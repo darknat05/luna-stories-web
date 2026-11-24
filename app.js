@@ -75,8 +75,24 @@ function toast(message,type){const el=document.createElement('div');el.className
 function toastAction(message,label,onAction){if(pendingUndoTimer)clearTimeout(pendingUndoTimer);if(pendingUndo&&pendingUndo.toast)pendingUndo.toast.remove();const el=document.createElement('div');el.className='toast success';const text=document.createElement('span');text.textContent=message;const button=document.createElement('button');button.type='button';button.className='toast-action';button.dataset.action='undo-delete';button.textContent=label;el.append(text,button);$('toastRegion').appendChild(el);pendingUndo={toast:el,callback:onAction};pendingUndoTimer=setTimeout(()=>{if(pendingUndo&&pendingUndo.toast===el)pendingUndo=null;el.remove()},15000)}
 function undoLastDeletion(){const entry=pendingUndo;if(!entry)return;pendingUndo=null;if(pendingUndoTimer)clearTimeout(pendingUndoTimer);pendingUndoTimer=null;entry.toast.remove();entry.callback()}
 let routeProgressTimer=null;
+function ensureRouteProgress(){
+  let bar=$('routeProgress');
+  if(!bar){
+    bar=document.createElement('div');
+    bar.id='routeProgress';
+    bar.className='routeProgress route-progress';
+    bar.setAttribute('aria-hidden','true');
+    const fill=document.createElement('span');
+    bar.appendChild(fill);
+    document.body.prepend(bar);
+  }else{
+    bar.classList.add('routeProgress','route-progress');
+    if(!bar.querySelector('span'))bar.appendChild(document.createElement('span'));
+  }
+  return bar;
+}
 function showRouteProgress(){
-  const bar=$('routeProgress');if(!bar)return;
+  const bar=ensureRouteProgress();
   bar.classList.remove('active','done');void bar.offsetWidth;bar.classList.add('active');
   if(routeProgressTimer)clearTimeout(routeProgressTimer);
   routeProgressTimer=setTimeout(()=>{bar.classList.add('done');setTimeout(()=>bar.classList.remove('active','done'),220)},430);
@@ -180,6 +196,6 @@ $('importFile').addEventListener('change',event=>{const file=event.target.files&
 $('menuToggle').addEventListener('click',()=>$('sidebar').classList.toggle('open'));
 $('themeButton').addEventListener('click',()=>{lightTheme=!lightTheme;setTheme()});
 document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();$('characterSearch').focus()}if(event.key==='Escape'){if($('confirmModal')?.classList.contains('open'))closeConfirm();document.querySelectorAll('.modal-backdrop.open').forEach(el=>closeModal(el.id));$('sidebar').classList.remove('open')}});
-function init(){setTheme(false);renderCharacters();renderStories();renderLibrary();fillProfile();if(!savedState)persist();if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.style.scrollBehavior='auto'}
+function init(){ensureRouteProgress();setTheme(false);renderCharacters();renderStories();renderLibrary();fillProfile();if(!savedState)persist();if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.style.scrollBehavior='auto'}
 init();
 })();
