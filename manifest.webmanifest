@@ -1,0 +1,14 @@
+{
+  "name": "Luna Stories",
+  "short_name": "Luna Stories",
+  "description": "Découvre des personnages, crée tes univers et invente des histoires.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1020",
+  "theme_color": "#101426",
+  "icons": [
+    {"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
