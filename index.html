@@ -144,22 +144,48 @@
 
         <section class="page" id="page-chat">
           <div class="chat-page-head">
-            <button class="back-link" data-action="back">← Retour</button>
-            <span class="chat-mode-label"><span class="status-dot"></span> TON ESPACE DE CONVERSATION</span>
+            <button class="back-link" data-action="back"><span>←</span> Retour</button>
+            <div class="chat-page-heading"><span class="chat-page-eyebrow">LUNA STORIES / ESPACE PRIVÉ</span><strong>Une conversation, un univers.</strong></div>
+            <span class="chat-mode-label"><span class="status-dot"></span> SESSION LOCALE</span>
           </div>
           <div class="chat-layout">
-            <aside class="chat-aside" id="chatAside"></aside>
             <section class="chat-main">
-              <div class="chat-top">
-                <div class="chat-top-character"><div class="mini-avatar" id="chatMiniAvatar">✦</div><div><strong id="chatCharacterName">Personnage</strong><small id="chatCharacterMeta">Univers</small></div></div>
-                <div class="chat-top-actions"><button class="icon-button" data-action="chat-memory" title="Notes personnelles" aria-label="Notes personnelles">▤</button><button class="icon-button" data-action="clear-chat" title="Effacer la discussion" aria-label="Effacer la discussion">⌫</button></div>
-              </div>
-              <div class="chat-context-strip"><span class="chat-context-dot"></span> Conversation privée sur cet appareil <span>·</span> <span id="chatContextCategory">Univers à découvrir</span></div>
-              <div class="chat-messages" id="chatMessages" aria-live="polite"></div>
-              <div class="typing-indicator" id="typingIndicator" hidden><span></span><span></span><span></span><small>réfléchit…</small></div>
-              <form class="chat-composer" id="chatForm"><textarea id="chatInput" rows="1" maxlength="1500" placeholder="Écris ton message…" aria-label="Ton message"></textarea><div class="composer-bottom"><span>Entrée pour envoyer · Maj + Entrée pour une nouvelle ligne</span><button class="send-button" type="submit" aria-label="Envoyer">➤</button></div></form>
-              <div class="chat-disclaimer">Version actuelle : réponses de démonstration locales, sans modèle d'IA connecté.</div>
+              <header class="chat-top">
+                <div class="chat-top-character">
+                  <div class="mini-avatar" id="chatMiniAvatar">✦</div>
+                  <div class="chat-top-name"><strong id="chatCharacterName">Personnage</strong><small id="chatCharacterMeta">Univers</small><span class="chat-top-status"><i></i><span id="chatTopStatus">Conversation personnelle</span></span></div>
+                </div>
+                <div class="chat-top-actions">
+                  <button class="chat-tool-button" data-chat-panel="scenes" title="Choisir une scène"><span>✧</span><small>Scènes</small></button>
+                  <button class="chat-tool-button" data-action="toggle-chat-details" title="Afficher la fiche du personnage"><span>ⓘ</span><small>Fiche</small></button>
+                  <button class="chat-tool-button" data-action="chat-memory" title="Notes personnelles"><span>▤</span><small>Notes</small></button>
+                  <button class="chat-tool-button" data-action="chat-settings" title="Préférences de discussion"><span>⚙</span><small>Options</small></button>
+                  <button class="icon-button" data-action="chat-export" title="Exporter la discussion" aria-label="Exporter la discussion">⇩</button>
+                  <button class="icon-button" data-action="clear-chat" title="Effacer la discussion" aria-label="Effacer la discussion">⌫</button>
+                </div>
+              </header>
+              <nav class="chat-panel-tabs" aria-label="Sections de la discussion">
+                <button type="button" class="chat-panel-tab active" data-chat-panel="conversation"><span>☏</span> Conversation</button>
+                <button type="button" class="chat-panel-tab" data-chat-panel="scenes"><span>✧</span> Scénarios</button>
+              </nav>
+              <section class="chat-conversation-panel" id="chatConversationPanel">
+                <div class="chat-context-strip"><span class="chat-context-dot"></span> Discussion privée <span class="chat-context-separator">·</span> <span id="chatContextCategory">Univers à découvrir</span><span class="chat-encryption-note">Enregistrée sur cet appareil</span></div>
+                <div class="chat-messages" id="chatMessages" aria-live="polite"></div>
+                <div class="chat-suggestions-wrap"><span class="chat-suggestions-label">POUR LANCER LA CONVERSATION</span><div class="chat-suggestions" id="chatSuggestions"></div></div>
+                <div class="typing-indicator" id="typingIndicator" hidden><span></span><span></span><span></span><small>prépare une réponse de démonstration…</small></div>
+                <form class="chat-composer" id="chatForm">
+                  <textarea id="chatInput" rows="1" maxlength="1500" placeholder="Écris un message à ce personnage…" aria-label="Ton message"></textarea>
+                  <div class="composer-bottom"><span>Entrée pour envoyer <i>·</i> Maj + Entrée pour une nouvelle ligne</span><span class="composer-counter" id="composerCounter">0 / 1500</span><button class="send-button" id="chatSendButton" type="submit" aria-label="Envoyer le message">➤</button></div>
+                </form>
+                <p class="chat-disclaimer"><span>ⓘ</span> Réponses locales de démonstration : aucun modèle d’IA n’est connecté pour le moment.</p>
+              </section>
+              <section class="chat-scenes-panel" id="chatScenesPanel" hidden>
+                <div class="chat-scenes-heading"><span class="chat-page-eyebrow">À TOI DE CHOISIR</span><h2>Comment commence votre histoire ?</h2><p>Choisis une mise en situation. Elle sera ajoutée à cette conversation, sans effacer les messages précédents.</p></div>
+                <div class="chat-scenes-grid" id="chatScenesGrid"></div>
+                <button class="chat-scenes-back" type="button" data-chat-panel="conversation">← Revenir à la conversation</button>
+              </section>
             </section>
+            <aside class="chat-aside" id="chatAside" aria-label="Fiche du personnage"></aside>
           </div>
         </section>
 
@@ -197,6 +223,25 @@
 
   <div class="modal-backdrop" id="memoryModal" aria-hidden="true"><section class="modal-card small-modal" role="dialog" aria-modal="true" aria-labelledby="memoryTitle"><div class="modal-header"><div><div class="eyebrow">NOTES PERSONNELLES</div><h2 id="memoryTitle">Mémoire du personnage</h2></div><button class="modal-close" data-action="close-memory">×</button></div><p class="modal-help">Garde ici les informations importantes à retrouver avec ce personnage. Dans cette version, ces notes sont enregistrées localement et ne sont pas injectées dans un modèle d'IA.</p><textarea id="memoryText" class="form-input" rows="6" maxlength="1000"></textarea><div class="modal-actions"><button class="button-quiet" data-action="close-memory">Annuler</button><button class="button-primary" data-action="save-memory">Enregistrer</button></div></section></div>
 
+  <div class="modal-backdrop" id="chatSettingsModal" aria-hidden="true">
+    <section class="modal-card small-modal chat-settings-modal" role="dialog" aria-modal="true" aria-labelledby="chatSettingsTitle">
+      <div class="modal-header"><div><div class="eyebrow">PERSONNALISE TON ÉCHANGE</div><h2 id="chatSettingsTitle">Préférences de discussion</h2></div><button class="modal-close" data-action="close-chat-settings" aria-label="Fermer">×</button></div>
+      <p class="modal-help">Ces réglages modifient les réponses de démonstration locales. Ils ne connectent pas de modèle d’intelligence artificielle.</p>
+      <label class="form-label" for="chatStyleSelect">Style de conversation</label>
+      <select class="form-input" id="chatStyleSelect"><option value="natural">Naturel et équilibré</option><option value="roleplay">Jeu de rôle avec narration</option><option value="dialogue">Dialogue uniquement</option><option value="concise">Réponses courtes</option></select>
+      <label class="form-label" for="chatNarrationSelect">Narration</label>
+      <select class="form-input" id="chatNarrationSelect"><option value="on">Autoriser les indications entre astérisques</option><option value="off">Désactiver la narration</option></select>
+      <div class="modal-actions"><button class="button-quiet" data-action="close-chat-settings">Annuler</button><button class="button-primary" data-action="save-chat-settings">Enregistrer les préférences</button></div>
+    </section>
+  </div>
+  <div class="modal-backdrop" id="chatEditModal" aria-hidden="true">
+    <section class="modal-card small-modal" role="dialog" aria-modal="true" aria-labelledby="chatEditTitle">
+      <div class="modal-header"><div><div class="eyebrow">MODIFIER TON DERNIER MESSAGE</div><h2 id="chatEditTitle">Corriger ton message</h2></div><button class="modal-close" data-action="close-chat-edit" aria-label="Fermer">×</button></div>
+      <p class="modal-help">La réponse de démonstration qui suit sera recalculée localement.</p>
+      <textarea id="chatEditText" class="form-input" rows="5" maxlength="1500"></textarea>
+      <div class="modal-actions"><button class="button-quiet" data-action="close-chat-edit">Annuler</button><button class="button-primary" data-action="save-chat-edit">Enregistrer</button></div>
+    </section>
+  </div>
   <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
   <script src="./app.js" defer></script>
 </body>
