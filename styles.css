@@ -215,3 +215,13 @@ body.light .profile-pill{background:#f5f1f8;color:#292333}
   .discovery-banner h1{font-size:30px}
   .showcase-character{width:99px;height:139px}
 }
+
+/* Keep the two-column character gallery on common phone widths. */
+@media(max-width:390px){
+  .character-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .character-cover{height:190px}
+}
+@media(max-width:350px){
+  .character-grid{grid-template-columns:1fr}
+  .character-cover{height:240px}
+}
