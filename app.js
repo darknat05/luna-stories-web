@@ -112,6 +112,7 @@ function flashBusy(el,duration=360){
   setTimeout(()=>{el.classList.remove('is-busy');el.removeAttribute('aria-busy')},duration);
 }
 function navigate(page){
+  document.body.classList.toggle('chat-active',page==='chat');
   showRouteProgress();
   document.querySelectorAll('.page').forEach(el=>el.classList.toggle('active',el.id==='page-'+page));
   document.querySelectorAll('[data-page]').forEach(el=>el.classList.toggle('active',el.dataset.page===page));
@@ -167,7 +168,7 @@ function openCreator(id){resetCharacterForm();if(id){const c=custom.find(x=>x.id
 function renderAvatarPreview(){const image=safeImage(pendingImage);$('avatarPreview').innerHTML=image?'<img src="'+image+'" alt="Aperçu du personnage">':esc($('characterEmoji').value||'🌙')}
 function compressImage(file){return new Promise((resolve,reject)=>{if(!file||!file.type.match(/^image\/(png|jpeg|webp)$/)){reject(new Error('Format non accepté. Utilise PNG, JPG ou WebP.'));return}if(file.size>8*1024*1024){reject(new Error('Image trop volumineuse (maximum 8 Mo).'));return}const reader=new FileReader();reader.onerror=()=>reject(new Error('Impossible de lire cette image.'));reader.onload=()=>{const img=new Image();img.onerror=()=>reject(new Error('Image illisible.'));img.onload=()=>{const max=560,scale=Math.min(1,max/Math.max(img.width,img.height)),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(img.width*scale));canvas.height=Math.max(1,Math.round(img.height*scale));const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,canvas.width,canvas.height);resolve(canvas.toDataURL('image/webp',.72))};img.src=reader.result};reader.readAsDataURL(file)})}
 function saveCharacter(event){event.preventDefault();const id=$('characterId').value||('user_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8));const obj={id,name:safeString($('characterName').value,40),category:ALLOWED_CATEGORIES.has($('characterCategory').value)?$('characterCategory').value:'Quotidien',emoji:safeString($('characterEmoji').value,8)||'🌙',description:safeString($('characterDescription').value,320),greeting:safeString($('characterGreeting').value,320)||'Salut ! Heureux de faire ta connaissance.',memory:safeString($('characterMemory').value,500),image:safeImage(pendingImage),colors:COLORS[custom.length%COLORS.length]};if(!obj.name||!obj.description){toast('Ajoute un nom et une description pour continuer.','error');return}const previous=custom.slice(),index=custom.findIndex(c=>c.id===id);if(index>=0)custom[index]=obj;else custom.unshift(obj);if(!persist()){custom=previous;return}closeModal('characterModal');renderCharacters();renderLibrary();toast(index>=0?'Personnage modifié.':'Personnage créé !','success')}
-function toggleFavorite(id){const previous=favorites.slice(),wasFavorite=favorites.includes(id);favorites=wasFavorite?favorites.filter(x=>x!==id):favorites.concat(id);if(!persist()){favorites=previous;return}renderCharacters();renderLibrary();toast(wasFavorite?'Retiré des favoris.':'Ajouté à tes favoris.','success')}
+function toggleFavorite(id){const previous=favorites.slice(),wasFavorite=favorites.includes(id);favorites=wasFavorite?favorites.filter(x=>x!==id):favorites.concat(id);if(!persist()){favorites=previous;return}renderCharacters();renderLibrary();if(activeCharacter&&activeCharacter.id===id)renderChatDetails();toast(wasFavorite?'Retiré des favoris.':'Ajouté à tes favoris.','success')}
 function askConfirm(title,message,confirmLabel,onConfirm){let modal=$('confirmModal');if(!modal){modal=document.createElement('div');modal.id='confirmModal';modal.className='modal-backdrop';modal.setAttribute('aria-hidden','true');modal.innerHTML='<section class="modal-card small-modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle"><div class="modal-header"><div><div class="eyebrow">CONFIRMATION</div><h2 id="confirmTitle"></h2></div><button type="button" class="modal-close" data-action="confirm-cancel" aria-label="Fermer">×</button></div><p class="modal-help" id="confirmMessage"></p><div class="modal-actions"><button type="button" class="button-quiet" data-action="confirm-cancel">Annuler</button><button type="button" class="button-danger" id="confirmAccept" data-action="confirm-accept"></button></div></section>';document.body.appendChild(modal);modal.addEventListener('click',event=>{if(event.target===modal)closeConfirm()});modal.querySelectorAll('[data-action="confirm-cancel"]').forEach(button=>button.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();closeConfirm()}));modal.querySelector('#confirmAccept').addEventListener('click',event=>{event.preventDefault();event.stopPropagation();acceptConfirm()})}$('confirmTitle').textContent=title;$('confirmMessage').textContent=message;$('confirmAccept').textContent=confirmLabel||'Confirmer';pendingConfirmation=onConfirm;modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';setTimeout(()=>$('confirmAccept').focus(),0)}
 function closeConfirm(){const modal=$('confirmModal');if(modal){modal.classList.remove('open');modal.setAttribute('aria-hidden','true')}pendingConfirmation=null;if(!document.querySelector('.modal-backdrop.open'))document.body.style.overflow=''}
 function acceptConfirm(){const callback=pendingConfirmation;closeConfirm();if(typeof callback==='function')callback()}
@@ -266,7 +267,7 @@ function autoResize(){const input=$('chatInput');if(!input)return;input.style.he
 function sendMessage(event){
  event.preventDefault();if(!activeCharacter)return;
  const input=$('chatInput'),text=input.value.trim();if(!text||pendingChatReplies.has(activeCharacter.id))return;
- const character=activeCharacter,cid=character.id,previous=(chats[cid]||[]).slice();
+ const character=activeCharacter,cid=character.id,storyMode=!!activeStory,previous=(chats[cid]||[]).slice();
  addMessage('user',text.slice(0,1500));
  if(activeStory)addMessage('assistant','Je t’écoute. Tu peux choisir une des possibilités de l’histoire ou continuer librement en racontant ce que tu souhaites faire.');
  if(!persist()){chats[cid]=previous;return}
@@ -274,7 +275,7 @@ function sendMessage(event){
  $('typingIndicator').hidden=false;$('chatTopStatus').textContent='Réponse en préparation…';$('chatSendButton').disabled=true;
  renderChatMessages();
  window.setTimeout(()=>{
-  if(!activeStory||activeCharacter?.id!==cid)addMessageToChat(cid,'assistant',localReply(text,character));
+  if(!storyMode)addMessageToChat(cid,'assistant',localReply(text,character));
   pendingChatReplies.delete(cid);persist();
   if(activeCharacter?.id===cid){$('typingIndicator').hidden=true;renderChatMessages()}
  },520);
@@ -358,7 +359,7 @@ $('characterImage').addEventListener('change',async event=>{const file=event.tar
 
 $('characterSearch').addEventListener('input',renderCharacters);$('librarySearch').addEventListener('input',renderLibrary);
 $('profileForm').addEventListener('submit',saveProfile);$('chatForm').addEventListener('submit',sendMessage);
-$('chatInput').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,110)+'px'});
+$('chatInput').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,140)+'px';$('composerCounter').textContent=this.value.length+' / 1500'});
 $('chatInput').addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();$('chatForm').requestSubmit()}});
 $('importFile').addEventListener('change',event=>{const file=event.target.files&&event.target.files[0];if(file)importData(file);event.target.value=''});
 $('menuToggle').addEventListener('click',()=>$('sidebar').classList.toggle('open'));
