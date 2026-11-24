@@ -1,4 +1,4 @@
-const CACHE_NAME = "luna-stories-static-v1";
+const CACHE_NAME = "luna-stories-static-v2";
 const CORE_ASSETS = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.webmanifest", "./icon.svg"];
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(CORE_ASSETS)).then(() => self.skipWaiting()));
@@ -16,5 +16,5 @@ self.addEventListener("fetch", event => {
       caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
     }
     return response;
-  }).catch(() => event.request.mode === "navigate" ? caches.match("./index.html") : Promise.error(new Error("Offline")))));
+  }).catch(() => event.request.mode === "navigate" ? caches.match("./index.html") : Promise.reject(new Error("Offline")))));
 });
