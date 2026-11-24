@@ -1,91 +1,150 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#101426"><meta name="description" content="Luna Stories — découvre des personnages, invente des histoires et crée ton propre univers.">
-<title>Luna Stories</title>
-<style>
-:root{color-scheme:dark;--bg:#0c1020;--panel:#151b30;--panel2:#1c2440;--line:#2a3556;--text:#f4f5ff;--muted:#a8b1cc;--violet:#a392ff;--mint:#72ddd1;--gold:#f0ca7b;--pink:#f39dbb;--shadow:0 18px 50px #0005}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 12% -10%,#32295f 0,transparent 36%),radial-gradient(ellipse at 96% 9%,#153f50 0,transparent 28%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
-.top{height:76px;position:sticky;top:0;z-index:8;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,60px);background:#0c1020df;backdrop-filter:blur(18px);border-bottom:1px solid #ffffff12}.brand{display:flex;align-items:center;gap:11px;color:var(--text);text-decoration:none;font-weight:850;font-size:20px;letter-spacing:.2px}.logo{width:39px;height:39px;border-radius:14px;background:linear-gradient(135deg,var(--violet),var(--mint));display:grid;place-items:center;color:#101426;font-size:21px;box-shadow:0 7px 22px #a392ff55}.nav{display:flex;gap:6px}.nav button,.quiet{border:0;background:transparent;color:var(--muted);padding:10px 13px;border-radius:12px}.nav button.active,.nav button:hover,.quiet:hover{color:white;background:#ffffff10}.primary{border:0;border-radius:13px;background:linear-gradient(115deg,var(--violet),var(--mint));padding:11px 17px;color:#101426;font-weight:850;box-shadow:0 8px 24px #9082ff35}.primary:hover{filter:brightness(1.08);transform:translateY(-1px)}.wrap{max-width:1450px;margin:auto;padding:30px clamp(16px,4vw,60px) 70px}.page{display:none}.page.active{display:block}
-.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center;margin:8px 0 34px}.hero-copy{padding:24px 0}.kicker{color:var(--mint);font-size:11px;font-weight:850;letter-spacing:1.8px;text-transform:uppercase}.hero h1{font-size:clamp(36px,5vw,62px);line-height:1.03;letter-spacing:-2.3px;margin:14px 0}.gradient{background:linear-gradient(90deg,#b5a5ff,#7fe1d6);color:transparent;background-clip:text}.hero p{max-width:580px;color:var(--muted);font-size:16px}.hero-art{height:280px;border:1px solid #ffffff1b;border-radius:28px;background:linear-gradient(140deg,#28214f,#17414c 72%,#242c4d);display:grid;place-items:center;position:relative;overflow:hidden;box-shadow:var(--shadow)}.moon{height:180px;width:180px;border-radius:50%;background:radial-gradient(circle at 32% 27%,#fff 0 1%,#e7e0ff 3%,#ad9bea 30%,#6559a3 68%,#2a3b64 100%);box-shadow:0 0 65px #b8aaff9c;position:relative}.moon:after{content:"✦";position:absolute;right:-36px;top:-17px;font-size:56px;color:white;text-shadow:0 0 23px white}.art-label{position:absolute;bottom:18px;left:22px;font-weight:750;color:#edf1ff}
-.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:20px 0}.search{position:relative;flex:1;min-width:220px;max-width:500px}.search span{position:absolute;left:14px;top:8px;color:var(--muted);font-size:21px}.search input{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 15px 12px 42px;color:white}.tabs,.chips{display:flex;gap:7px;flex-wrap:wrap}.tab,.chip{border:1px solid transparent;background:transparent;color:var(--muted);padding:9px 14px;border-radius:999px}.tab.active{background:#a392ff22;border-color:#a392ff66;color:#e6dfff}.chip{background:#ffffff08;border-color:#ffffff10;font-size:12px}.chip.active,.chip:hover{background:#72ddd11b;border-color:#72ddd166;color:#b7fff5}
-.head{display:flex;justify-content:space-between;align-items:end;gap:14px;margin:30px 0 16px}.head h2{font-size:22px;margin:0}.head p{margin:3px 0 0;color:var(--muted);font-size:13px}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:17px}.card{min-width:0;overflow:hidden;border:1px solid #ffffff15;border-radius:20px;background:linear-gradient(155deg,#1b2340,#12182b);transition:.2s}.card:hover{transform:translateY(-4px);border-color:#a392ff66;box-shadow:var(--shadow)}.cover{height:156px;position:relative;display:grid;place-items:center;overflow:hidden;background:linear-gradient(135deg,var(--a,#4b427b),var(--b,#253c5c))}.cover:before,.cover:after{content:"";position:absolute;border:1px solid #ffffff28;border-radius:50%;width:190px;height:190px}.cover:after{width:125px;height:125px}.emoji{font-size:65px;z-index:1;filter:drop-shadow(0 8px 10px #0005)}.tag{position:absolute;left:12px;top:12px;background:#0c1020b8;border:1px solid #ffffff2e;padding:4px 9px;border-radius:99px;font-size:10px}.heart{position:absolute;right:10px;top:10px;border:1px solid #ffffff35;background:#0c1020b5;color:white;border-radius:50%;width:34px;height:34px;font-size:17px}.heart.on{color:#ff8eaa}.body{padding:14px}.card-title{display:flex;align-items:center;justify-content:space-between;gap:8px}.card-title h3{margin:0;font-size:16px}.badge{font-size:10px;color:var(--mint);white-space:nowrap}.desc{font-size:12px;color:var(--muted);min-height:38px;margin:8px 0 13px}.foot{display:flex;justify-content:space-between;align-items:center;gap:8px}.small{border:1px solid #a392ff55;background:#a392ff20;color:#e7e0ff;border-radius:10px;padding:8px 12px;font-size:12px;font-weight:800}.small:hover{background:#a392ff40}.linkbtn{border:0;background:none;color:var(--muted);font-size:12px}.empty{grid-column:1/-1;text-align:center;padding:42px 20px;border:1px dashed var(--line);border-radius:18px;color:var(--muted)}.banner{margin-top:34px;padding:24px;border:1px solid #ffffff1c;border-radius:20px;background:linear-gradient(110deg,#2a2452,#16414b);display:flex;align-items:center;justify-content:space-between;gap:16px}.banner h3{margin:0 0 4px}.banner p{margin:0;color:#c5cbe1;font-size:13px}
-.split{display:grid;grid-template-columns:300px 1fr;gap:18px;min-height:570px}.profilecard,.chatbox{background:var(--panel);border:1px solid var(--line);border-radius:20px;overflow:hidden}.profilecard{padding:19px}.profilecard .cover{border-radius:15px;height:170px;margin-bottom:15px}.profilecard p{font-size:13px;color:var(--muted)}.chatbox{display:flex;flex-direction:column;min-height:570px}.chathead{display:flex;justify-content:space-between;align-items:center;padding:15px 19px;border-bottom:1px solid var(--line)}.chathead h3{margin:0}.messages{flex:1;overflow:auto;max-height:450px;padding:20px;display:flex;flex-direction:column;gap:12px}.bubble{align-self:flex-start;max-width:78%;padding:11px 14px;border-radius:16px;background:#252f50;white-space:pre-wrap;overflow-wrap:anywhere}.bubble.mine{align-self:flex-end;background:#6255a7}.bubble small{display:block;color:#c5cbe1;font-size:10px;margin-bottom:3px}.compose{display:flex;gap:10px;padding:14px;border-top:1px solid var(--line)}.compose input{flex:1;min-width:0;background:#0e1426;border:1px solid var(--line);border-radius:12px;padding:12px;color:white}
-.modalbg{display:none;position:fixed;inset:0;background:#050713d9;z-index:20;align-items:center;justify-content:center;padding:16px}.modalbg.open{display:flex}.modal{width:min(560px,100%);max-height:92vh;overflow:auto;background:#171e34;border:1px solid #ffffff24;border-radius:22px;padding:22px;box-shadow:var(--shadow)}.modalhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.modalhead h2{margin:0}.close{border:0;background:#ffffff12;color:white;border-radius:10px;width:35px;height:35px}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:12px;font-weight:750;color:#c8cfe4}.field input,.field textarea,.field select{width:100%;background:#0e1426;border:1px solid var(--line);color:white;border-radius:11px;padding:11px 12px}.field textarea{min-height:90px;resize:vertical}.actions{display:flex;justify-content:flex-end;gap:9px;margin-top:17px}.notice{margin-top:15px;background:#ffffff08;color:var(--muted);border-radius:11px;padding:11px 13px;font-size:12px}
-.storychoices{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}.storychoices button{background:#a392ff20;border:1px solid #a392ff55;color:#eee8ff;padding:10px 13px;border-radius:12px}.settingsbox{max-width:700px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px}.settingsbox h3{margin-top:0}
-footer{border-top:1px solid #ffffff12;text-align:center;color:#8791ad;padding:25px;font-size:12px}
-@media(max-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{grid-template-columns:1fr .7fr}}@media(max-width:720px){.top{height:auto;min-height:68px;flex-wrap:wrap;gap:9px;padding:12px 16px}.brand{font-size:18px}.nav{order:3;width:100%;justify-content:space-between}.nav button{padding:8px 9px;font-size:12px}.top>.primary{font-size:12px;padding:9px 11px}.hero{grid-template-columns:1fr}.hero-copy{padding:10px 0 0}.hero-art{height:180px}.moon{height:120px;width:120px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.cover{height:125px}.emoji{font-size:52px}.split{grid-template-columns:1fr}.profilecard{display:none}.chatbox{min-height:65vh}.banner{align-items:flex-start;flex-direction:column}.head{align-items:start;flex-direction:column}}@media(max-width:390px){.grid{grid-template-columns:1fr}.cover{height:160px}}
-</style></head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101426">
+  <meta name="description" content="Luna Stories — découvre des personnages, crée tes propres univers et imagine des histoires interactives.">
+  <meta name="color-scheme" content="dark">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Luna Stories — Des histoires à vivre</title>
+</head>
 <body>
-<header class="top">
- <a class="brand" href="#" onclick="navigate('discover');return false"><span class="logo">✦</span><span>Luna Stories</span></a>
- <nav class="nav" aria-label="Navigation principale">
-  <button class="active" data-page="discover" onclick="navigate('discover')">Découvrir</button>
-  <button data-page="library" onclick="navigate('library')">Bibliothèque</button>
-  <button data-page="stories" onclick="navigate('stories')">Histoires</button>
-  <button data-page="settings" onclick="navigate('settings')">Profil</button>
- </nav>
- <button class="primary" onclick="openCreator()">＋ Créer</button>
-</header>
-<main class="wrap">
-<section id="discover" class="page active">
- <div class="hero"><div class="hero-copy"><div class="kicker">Ton univers commence ici</div><h1>Des histoires à vivre.<br><span class="gradient">Des personnages</span><br>à découvrir.</h1><p>Explore des univers, invente tes propres personnages et imagine des aventures à ton rythme.</p></div><div class="hero-art"><div class="moon"></div><div class="art-label">✦ À toi d'écrire la suite</div></div></div>
- <div class="toolbar"><div class="search"><span>⌕</span><input id="search" placeholder="Rechercher un personnage…" oninput="renderFeed()"></div><div class="tabs"><button class="tab active" data-feed="For you" onclick="setFeed('For you')">Pour toi</button><button class="tab" data-feed="All" onclick="setFeed('All')">Tous</button><button class="tab" data-feed="Fav" onclick="setFeed('Fav')">Favoris</button></div></div>
- <div class="chips" id="chips"></div><div class="head"><div><h2 id="feedTitle">Personnages à découvrir</h2><p>Choisis un personnage pour démarrer une discussion.</p></div><span class="muted" id="feedCount"></span></div><div class="grid" id="feedGrid"></div>
- <div class="banner"><div><h3>Tu as une idée de personnage ?</h3><p>Donne-lui un nom, une personnalité et un univers.</p></div><button class="primary" onclick="openCreator()">Créer mon personnage</button></div>
-</section>
-<section id="library" class="page"><div class="head"><div><div class="kicker">Ton espace personnel</div><h2>Ma bibliothèque</h2><p>Retrouve tes créations, tes favoris et tes discussions enregistrées.</p></div></div><div class="toolbar"><div class="search"><span>⌕</span><input id="libSearch" placeholder="Rechercher…" oninput="renderLibrary()"></div></div><div class="grid" id="libraryGrid"></div></section>
-<section id="stories" class="page"><div class="head"><div><div class="kicker">Choisis ton aventure</div><h2>Histoires interactives</h2><p>Des scénarios originaux où tes choix font avancer le récit.</p></div></div><div class="grid" id="storyGrid"></div></section>
-<section id="chat" class="page"><div class="head"><div><button class="quiet" onclick="navigate('discover')">← Retour</button><h2 id="chatTitle">Discussion</h2></div></div><div class="split"><aside class="profilecard" id="chatProfile"></aside><div class="chatbox"><div class="chathead"><div><h3 id="chatName">Personnage</h3><span class="badge">● Conversation sur cet appareil</span></div><button class="quiet" onclick="clearConversation()">Effacer</button></div><div class="messages" id="messages"></div><form class="compose" onsubmit="sendMessage(event)"><input id="message" placeholder="Écris ton message…" required autocomplete="off"><button class="primary">Envoyer</button></form></div></div><div class="notice">Cette version utilise des réponses de démonstration locales. Aucun modèle d'IA externe n'est connecté pour le moment.</div></section>
-<section id="settings" class="page"><div class="head"><div><div class="kicker">Ton espace</div><h2>Profil et préférences</h2><p>Personnalise ton nom d'affichage sur cet appareil.</p></div></div><div class="settingsbox"><h3>Mon profil</h3><div class="field"><label for="nickname">Nom d'affichage</label><input id="nickname" maxlength="30" placeholder="Mon pseudo"></div><button class="primary" onclick="saveProfile()">Enregistrer</button><div class="notice">Les données sont stockées dans le navigateur de cet appareil. Elles ne sont pas synchronisées entre plusieurs appareils.</div><h3 style="margin-top:25px">Données du site</h3><button class="small" onclick="exportData()">Exporter mes données</button> <button class="small" onclick="resetData()">Réinitialiser mes données</button></div></section>
-</main>
-<footer>Luna Stories · Un espace créatif original · Données conservées localement dans ce navigateur</footer>
-<div class="modalbg" id="creator" onclick="if(event.target===this)closeCreator()"><div class="modal"><div class="modalhead"><h2 id="creatorTitle">Créer un personnage</h2><button class="close" onclick="closeCreator()">✕</button></div><form id="creatorForm" onsubmit="saveCharacter(event)"><input id="editId" type="hidden"><div class="field"><label for="name">Nom</label><input id="name" maxlength="35" required placeholder="Ex. : Nova"></div><div class="field"><label for="category">Univers</label><select id="category"><option>Fantaisie</option><option>Amitié</option><option>Mystère</option><option>Aventure</option><option>Science-fiction</option><option>Quotidien</option></select></div><div class="field"><label for="avatar">Emoji du personnage</label><input id="avatar" maxlength="5" value="🌙"></div><div class="field"><label for="description">Description</label><textarea id="description" maxlength="240" required placeholder="Décris son caractère et son univers…"></textarea></div><div class="field"><label for="greeting">Première phrase</label><textarea id="greeting" maxlength="240" placeholder="Bonjour ! Prêt pour une aventure ?"></textarea></div><div class="actions"><button type="button" class="quiet" onclick="closeCreator()">Annuler</button><button class="primary">Enregistrer</button></div></form></div></div>
-<script>
-const starter=[
-{id:'mira',name:'Mira',category:'Fantaisie',avatar:'🧝',description:'Une apprentie magicienne curieuse qui explore les secrets d’une forêt ancienne.',greeting:'Bonjour voyageur ! J’ai trouvé une carte étrange. Tu veux m’aider à comprendre où elle mène ?',colors:['#574381','#283e69']},
-{id:'eliot',name:'Eliot',category:'Mystère',avatar:'🕵️',description:'Un détective observateur qui adore résoudre des énigmes et aider les autres.',greeting:'J’attendais justement un coup de main. Un objet a disparu du musée cette nuit…',colors:['#69533d','#2d3854']},
-{id:'sora',name:'Sora',category:'Aventure',avatar:'🧭',description:'Une exploratrice intrépide toujours prête à découvrir un lieu inconnu.',greeting:'Le sentier se divise en deux. La vieille carte indique un passage au nord… tu en penses quoi ?',colors:['#28616a','#263a58']},
-{id:'lyra',name:'Lyra',category:'Science-fiction',avatar:'🤖',description:'Un robot cartographe qui tente de comprendre les anciennes villes humaines.',greeting:'Journal de bord activé. J’ai détecté une lumière dans la ville abandonnée. Enquête avec moi ?',colors:['#315d78','#282e5b']},
-{id:'noa',name:'Noa',category:'Amitié',avatar:'🎨',description:'Un artiste imaginatif qui transforme chaque journée en petite aventure.',greeting:'J’ai commencé un dessin, mais il me manque une idée géniale. On invente quelque chose ?',colors:['#765078','#3b426d']},
-{id:'atlas',name:'Atlas',category:'Fantaisie',avatar:'🐉',description:'Le gardien bienveillant d’une vallée peuplée de créatures extraordinaires.',greeting:'Bienvenue dans la vallée ! Une créature s’est éloignée du village. Peux-tu m’aider à la retrouver ?',colors:['#416b58','#263c4d']}
-];
-const storySeeds=[
-{ id:'signal',name:'Le signal oublié',category:'Science-fiction',avatar:'🚀',description:'Un message venu d’une station abandonnée bouleverse ton exploration spatiale.',colors:['#273b69','#18223d'],opening:'Ton vaisseau reçoit un signal qui semble provenir d’une station disparue des cartes. La porte extérieure vient de s’ouvrir toute seule.',choices:['Entrer prudemment dans la station','Analyser le signal depuis le vaisseau','Envoyer un petit drone en éclaireur']},
-{ id:'library',name:'La bibliothèque secrète',category:'Mystère',avatar:'🗝️',description:'Une porte cachée révèle des livres qui semblent connaître les lieux.',colors:['#49365f','#202a45'],opening:'Derrière une étagère, tu découvres une pièce remplie de livres anciens. L’un d’eux porte ton prénom sur sa couverture.',choices:['Ouvrir le livre mystérieux','Examiner la pièce','Chercher un autre passage']},
-{ id:'dragon',name:'Le dernier dragon',category:'Fantaisie',avatar:'🐉',description:'Tu découvres un œuf mystérieux au cœur d’une forêt ancienne.',colors:['#315c4b','#172f3b'],opening:'Au milieu d’une clairière, un œuf aux reflets dorés repose dans la mousse. Un bruit vient des arbres.',choices:['Protéger l’œuf','Observer les traces autour','Appeler doucement pour voir qui est là']}
-];
-const cats=['Tout','Fantaisie','Amitié','Mystère','Aventure','Science-fiction','Quotidien'];
-const read=(k,f)=>{try{return JSON.parse(localStorage.getItem(k))??f}catch{return f}};
-let custom=read('luna_custom',[]),favorites=read('luna_favorites',[]),chats=read('luna_chats',{}),feed='For you',activeCategory='Tout',active=null,storyState={};
-let profile=read('luna_profile',{nickname:''});
-const all=()=>[...starter,...custom];
-function save(){localStorage.setItem('luna_custom',JSON.stringify(custom));localStorage.setItem('luna_favorites',JSON.stringify(favorites));localStorage.setItem('luna_chats',JSON.stringify(chats));localStorage.setItem('luna_profile',JSON.stringify(profile))}
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function navigate(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='library')renderLibrary();if(id==='settings')document.getElementById('nickname').value=profile.nickname||'';window.scrollTo({top:0,behavior:'smooth'})}
-function setFeed(x){feed=x;document.querySelectorAll('[data-feed]').forEach(b=>b.classList.toggle('active',b.dataset.feed===x));renderFeed()}
-function renderChips(){document.getElementById('chips').innerHTML=cats.map(c=>`<button class="chip ${activeCategory===c?'active':''}" onclick="setCategory('${c}')">${esc(c)}</button>`).join('')}
-function setCategory(c){activeCategory=c;renderChips();renderFeed()}
-function card(c){const fav=favorites.includes(c.id),mine=custom.some(x=>x.id===c.id);const colors=c.colors||['#574381','#283e69'];return `<article class="card"><div class="cover" style="--a:${colors[0]};--b:${colors[1]}"><span class="emoji">${esc(c.avatar||'🌙')}</span><span class="tag">${esc(c.category)}</span><button class="heart ${fav?'on':''}" title="Ajouter aux favoris" aria-label="Favori" onclick="toggleFavorite('${c.id}')">${fav?'♥':'♡'}</button></div><div class="body"><div class="card-title"><h3>${esc(c.name)}</h3><span class="badge">${mine?'Ma création':'Disponible'}</span></div><p class="desc">${esc(c.description)}</p><div class="foot"><button class="small" onclick="openChat('${c.id}')">Discuter →</button>${mine?`<button class="linkbtn" onclick="editCharacter('${c.id}')">Modifier</button>`:''}</div></div></article>`}
-function renderFeed(){renderChips();const q=document.getElementById('search').value.trim().toLowerCase();let list=all().filter(c=>(activeCategory==='Tout'||c.category===activeCategory)&&[c.name,c.category,c.description].join(' ').toLowerCase().includes(q));if(feed==='Fav')list=list.filter(c=>favorites.includes(c.id));if(feed==='For you')list.sort((a,b)=>Number(favorites.includes(b.id))-Number(favorites.includes(a.id)));document.getElementById('feedTitle').textContent=feed==='Fav'?'Tes favoris':feed==='All'?'Tous les personnages':'Personnages à découvrir';document.getElementById('feedCount').textContent=list.length+' personnage(s)';document.getElementById('feedGrid').innerHTML=list.length?list.map(card).join(''):'<div class="empty">Aucun résultat. Change le filtre ou crée ton personnage.</div>'}
-function renderLibrary(){const q=document.getElementById('libSearch').value.toLowerCase();let list=all().filter(c=>favorites.includes(c.id)||custom.some(x=>x.id===c.id)||chats[c.id]?.length>1).filter(c=>(c.name+' '+c.description).toLowerCase().includes(q));document.getElementById('libraryGrid').innerHTML=list.length?list.map(card).join(''):'<div class="empty">Ta bibliothèque est vide. Ajoute un favori, crée un personnage ou commence une discussion.</div>'}
-function toggleFavorite(id){favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];save();renderFeed();renderLibrary()}
-function openCreator(){document.getElementById('creatorTitle').textContent='Créer un personnage';document.getElementById('creatorForm').reset();document.getElementById('editId').value='';document.getElementById('avatar').value='🌙';document.getElementById('creator').classList.add('open')}
-function closeCreator(){document.getElementById('creator').classList.remove('open')}
-function saveCharacter(e){e.preventDefault();const id=document.getElementById('editId').value||('custom_'+Date.now());const obj={id,name:document.getElementById('name').value.trim(),category:document.getElementById('category').value,avatar:document.getElementById('avatar').value||'🌙',description:document.getElementById('description').value.trim(),greeting:document.getElementById('greeting').value.trim()||'Salut ! Heureux de faire ta connaissance.',colors:['#554080','#263d65']};const i=custom.findIndex(x=>x.id===id);if(i>=0)custom[i]=obj;else custom.unshift(obj);save();closeCreator();renderFeed();if(document.getElementById('library').classList.contains('active'))renderLibrary()}
-function editCharacter(id){const c=custom.find(x=>x.id===id);if(!c)return;document.getElementById('creatorTitle').textContent='Modifier le personnage';document.getElementById('editId').value=c.id;document.getElementById('name').value=c.name;document.getElementById('category').value=c.category;document.getElementById('avatar').value=c.avatar;document.getElementById('description').value=c.description;document.getElementById('greeting').value=c.greeting||'';document.getElementById('creator').classList.add('open')}
-function openChat(id){active=all().find(c=>c.id===id);if(!active)return;document.getElementById('chatTitle').textContent='Discussion avec '+active.name;document.getElementById('chatName').textContent=active.name;let colors=active.colors||['#554080','#263d65'];document.getElementById('chatProfile').innerHTML='<div class="cover" style="--a:'+colors[0]+';--b:'+colors[1]+'"><span class="emoji">'+esc(active.avatar)+'</span></div><h2>'+esc(active.name)+'</h2><span class="badge">'+esc(active.category)+'</span><p>'+esc(active.description)+'</p>';if(!chats[id])chats[id]=[{who:'bot',text:active.greeting||'Bonjour ! Que souhaites-tu découvrir aujourd’hui ?'}];renderMessages();navigate('chat')}
-function renderMessages(){document.getElementById('messages').innerHTML=(chats[active.id]||[]).map(m=>'<div class="bubble '+(m.who==='me'?'mine':'')+'"><small>'+(m.who==='me'?'Moi':esc(active.name))+'</small>'+esc(m.text)+'</div>').join('');let el=document.getElementById('messages');el.scrollTop=el.scrollHeight}
-function sendMessage(e){e.preventDefault();const input=document.getElementById('message'),text=input.value.trim();if(!text||!active)return;chats[active.id].push({who:'me',text});input.value='';chats[active.id].push({who:'bot',text:localReply(text,active)});save();renderMessages()}
-function localReply(t,c){const s=t.toLowerCase();if(/bonjour|salut|coucou/.test(s))return 'Salut ! Ravi de poursuivre cette aventure avec toi. Qu’aimerais-tu découvrir maintenant ?';if(t.includes('?'))return 'Bonne question ! Je pense que nous devrions explorer un peu plus pour trouver la réponse. Qu’est-ce qu’on examine en premier ?';return 'Je t’écoute. '+c.name+' réfléchit à ce que tu viens de dire. On peut imaginer la suite ensemble : quelle sera notre prochaine étape ?'}
-function clearConversation(){if(!active||!confirm('Effacer cette discussion ?'))return;chats[active.id]=[{who:'bot',text:active.greeting||'On recommence notre aventure ?'}];save();renderMessages()}
-function renderStories(){document.getElementById('storyGrid').innerHTML=storySeeds.map(s=>`<article class="card"><div class="cover" style="--a:${s.colors[0]};--b:${s.colors[1]}"><span class="emoji">${s.avatar}</span><span class="tag">${s.category}</span></div><div class="body"><h3>${s.name}</h3><p class="desc">${s.description}</p><button class="small" onclick="beginStory('${s.id}')">Commencer →</button></div></article>`).join('')}
-function beginStory(id){const s=storySeeds.find(x=>x.id===id);if(!s)return;storyState={id,step:0};active={id:'story_'+id,name:s.name,category:s.category,avatar:s.avatar,description:s.description,greeting:s.opening,colors:s.colors};chats[active.id]=[{who:'bot',text:s.opening}];renderStoryChoices();document.getElementById('chatTitle').textContent=s.name;document.getElementById('chatName').textContent=s.name;document.getElementById('chatProfile').innerHTML='<div class="cover" style="--a:'+s.colors[0]+';--b:'+s.colors[1]+'"><span class="emoji">'+s.avatar+'</span></div><h2>'+s.name+'</h2><p>'+s.description+'</p>';renderMessages();navigate('chat')}
-function renderStoryChoices(){const old=document.getElementById('storyChoiceBox');if(old)old.remove();const id=storyState.id;if(!id)return;const s=storySeeds.find(x=>x.id===id);const box=document.createElement('div');box.id='storyChoiceBox';box.className='storychoices';s.choices.forEach(choice=>{const b=document.createElement('button');b.textContent=choice;b.onclick=()=>chooseStory(choice);box.appendChild(b)});document.querySelector('.compose').before(box)}
-function chooseStory(choice){if(!active)return;chats[active.id].push({who:'me',text:choice});chats[active.id].push({who:'bot',text:'Tu choisis : '+choice+'. Le décor change autour de toi. Une nouvelle piste apparaît au loin. Que décides-tu de faire ensuite ?'});renderMessages();document.getElementById('storyChoiceBox')?.remove();storyState.step++;if(storyState.step<3)renderStoryChoices();else chats[active.id].push({who:'bot',text:'Fin de ce premier chapitre. Tu peux continuer librement la discussion pour inventer la suite.'});save()}
-function saveProfile(){profile.nickname=document.getElementById('nickname').value.trim();save();alert('Profil enregistré sur cet appareil.')}
-function exportData(){const data={custom,favorites,chats,profile};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='luna-stories-data.json';a.click();URL.revokeObjectURL(url)}
-function resetData(){if(!confirm('Supprimer les personnages créés, favoris et discussions de ce navigateur ?'))return;['luna_custom','luna_favorites','luna_chats','luna_profile'].forEach(k=>localStorage.removeItem(k));custom=[];favorites=[];chats={};profile={nickname:''};renderFeed();renderLibrary();document.getElementById('nickname').value=''}
-renderStories();renderFeed();
-</script></body></html>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#discover" aria-label="Luna Stories, accueil">
+        <span class="brand-mark">✦</span><span class="brand-copy"><strong>Luna Stories</strong><small>IMAGINE · EXPLORE · RACONTE</small></span>
+      </a>
+      <div class="sidebar-label">ESPACE CRÉATIF</div>
+      <nav class="side-nav" aria-label="Navigation principale">
+        <button class="nav-item active" data-page="discover"><span class="nav-icon">✧</span><span>Découvrir</span></button>
+        <button class="nav-item" data-page="library"><span class="nav-icon">▤</span><span>Bibliothèque</span><span class="nav-count" id="libraryCount">0</span></button>
+        <button class="nav-item" data-page="stories"><span class="nav-icon">✺</span><span>Histoires</span></button>
+        <button class="nav-item" data-page="profile"><span class="nav-icon">◉</span><span>Mon espace</span></button>
+      </nav>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-label">RACCOURCIS</div>
+      <button class="shortcut" data-action="show-favorites"><span>♡</span> Mes favoris</button>
+      <button class="shortcut" data-action="new-character"><span>＋</span> Nouveau personnage</button>
+      <div class="sidebar-spacer"></div>
+      <div class="sidebar-note"><span class="note-star">✦</span><strong>Ton imagination, tes règles.</strong><p>Crée un personnage et invente la suite de son histoire.</p><button data-action="new-character">Créer mon premier personnage <span>→</span></button></div>
+      <div class="sidebar-footer"><span class="status-dot"></span> Espace local · données privées</div>
+    </aside>
+
+    <div class="main-shell">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-button mobile-menu" id="menuToggle" aria-label="Ouvrir le menu">☰</button>
+          <div class="breadcrumb"><span>LUNA STORIES</span><i>/</i><strong id="breadcrumbCurrent">Découvrir</strong></div>
+        </div>
+        <div class="topbar-actions">
+          <button class="icon-button" id="themeButton" aria-label="Changer le thème" title="Changer le thème">☾</button>
+          <button class="profile-pill" data-page="profile"><span class="profile-avatar" id="topAvatar">N</span><span id="topName">Mon espace</span><span class="chevron">⌄</span></button>
+        </div>
+      </header>
+
+      <main id="mainContent">
+        <section class="page active" id="page-discover" aria-labelledby="welcomeTitle">
+          <div class="hero">
+            <div class="hero-copy">
+              <div class="eyebrow"><span class="eyebrow-line"></span> UN MONDE À INVENTER</div>
+              <h1 id="welcomeTitle">Et si la prochaine<br>histoire commençait<br><em>avec toi ?</em></h1>
+              <p>Rencontre des personnages, explore de nouveaux univers et crée des aventures qui n'appartiennent qu'à toi.</p>
+              <div class="hero-actions"><button class="button-primary" data-action="browse">Explorer les personnages <span>↗</span></button><button class="button-quiet" data-action="new-character">＋ Créer un personnage</button></div>
+              <div class="hero-proof"><span class="proof-stars">✦ ✦ ✦</span><span>Ton espace créatif personnel</span><span class="proof-separator">·</span><span>Sans abonnement</span></div>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+              <div class="art-orbit orbit-a"></div><div class="art-orbit orbit-b"></div><div class="art-moon"><span>✦</span></div>
+              <div class="art-spark spark-a">✧</div><div class="art-spark spark-b">✦</div><div class="art-spark spark-c">·</div>
+              <div class="art-card art-card-one"><span>✧</span><div><b>Un univers</b><small>À découvrir</small></div></div>
+              <div class="art-card art-card-two"><span>☾</span><div><b>Une histoire</b><small>À écrire</small></div></div>
+              <div class="art-caption">Là où ton imagination prend vie.</div>
+            </div>
+          </div>
+
+          <section class="content-section" id="characterBrowser">
+            <div class="section-heading">
+              <div><div class="eyebrow">FAIS UNE RENCONTRE</div><h2>Quel univers t'appelle ?</h2><p>Un personnage, une idée, et le début d'une aventure.</p></div>
+              <button class="text-link" data-page="library">Voir ma bibliothèque <span>→</span></button>
+            </div>
+            <div class="browse-controls">
+              <label class="search-box"><span>⌕</span><input id="characterSearch" type="search" placeholder="Chercher un nom, un univers…" autocomplete="off"><kbd>⌘ K</kbd></label>
+              <div class="feed-tabs" role="group" aria-label="Filtrer les personnages">
+                <button class="feed-tab active" data-feed="recommended">Pour toi</button><button class="feed-tab" data-feed="all">Tous</button><button class="feed-tab" data-feed="favorites">Favoris <span id="favoriteCount">0</span></button><button class="feed-tab" data-feed="mine">Mes créations</button>
+              </div>
+            </div>
+            <div class="category-row" id="categoryFilters" aria-label="Catégories"></div>
+            <div class="results-caption"><span id="resultsTitle">À découvrir</span><span id="resultsCount">0 personnage</span></div>
+            <div class="character-grid" id="characterGrid"></div>
+          </section>
+
+          <section class="featured-banner">
+            <div class="featured-icon">✧</div><div class="featured-copy"><span>TON PROCHAIN PERSONNAGE</span><h3>Il n'existe pas encore ? Invente-le.</h3><p>Imagine son apparence, sa personnalité et son monde. Le reste commence ici.</p></div><button class="button-light" data-action="new-character">Créer mon personnage <span>↗</span></button>
+          </section>
+          <section class="content-section">
+            <div class="section-heading compact"><div><div class="eyebrow">LANCE-TOI</div><h2>Une histoire pour commencer</h2></div><button class="text-link" data-page="stories">Toutes les histoires <span>→</span></button></div>
+            <div class="story-strip" id="homeStories"></div>
+          </section>
+        </section>
+
+        <section class="page" id="page-library">
+          <div class="page-intro"><div class="eyebrow">TON PETIT UNIVERS</div><h1>Ma bibliothèque<span>.</span></h1><p>Tes personnages préférés, tes créations et les conversations que tu veux retrouver.</p></div>
+          <div class="library-toolbar"><label class="search-box"><span>⌕</span><input id="librarySearch" type="search" placeholder="Rechercher dans ma bibliothèque…"></label><button class="button-primary" data-action="new-character">＋ Créer</button></div>
+          <div class="library-tabs"><button class="library-tab active" data-library="all">Tout</button><button class="library-tab" data-library="favorites">Favoris</button><button class="library-tab" data-library="created">Mes créations</button><button class="library-tab" data-library="chats">Discussions</button></div>
+          <div class="character-grid" id="libraryGrid"></div>
+        </section>
+
+        <section class="page" id="page-stories">
+          <div class="page-intro"><div class="eyebrow">À TOI DE CHOISIR</div><h1>Histoires interactives<span>.</span></h1><p>Entre dans un récit, fais des choix et découvre où ils te conduisent.</p></div>
+          <div class="story-feature"><div class="story-feature-symbol">✧</div><div><span>CHAPITRE APRÈS CHAPITRE</span><h2>Ton choix change la suite.</h2><p>Chaque histoire commence par une situation. À toi de décider comment continuer.</p></div></div>
+          <div class="story-grid" id="storyGrid"></div>
+        </section>
+
+        <section class="page" id="page-chat">
+          <div class="chat-page-head"><button class="back-link" data-action="back">← Retour</button><span class="chat-mode-label"><span class="status-dot"></span> CONVERSATION LOCALE</span></div>
+          <div class="chat-layout">
+            <aside class="chat-aside" id="chatAside"></aside>
+            <section class="chat-main">
+              <div class="chat-top"><div class="chat-top-character"><div class="mini-avatar" id="chatMiniAvatar">✦</div><div><strong id="chatCharacterName">Personnage</strong><small id="chatCharacterMeta">Univers</small></div></div><div class="chat-top-actions"><button class="icon-button" data-action="chat-memory" title="Mémoire du personnage">▤</button><button class="icon-button" data-action="clear-chat" title="Effacer la discussion">⌫</button></div></div>
+              <div class="chat-messages" id="chatMessages" aria-live="polite"></div>
+              <div class="typing-indicator" id="typingIndicator" hidden><span></span><span></span><span></span><small>réfléchit…</small></div>
+              <form class="chat-composer" id="chatForm"><textarea id="chatInput" rows="1" maxlength="1500" placeholder="Écris ton message…" aria-label="Ton message"></textarea><div class="composer-bottom"><span>Entrée pour envoyer · Maj + Entrée pour une nouvelle ligne</span><button class="send-button" type="submit" aria-label="Envoyer">➤</button></div></form>
+              <div class="chat-disclaimer">Mode démonstration : les réponses sont locales et pré-écrites. Aucune IA externe n'est connectée.</div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" id="page-profile">
+          <div class="page-intro"><div class="eyebrow">TON ESPACE PERSONNEL</div><h1>Mon espace<span>.</span></h1><p>Quelques informations pour organiser ton univers Luna Stories.</p></div>
+          <div class="profile-layout">
+            <section class="settings-card"><div class="settings-title"><div class="settings-symbol">◉</div><div><h2>Mon profil</h2><p>Ces informations restent dans ce navigateur.</p></div></div><form id="profileForm"><label class="form-label" for="profileName">Nom d'affichage</label><input class="form-input" id="profileName" maxlength="32" placeholder="Comment veux-tu être appelé ?"><label class="form-label" for="profileBio">Quelques mots sur toi</label><textarea class="form-input" id="profileBio" rows="3" maxlength="300" placeholder="Tes univers préférés, tes idées…"></textarea><label class="form-label" for="profileStyle">Style d'histoire que tu préfères</label><select class="form-input" id="profileStyle"><option value="Libre">Libre / varié</option><option>Fantaisie</option><option>Mystère</option><option>Aventure</option><option>Science-fiction</option><option>Tranche de vie</option></select><button class="button-primary" type="submit">Enregistrer mon profil</button></form></section>
+            <section class="settings-card"><div class="settings-title"><div class="settings-symbol">✧</div><div><h2>Mes données</h2><p>Tu gardes le contrôle de tes créations.</p></div></div><div class="data-row"><div><b>Exporter ma bibliothèque</b><small>Télécharge une sauvegarde JSON.</small></div><button class="button-outline" data-action="export">Exporter</button></div><div class="data-row"><div><b>Importer une sauvegarde</b><small>Restaure des données exportées depuis Luna Stories.</small></div><button class="button-outline" data-action="import">Importer</button></div><div class="data-row"><div><b>Effacer les données locales</b><small>Supprime créations, favoris et conversations sur cet appareil.</small></div><button class="button-danger" data-action="reset">Effacer</button></div><input id="importFile" type="file" accept="application/json,.json" hidden></section>
+          </div>
+          <div class="privacy-note"><span>♧</span><div><b>Une note sur la confidentialité</b><p>Cette version sauvegarde les données dans le stockage local de ton navigateur. Il n'y a pas encore de comptes en ligne, de synchronisation entre appareils, ni de galerie publique partagée.</p></div></div>
+        </section>
+      </main>
+      <footer class="main-footer"><span>✦ LUNA STORIES</span><span>Fait pour imaginer, inventer et raconter.</span><span>Version web 1.1</span></footer>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="characterModal" aria-hidden="true">
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header"><div><div class="eyebrow">DONNE VIE À TON IDÉE</div><h2 id="modalTitle">Créer un personnage</h2></div><button class="modal-close" data-action="close-modal" aria-label="Fermer">×</button></div>
+      <form id="characterForm">
+        <input type="hidden" id="characterId">
+        <div class="avatar-editor"><div class="avatar-preview" id="avatarPreview">🌙</div><div><b>Son apparence</b><p>Choisis un emoji ou importe une image.</p><div class="avatar-actions"><input id="characterEmoji" maxlength="8" value="🌙" aria-label="Emoji du personnage"><label class="upload-button" for="characterImage">＋ Ajouter une image</label><input id="characterImage" type="file" accept="image/png,image/jpeg,image/webp" hidden></div></div></div>
+        <div class="form-grid"><div class="form-field full"><label for="characterName">Nom du personnage *</label><input id="characterName" class="form-input" required maxlength="40" placeholder="Ex. : Nova"></div><div class="form-field"><label for="characterCategory">Univers</label><select id="characterCategory" class="form-input"><option>Fantaisie</option><option>Amitié</option><option>Mystère</option><option>Aventure</option><option>Science-fiction</option><option>Quotidien</option></select></div><div class="form-field"><label for="characterVisibility">Visibilité</label><select id="characterVisibility" class="form-input"><option value="private">Personnel · privé sur cet appareil</option></select></div><div class="form-field full"><label for="characterDescription">Description *</label><textarea id="characterDescription" class="form-input" required maxlength="320" rows="3" placeholder="Son caractère, son univers, ce qui le rend unique…"></textarea></div><div class="form-field full"><label for="characterGreeting">Première phrase</label><textarea id="characterGreeting" class="form-input" maxlength="320" rows="2" placeholder="Comment commence votre rencontre ?"></textarea></div><div class="form-field full"><label for="characterMemory">Notes / souvenirs à garder</label><textarea id="characterMemory" class="form-input" maxlength="500" rows="2" placeholder="Des détails utiles à retrouver plus tard…"></textarea></div></div>
+        <div class="modal-actions"><button class="button-quiet" type="button" data-action="close-modal">Annuler</button><button class="button-primary" type="submit">Enregistrer le personnage <span>→</span></button></div>
+      </form>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="memoryModal" aria-hidden="true"><section class="modal-card small-modal" role="dialog" aria-modal="true" aria-labelledby="memoryTitle"><div class="modal-header"><div><div class="eyebrow">NOTES PERSONNELLES</div><h2 id="memoryTitle">Mémoire du personnage</h2></div><button class="modal-close" data-action="close-memory">×</button></div><p class="modal-help">Garde ici les informations importantes à retrouver avec ce personnage. Dans cette version, ces notes sont enregistrées localement et ne sont pas injectées dans un modèle d'IA.</p><textarea id="memoryText" class="form-input" rows="6" maxlength="1000"></textarea><div class="modal-actions"><button class="button-quiet" data-action="close-memory">Annuler</button><button class="button-primary" data-action="save-memory">Enregistrer</button></div></section></div>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+  <script src="./app.js" defer></script>
+</body>
+</html>
