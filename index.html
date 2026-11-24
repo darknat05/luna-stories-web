@@ -18,20 +18,21 @@
       <a class="brand" href="#discover" aria-label="Luna Stories, accueil">
         <span class="brand-mark">✦</span><span class="brand-copy"><strong>Luna Stories</strong><small>IMAGINE · EXPLORE · RACONTE</small></span>
       </a>
-      <div class="sidebar-label">ESPACE CRÉATIF</div>
+      <div class="sidebar-label">EXPLORER</div>
       <nav class="side-nav" aria-label="Navigation principale">
-        <button class="nav-item active" data-page="discover"><span class="nav-icon">✧</span><span>Découvrir</span></button>
+        <button class="nav-item active" data-page="discover"><span class="nav-icon">⌕</span><span>Découvrir</span></button>
+        <button class="nav-item" data-action="new-character"><span class="nav-icon">＋</span><span>Créer un personnage</span></button>
         <button class="nav-item" data-page="library"><span class="nav-icon">▤</span><span>Bibliothèque</span><span class="nav-count" id="libraryCount">0</span></button>
-        <button class="nav-item" data-page="stories"><span class="nav-icon">✺</span><span>Histoires</span></button>
+        <button class="nav-item" data-page="stories"><span class="nav-icon">✧</span><span>Histoires</span></button>
         <button class="nav-item" data-page="profile"><span class="nav-icon">◉</span><span>Mon espace</span></button>
       </nav>
       <div class="sidebar-divider"></div>
       <div class="sidebar-label">RACCOURCIS</div>
-      <button class="shortcut" data-action="show-favorites"><span>♡</span> Mes favoris</button>
-      <button class="shortcut" data-action="new-character"><span>＋</span> Nouveau personnage</button>
+      <button class="shortcut" data-action="show-favorites"><span>♡</span> Mes favoris <span class="shortcut-count" id="favoriteCountSide">0</span></button>
+      <button class="shortcut" data-page="library"><span>▤</span> Mes discussions</button>
       <div class="sidebar-spacer"></div>
-      <div class="sidebar-note"><span class="note-star">✦</span><strong>Ton imagination, tes règles.</strong><p>Crée un personnage et invente la suite de son histoire.</p><button data-action="new-character">Créer mon premier personnage <span>→</span></button></div>
-      <div class="sidebar-footer"><span class="status-dot"></span> Espace local · données privées</div>
+      <div class="sidebar-note"><span class="note-star">✦</span><strong>Un personnage en tête ?</strong><p>Donne-lui un nom, une image et une personnalité.</p><button data-action="new-character">Créer maintenant <span>→</span></button></div>
+      <div class="sidebar-footer"><span class="status-dot"></span> Luna Stories · espace personnel</div>
     </aside>
 
     <div class="main-shell">
@@ -40,7 +41,11 @@
           <button class="icon-button mobile-menu" id="menuToggle" aria-label="Ouvrir le menu">☰</button>
           <div class="breadcrumb"><span>LUNA STORIES</span><i>/</i><strong id="breadcrumbCurrent">Découvrir</strong></div>
         </div>
+        <label class="global-search" aria-label="Rechercher un personnage">
+          <span>⌕</span><input id="characterSearch" type="search" placeholder="Rechercher un personnage…" autocomplete="off"><kbd>Ctrl K</kbd>
+        </label>
         <div class="topbar-actions">
+          <button class="top-create" data-action="new-character"><span>＋</span> Créer</button>
           <button class="icon-button" id="themeButton" aria-label="Changer le thème" title="Changer le thème">☾</button>
           <button class="profile-pill" data-page="profile"><span class="profile-avatar" id="topAvatar">N</span><span id="topName">Mon espace</span><span class="chevron">⌄</span></button>
         </div>
@@ -48,36 +53,46 @@
 
       <main id="mainContent">
         <section class="page active" id="page-discover" aria-labelledby="welcomeTitle">
-          <div class="hero">
-            <div class="hero-copy">
-              <div class="eyebrow"><span class="eyebrow-line"></span> UN MONDE À INVENTER</div>
-              <h1 id="welcomeTitle">Et si la prochaine<br>histoire commençait<br><em>avec toi ?</em></h1>
-              <p>Rencontre des personnages, explore de nouveaux univers et crée des aventures qui n'appartiennent qu'à toi.</p>
-              <div class="hero-actions"><button class="button-primary" data-action="browse">Explorer les personnages <span>↗</span></button><button class="button-quiet" data-action="new-character">＋ Créer un personnage</button></div>
-              <div class="hero-proof"><span class="proof-stars">✦ ✦ ✦</span><span>Ton espace créatif personnel</span><span class="proof-separator">·</span><span>Sans abonnement</span></div>
+          <section class="discovery-banner">
+            <div class="discovery-banner-copy">
+              <div class="eyebrow"><span class="eyebrow-line"></span> DÉCOUVRE TON PROCHAIN UNIVERS</div>
+              <h1 id="welcomeTitle">Des personnages à rencontrer. <em>Des histoires à inventer.</em></h1>
+              <p>Choisis un personnage, entre dans son univers et commence une conversation. Ou crée le tien de A à Z.</p>
+              <div class="hero-actions">
+                <button class="button-primary" data-action="browse">Explorer les personnages <span>↗</span></button>
+                <button class="button-quiet" data-action="new-character">＋ Créer un personnage</button>
+              </div>
+              <div class="banner-meta"><span>✦ Des univers variés</span><span>·</span><span>♡ Tes favoris à retrouver</span><span>·</span><span>✧ Tes histoires à toi</span></div>
             </div>
-            <div class="hero-art" aria-hidden="true">
-              <div class="art-orbit orbit-a"></div><div class="art-orbit orbit-b"></div><div class="art-moon"><span>✦</span></div>
-              <div class="art-spark spark-a">✧</div><div class="art-spark spark-b">✦</div><div class="art-spark spark-c">·</div>
-              <div class="art-card art-card-one"><span>✧</span><div><b>Un univers</b><small>À découvrir</small></div></div>
-              <div class="art-card art-card-two"><span>☾</span><div><b>Une histoire</b><small>À écrire</small></div></div>
-              <div class="art-caption">Là où ton imagination prend vie.</div>
+            <div class="discovery-showcase" aria-label="Personnages à découvrir">
+              <button class="showcase-character showcase-one" data-action="open-chat" data-id="mira" aria-label="Discuter avec Mira">
+                <span class="showcase-art">🧝</span><span class="showcase-label"><b>Mira</b><small>Fantaisie</small></span>
+              </button>
+              <button class="showcase-character showcase-two" data-action="open-chat" data-id="lyra" aria-label="Discuter avec Lyra">
+                <span class="showcase-art">🤖</span><span class="showcase-label"><b>Lyra</b><small>Science-fiction</small></span>
+              </button>
+              <button class="showcase-character showcase-three" data-action="open-chat" data-id="eliot" aria-label="Discuter avec Eliot">
+                <span class="showcase-art">🕵️</span><span class="showcase-label"><b>Eliot</b><small>Mystère</small></span>
+              </button>
+              <span class="showcase-orbit orbit-one"></span><span class="showcase-orbit orbit-two"></span>
             </div>
-          </div>
+          </section>
 
           <section class="content-section" id="characterBrowser">
             <div class="section-heading">
-              <div><div class="eyebrow">FAIS UNE RENCONTRE</div><h2>Quel univers t'appelle ?</h2><p>Un personnage, une idée, et le début d'une aventure.</p></div>
-              <button class="text-link" data-page="library">Voir ma bibliothèque <span>→</span></button>
+              <div><div class="eyebrow">SÉLECTION PERSONNALISÉE</div><h2>Personnages à découvrir</h2><p>Explore les profils et trouve celui avec qui commencer.</p></div>
+              <button class="text-link" data-page="library">Ma bibliothèque <span>→</span></button>
             </div>
             <div class="browse-controls">
-              <label class="search-box"><span>⌕</span><input id="characterSearch" type="search" placeholder="Chercher un nom, un univers…" autocomplete="off"><kbd>⌘ K</kbd></label>
               <div class="feed-tabs" role="group" aria-label="Filtrer les personnages">
-                <button class="feed-tab active" data-feed="recommended">Pour toi</button><button class="feed-tab" data-feed="all">Tous</button><button class="feed-tab" data-feed="favorites">Favoris <span id="favoriteCount">0</span></button><button class="feed-tab" data-feed="mine">Mes créations</button>
+                <button class="feed-tab active" data-feed="recommended">✦ Pour toi</button>
+                <button class="feed-tab" data-feed="all">Tous</button>
+                <button class="feed-tab" data-feed="favorites">♡ Favoris <span id="favoriteCount">0</span></button>
+                <button class="feed-tab" data-feed="mine">Mes créations</button>
               </div>
             </div>
             <div class="category-row" id="categoryFilters" aria-label="Catégories"></div>
-            <div class="results-caption"><span id="resultsTitle">À découvrir</span><span id="resultsCount">0 personnage</span></div>
+            <div class="results-caption"><span id="resultsTitle">Pour toi</span><span id="resultsCount">0 personnage</span></div>
             <div class="character-grid" id="characterGrid"></div>
           </section>
 
@@ -85,7 +100,7 @@
             <div class="featured-icon">✧</div><div class="featured-copy"><span>TON PROCHAIN PERSONNAGE</span><h3>Il n'existe pas encore ? Invente-le.</h3><p>Imagine son apparence, sa personnalité et son monde. Le reste commence ici.</p></div><button class="button-light" data-action="new-character">Créer mon personnage <span>↗</span></button>
           </section>
           <section class="content-section">
-            <div class="section-heading compact"><div><div class="eyebrow">LANCE-TOI</div><h2>Une histoire pour commencer</h2></div><button class="text-link" data-page="stories">Toutes les histoires <span>→</span></button></div>
+            <div class="section-heading compact"><div><div class="eyebrow">POUR CHANGER D'UNIVERS</div><h2>Histoires interactives</h2><p>Choisis une aventure et décide de la suite.</p></div><button class="text-link" data-page="stories">Toutes les histoires <span>→</span></button></div>
             <div class="story-strip" id="homeStories"></div>
           </section>
         </section>
