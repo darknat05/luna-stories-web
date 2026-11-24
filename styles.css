@@ -790,3 +790,14 @@ body.light .chat-scene-card p,body.light .chat-scenes-heading p{color:#766b80}
 @media(prefers-reduced-motion:reduce){
  .chat-scene-card,.chat-tool-button,.chat-suggestion,.message-tools{transition:none!important}
 }
+
+/* Details panel toggle and message tools refinement */
+.chat-layout.details-hidden{grid-template-columns:minmax(0,1fr)}
+.chat-layout.details-hidden .chat-aside{display:none!important}
+.chat-layout.details-hidden .chat-main{grid-column:1}
+.message-avatar{position:relative}
+.message-avatar img{position:relative!important;inset:auto!important;width:100%;height:100%;object-fit:cover}
+.message-tools{opacity:.72}
+.message-tools button{min-width:24px;min-height:22px;padding:2px 5px;font-weight:750}
+.message-tools button:hover{background:#b78edc30;border-color:#cba0e555}
+@media(max-width:760px){.message-tools{opacity:.9}}
