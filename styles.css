@@ -484,3 +484,83 @@ body.light .chat-aside p,body.light .character-description,body.light .story-con
  .character-cover{height:230px}
 }
 @media(prefers-reduced-motion:reduce){.showcase-character,.character-card,.story-card-luna{transition:none!important}}
+
+
+/* === LUNA ATMOSPHERE / 3D MOTION / REAL UI FEEDBACK === */
+.route-progress{position:fixed;z-index:1000;left:0;top:0;width:100%;height:3px;pointer-events:none;opacity:0;overflow:hidden;transition:opacity .18s ease}
+.route-progress span{display:block;width:100%;height:100%;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,#9c72f0,#e3b1ff,#75e3db);box-shadow:0 0 14px #b88aff99}
+.route-progress.active{opacity:1}
+.route-progress.active span{animation:lunaProgress .42s cubic-bezier(.22,.78,.2,1) forwards}
+.route-progress.done{opacity:0}
+@keyframes lunaProgress{0%{transform:scaleX(.02)}65%{transform:scaleX(.78)}100%{transform:scaleX(1)}}
+@keyframes lunaSpin{to{transform:translateY(-50%) rotate(360deg)}}
+@keyframes lunaFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes lunaGlow{0%,100%{filter:drop-shadow(0 0 5px #bd9aff33)}50%{filter:drop-shadow(0 0 18px #bd9aff88)}}
+@keyframes lunaShimmer{0%{background-position:180% 0}100%{background-position:-180% 0}}
+@keyframes lunaCardIn{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+.is-busy{position:relative!important;pointer-events:none!important;opacity:.9!important;padding-right:34px!important}
+.is-busy:after{content:"";position:absolute;right:11px;top:50%;width:13px;height:13px;border:2px solid #ffffff55;border-top-color:#fff;border-radius:50%;transform:translateY(-50%);animation:lunaSpin .7s linear infinite}
+.nav-item.is-busy:after,.shortcut.is-busy:after{right:10px}
+.discovery-banner{
+ background:
+  linear-gradient(90deg,#30203f 0%,#251b34ed 34%,#20192d99 62%,#17131c52 100%),
+  url('./assets/luna-world.webp') 62% 43%/cover no-repeat,
+  radial-gradient(ellipse at 76% 22%,#56377a 0,transparent 37%),
+  linear-gradient(115deg,#30203f,#211c31 48%,#172032);
+ border-color:#be96f14a;box-shadow:0 22px 55px #0005,0 0 35px #9b6dd01b;
+}
+.discovery-banner:after{z-index:1;mix-blend-mode:screen;opacity:.62}
+.discovery-banner-copy{z-index:3}
+.discovery-showcase{z-index:2;perspective:950px}
+.showcase-character{transform-style:preserve-3d;backface-visibility:hidden}
+.showcase-character .showcase-art{transition:filter .22s,transform .22s}
+.showcase-character:hover .showcase-art{transform:translateZ(10px) scale(1.04);filter:drop-shadow(0 0 13px #d7b5ff77)}
+.showcase-one,.showcase-three{animation:lunaFloat 5s ease-in-out infinite}
+.showcase-two{animation:lunaFloat 5.8s ease-in-out .7s infinite}
+.showcase-one:hover,.showcase-two:hover,.showcase-three:hover{animation-play-state:paused}
+.discovery-banner .eyebrow:before{content:"";width:5px;height:5px;border-radius:50%;background:#eed6ff;box-shadow:0 0 12px #e4bfff;animation:lunaGlow 2.1s ease-in-out infinite}
+.brand-mark{position:relative;isolation:isolate}
+.brand-mark:after{content:"";position:absolute;inset:-5px;border:1px solid #d2b3ff55;border-radius:15px;z-index:-1;animation:lunaGlow 3.2s ease-in-out infinite}
+.character-card.poly-card{perspective:900px;transform-style:preserve-3d;will-change:transform}
+.character-card.poly-card:hover{transform:translateY(-5px) rotateX(1.2deg);box-shadow:0 20px 42px #0007,0 0 22px #ae87e51c}
+.character-cover{isolation:isolate}
+.character-cover:after{box-shadow:0 0 0 25px #ffffff07,0 0 0 52px #ffffff04,0 0 50px #c9a8f522}
+.poster-halo{animation:lunaGlow 5s ease-in-out infinite}
+.poster-spark{animation:lunaFloat 4s ease-in-out infinite}
+.character-poster-art{transform:translateZ(12px);transition:transform .28s ease,filter .28s ease}
+.character-card:hover .character-poster-art{transform:translateZ(18px) scale(1.035);filter:drop-shadow(0 16px 22px #000b)}
+.character-cover .character-tag{backdrop-filter:blur(12px);box-shadow:0 5px 18px #0003}
+.favorite-button{transition:transform .16s,background .16s,color .16s}
+.favorite-button:hover{transform:scale(1.12)}
+.favorite-button.active{animation:favoritePop .24s ease}
+@keyframes favoritePop{0%{transform:scale(.8)}65%{transform:scale(1.18)}100%{transform:scale(1)}}
+.category-chip,.feed-tab,.library-tab{transition:transform .16s,border-color .16s,background .16s,color .16s}
+.category-chip:active,.feed-tab:active,.library-tab:active{transform:scale(.96)}
+.story-card-luna{perspective:900px;transform-style:preserve-3d}
+.story-card-luna:hover{transform:translateY(-4px) rotateX(1deg)}
+.story-art-emoji{animation:lunaFloat 5s ease-in-out infinite;filter:drop-shadow(0 14px 22px #0009)}
+.story-art-glint{animation:lunaGlow 3s ease-in-out infinite}
+.library-stat{transition:transform .18s,border-color .18s}
+.library-stat:hover{transform:translateY(-2px);border-color:#c39cff55}
+.settings-card,.chat-main,.chat-aside{box-shadow:0 12px 34px #0002}
+.icon-button:hover,.card-more:hover,.text-link:hover{transform:translateY(-1px)}
+.chat-top-character .mini-avatar{box-shadow:0 0 0 3px #c49bff1a,0 0 18px #b38be333}
+.chat-context-dot{animation:contextPulse 2.2s ease-in-out infinite}
+@keyframes contextPulse{50%{box-shadow:0 0 0 5px #80d3ad13,0 0 12px #80d3ad}}
+.chat-composer:focus-within{border-color:#c39cff88;box-shadow:0 0 0 3px #b58aee17,0 8px 25px #0002}
+.modal-card{animation:modalIn .2s cubic-bezier(.2,.8,.2,1)}
+.toast{animation:toastIn .2s ease,toastOut .2s ease 3.2s forwards}
+@keyframes toastOut{to{opacity:0;transform:translateY(7px)}}
+@media(max-width:680px){
+ .discovery-banner{background:
+  linear-gradient(180deg,#2a203bdb 0%,#201a2ce8 59%,#191521ef 100%),
+  url('./assets/luna-world.webp') center/cover no-repeat,
+  #211c31}
+ .discovery-showcase{filter:drop-shadow(0 8px 20px #0006)}
+ .character-card.poly-card:hover,.story-card-luna:hover{transform:translateY(-2px)}
+}
+@media(prefers-reduced-motion:reduce){
+ .route-progress span,.poster-halo,.poster-spark,.showcase-one,.showcase-two,.showcase-three,.brand-mark:after,.story-art-emoji,.story-art-glint,.chat-context-dot{animation:none!important}
+ .is-busy:after{animation:none!important}
+ .character-card.poly-card,.story-card-luna,.showcase-character,.character-poster-art{transition:none!important}
+}
