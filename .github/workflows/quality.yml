@@ -1,0 +1,32 @@
+name: Luna Stories quality checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Check JavaScript syntax
+        run: |
+          node --check app.js
+          node --check sw.js
+      - name: Check required site files and landmarks
+        run: |
+          test -s index.html
+          test -s styles.css
+          test -s app.js
+          test -s manifest.webmanifest
+          test -s sw.js
+          grep -q 'id="characterGrid"' index.html
+          grep -q 'id="page-chat"' index.html
+          grep -q 'id="page-profile"' index.html
+          grep -q 'id="characterModal"' index.html
+          grep -q 'serviceWorker.register' app.js
+          echo "Required files and UI landmarks are present."
