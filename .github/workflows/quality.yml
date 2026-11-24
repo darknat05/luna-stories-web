@@ -29,4 +29,6 @@ jobs:
           grep -q 'id="page-profile"' index.html
           grep -q 'id="characterModal"' index.html
           grep -q 'serviceWorker.register' app.js
+          grep -q 'function deleteCharacter' app.js
+          grep -q 'toastAction(\\x27Personnage supprimé.\\x27' app.js
           echo "Required files and UI landmarks are present."
