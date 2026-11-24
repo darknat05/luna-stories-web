@@ -564,3 +564,37 @@ body.light .chat-aside p,body.light .character-description,body.light .story-con
  .is-busy:after{animation:none!important}
  .character-card.poly-card,.story-card-luna,.showcase-character,.character-poster-art{transition:none!important}
 }
+
+/* Discovery refresh — original Luna Stories interpretation */
+.discovery-banner{min-height:218px;grid-template-columns:minmax(0,1.18fr) minmax(280px,.82fr);padding:25px 30px;border-radius:20px;background:radial-gradient(ellipse at 78% 18%,#70416f 0,transparent 38%),linear-gradient(115deg,#251b31 0%,#211b2d 48%,#171d30 100%)}
+.discovery-banner h1{font-size:clamp(30px,3.4vw,46px);max-width:560px}
+.discovery-banner-copy>p{max-width:450px}
+.discovery-showcase{height:185px}
+.showcase-character{width:116px;height:164px;border-radius:13px}
+.category-row{gap:8px;padding:5px 1px 11px;scrollbar-width:thin}
+.category-chip{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;background:#201b2a;border-color:#ffffff12;color:#c9bfd0;font-size:10px;font-weight:650;transition:transform .18s,background .18s,border-color .18s}
+.category-chip:hover{transform:translateY(-2px);background:#35253d;border-color:#b57bba66}
+.category-chip.active{background:linear-gradient(120deg,#78476f,#503b68);border-color:#d39acb66;color:#fff;box-shadow:0 5px 18px #8d4b812b}
+.category-icon{font-size:13px}
+.character-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.character-card{background:#191724;border-color:#ffffff14;border-radius:14px}
+.character-card:hover{transform:translateY(-5px) scale(1.008);border-color:#c58cc466;box-shadow:0 18px 36px #0005}
+.character-cover{height:220px;background:radial-gradient(circle at 50% 36%,var(--cover2),var(--cover1))}
+.character-cover:before{width:230px;height:230px;border-color:#ffffff25}
+.character-cover:after{width:165px;height:165px;border-color:#ffffff18}
+.character-poster-art{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;z-index:1}
+.character-emoji.character-poster-art{font-size:76px;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#ffffff27,transparent 55%);filter:drop-shadow(0 12px 18px #0008)}
+.character-tag{font-size:9px;letter-spacing:.2px;background:#17121dcc;border-color:#ffffff30;padding:5px 9px}
+.favorite-button{width:32px;height:32px;font-size:17px;backdrop-filter:blur(10px);transition:transform .18s,background .18s}
+.favorite-button:hover{transform:scale(1.1);background:#4b2945}
+.character-details{padding:12px 13px 13px}
+.character-name-row h3{font-size:14px}
+.character-description{font-size:10px;min-height:45px}
+.character-tag-list{display:flex;gap:5px;flex-wrap:wrap;min-height:21px;margin:0 0 9px}
+.character-tag-list span{font-size:8px;color:#e8c5df;background:#9a5c841e;border:1px solid #c58bb52b;border-radius:99px;padding:3px 7px}
+.card-action{border-radius:8px;background:linear-gradient(120deg,#9a5c88,#674d85);color:#fff;padding:7px 10px;font-weight:750}
+.card-action:hover{filter:brightness(1.15)}
+.results-caption{margin-top:8px}
+@media(max-width:1100px){.character-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.discovery-banner{grid-template-columns:1fr;min-height:auto;padding:23px}.discovery-showcase{height:155px;margin-top:8px}.character-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.character-cover{height:190px}}
+@media(max-width:390px){.character-cover{height:165px}.character-details{padding:10px}.character-description{font-size:9px}}
