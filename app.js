@@ -1,7 +1,8 @@
 (function(){
 'use strict';
-const STORAGE={characters:'luna_custom_v2',favorites:'luna_favorites_v2',chats:'luna_chats_v2',profile:'luna_profile_v2',memory:'luna_memory_v2',theme:'luna_theme_v2',story:'luna_story_progress_v2'};
+const STORAGE={state:'luna_app_state_v3',characters:'luna_custom_v2',favorites:'luna_favorites_v2',chats:'luna_chats_v2',profile:'luna_profile_v2',memory:'luna_memory_v2',theme:'luna_theme_v2',story:'luna_story_progress_v2'};
 const COLORS=[['#574381','#283e69'],['#28616a','#263a58'],['#765078','#3b426d'],['#416b58','#263c4d']];
+const ALLOWED_CATEGORIES=new Set(['Fantaisie','Amitié','Mystère','Aventure','Science-fiction','Quotidien']);
 const starter=[
 {id:'mira',name:'Mira',category:'Fantaisie',emoji:'🧝',description:'Une apprentie magicienne curieuse qui explore les secrets d’une forêt ancienne.',greeting:'Bonjour voyageur ! J’ai trouvé une carte étrange. Tu veux m’aider à comprendre où elle mène ?',memory:'',colors:COLORS[0]},
 {id:'eliot',name:'Eliot',category:'Mystère',emoji:'🕵️',description:'Un détective observateur qui adore résoudre des énigmes et aider les autres.',greeting:'J’attendais justement un coup de main. Un objet a disparu du musée cette nuit…',memory:'',colors:['#69533d','#2d3854']},
