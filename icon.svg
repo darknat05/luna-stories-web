@@ -1,4 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a698ff"/><stop offset="1" stop-color="#75dfd2"/></linearGradient><radialGradient id="m" cx=".32" cy=".27" r=".8"><stop stop-color="#f4edff"/><stop offset=".45" stop-color="#c0b3ff"/><stop offset="1" stop-color="#7166b9"/></radialGradient></defs>
-<rect width="512" height="512" rx="128" fill="#10182b"/><circle cx="256" cy="256" r="166" fill="url(#g)" opacity=".15"/><circle cx="242" cy="252" r="122" fill="url(#m)"/><path d="M323 137a132 132 0 1 0 67 221 116 116 0 0 1-67-221Z" fill="#10182b"/><path d="m365 103 15 43 43 15-43 15-15 43-15-43-43-15 43-15Z" fill="#fff"/><circle cx="137" cy="149" r="8" fill="#75dfd2"/><circle cx="385" cy="340" r="7" fill="#a698ff"/>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5b465f"/><stop offset=".58" stop-color="#3b3548"/><stop offset="1" stop-color="#526d63"/></linearGradient>
+ <linearGradient id="moon" x1=".2" y1="0" x2=".8" y2="1"><stop stop-color="#f2d9eb"/><stop offset=".5" stop-color="#c6a9cb"/><stop offset="1" stop-color="#9b819f"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#f3d8ed" stop-opacity=".45"/><stop offset="1" stop-color="#f3d8ed" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="512" height="512" rx="120" fill="url(#bg)"/>
+<circle cx="250" cy="250" r="205" fill="url(#glow)"/>
+<path d="M307 90c-91 0-165 74-165 165s74 165 165 165c46 0 87-19 117-50-18 8-38 12-59 12-86 0-156-70-156-156 0-56 30-106 75-134-9-1-18-2-27-2Z" fill="url(#moon)"/>
+<path d="m356 84 18 52 52 18-52 18-18 52-18-52-52-18 52-18Z" fill="#fff5f7"/>
+<path d="m124 280 10 28 28 10-28 10-10 28-10-28-28-10 28-10Z" fill="#d7c0dc"/>
+<circle cx="390" cy="338" r="9" fill="#d9c29a"/><circle cx="122" cy="144" r="6" fill="#f3e2ed"/>
 </svg>
