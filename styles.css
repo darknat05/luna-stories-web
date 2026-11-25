@@ -2240,3 +2240,13 @@ body:before{display:none}
  .character-card,.character-poster-art,.nav-item{transition:none!important}
  .character-card:hover,.nav-item:hover{transform:none}
 }
+
+/* Synthetic character portraits: face-first crop and graceful fallback */
+.portrait-notice{display:inline-block;margin-top:3px;color:#92939b;font-size:8px;letter-spacing:.25px}
+.character-poster-art{object-fit:cover;object-position:center 25%}
+.character-cover.media-error .character-poster-art{display:none}
+.character-cover.media-error .character-fallback-avatar{display:grid}
+.character-fallback-avatar{position:absolute;inset:0;display:none;place-items:center;font-size:44px;background:radial-gradient(circle at 50% 35%,#55506d,#24252a 74%)}
+.spotlight-photo img{object-position:center 25%}
+.story-mini-art{display:grid;place-items:center;background:linear-gradient(145deg,#45405a,#252a32)}
+.story-mini-art>span{position:relative;z-index:1;font-size:23px}
