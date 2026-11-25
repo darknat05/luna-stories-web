@@ -225,7 +225,33 @@ function renderCategories(){
   const icons={'Tout':'✦','Anime':'🌸','Fantaisie':'🪄','Romance':'💕','Amitié':'☀️','Drama':'💔','Crush':'💘','Lover':'❤️','Best friend':'🫶','WLW':'🌷','BL':'💙','Enemies':'⚡','Secret':'🤫','Mystère':'🔎','Aventure':'🧭','RPG':'🎲','Science-fiction':'🚀','Paranormal':'🌙','Comédie':'🎭','Historique':'🏛️','Quotidien':'☕'};
   $('categoryFilters').innerHTML=categories.map(c=>'<button class="category-chip '+(activeCategory===c?'active':'')+'" data-action="category" data-value="'+esc(c)+'"><span class="category-icon">'+(icons[c]||'✧')+'</span><span>'+esc(c)+'</span></button>').join('');
 }
-function avatarHTML(c,extraClass){const image=safeImage(c.image);return image?'<img class="'+(extraClass||'character-image')+'" src="'+image+'" alt="Illustration de '+esc(c.name)+'">':'<span class="'+(extraClass||'character-emoji')+'">'+esc(c.emoji||'✦')+'</span>'}
+function characterPortraitURL(character){
+ const portraits=[
+  'photo-1534528741775-53994a69daeb',
+  'photo-1500648767791-00dcc994a43e',
+  'photo-1535713875002-d1d0cf377fde',
+  'photo-1524504388940-b1c1722653e1',
+  'photo-1506794778202-cad84cf45f1d',
+  'photo-1544005313-94ddf0286df2',
+  'photo-1508214751196-bcfd4ca60f91',
+  'photo-1507003211169-0a1dd7228f2d',
+  'photo-1531123897727-8f129e1688ce',
+  'photo-1529139574466-a303027c1d8b',
+  'photo-1517841905240-472988babdf9',
+  'photo-1504593811423-6dd665756598',
+  'photo-1527980965255-d3b416303d12',
+  'photo-1534528741775-53994a69daeb',
+  'photo-1534528741775-53994a69daeb',
+  'photo-1524504388940-b1c1722653e1'
+ ];
+ const key=String(character.id||character.name||'luna');
+ const seed=Array.from(key).reduce((sum,ch)=>sum+ch.charCodeAt(0),0);
+ return 'https://images.unsplash.com/'+portraits[seed%portraits.length]+'?auto=format&fit=crop&w=900&h=1200&q=88';
+}
+function avatarHTML(c,extraClass){
+ const image=safeImage(c.image)||characterPortraitURL(c);
+ return '<img class="'+(extraClass||'character-image')+'" src="'+image+'" alt="Portrait de '+esc(c.name)+'" loading="lazy" decoding="async">';
+}
 function characterCoverURL(character){
  const pools={
   'Fantaisie':['photo-1511497584788-876760111969','photo-1519681393784-d120267933ba','photo-1470252649378-9c29740c9fa8'],
@@ -247,7 +273,7 @@ function storyCoverURL(id){
 function characterCard(c){
  const mine=custom.some(x=>x.id===c.id),fav=favorites.includes(c.id);
  const palette=(c.colors||COLORS[0]),hasImage=!!safeImage(c.image);
- const cover=hasImage?'':'<img class="character-cover-photo visual-media" data-visual-image src="'+esc(characterCoverURL(c))+'" alt="" aria-hidden="true" loading="lazy" decoding="async">';
+ const cover='';
  return '<article class="character-card poly-card" data-tilt-card><div class="character-cover '+(hasImage?'has-character-image':'has-scene-photo')+'" data-image-shell style="--cover1:'+esc(palette[0])+';--cover2:'+esc(palette[1])+'"><span class="cover-shimmer"></span>'+cover+'<div class="poster-halo"></div><div class="poster-orbit"></div>'+avatarHTML(c,'character-poster-art')+'<span class="character-tag">'+esc(c.category)+'</span><button class="favorite-button '+(fav?'active':'')+'" data-action="favorite" data-id="'+esc(c.id)+'" aria-label="'+(fav?'Retirer des favoris':'Ajouter aux favoris')+'">'+(fav?'♥':'♡')+'</button><span class="poster-spark">✦</span><span class="poster-bottom-glow"></span></div><div class="character-details"><div class="character-name-row"><h3>'+esc(c.name)+'</h3><span class="character-origin">'+(mine?'✦ CRÉATION':'LUNA PICK')+'</span></div><p class="character-description">'+esc(c.description)+'</p><div class="character-tag-list">'+(c.tags||[]).slice(0,3).map(t=>'<span>'+esc(t)+'</span>').join('')+'</div><div class="character-card-footer"><span class="card-category"><i>✧</i> '+esc(c.category)+'</span><div class="character-actions"><button class="card-action" data-action="open-chat" data-id="'+esc(c.id)+'">Discuter <span>↗</span></button>'+(mine?'<button class="card-more" data-action="edit-character" data-id="'+esc(c.id)+'" aria-label="Modifier '+esc(c.name)+'">✎</button><button class="card-more" data-action="delete-character" data-id="'+esc(c.id)+'" aria-label="Supprimer '+esc(c.name)+'">×</button>':'')+'</div></div></div></article>'
 }
 function renderCharacters(){
