@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101426">
+  <meta name="theme-color" content="#f1ece5">
   <meta name="description" content="Luna Stories — découvre des personnages, crée tes propres univers et imagine des histoires interactives.">
   <meta name="color-scheme" content="dark">
   <link rel="manifest" href="./manifest.webmanifest">
@@ -12,6 +12,11 @@
   <title>Luna Stories — Des histoires à vivre</title>
 </head>
 <body>
+  <div class="app-loader" id="appLoader" aria-live="polite" aria-label="Chargement de Luna Stories">
+    <div class="app-loader-orbit"><span class="loader-moon">✦</span><i></i><b></b></div>
+    <strong>Luna Stories</strong><small>TON UNIVERS PREND FORME</small>
+    <div class="app-loader-track"><span></span></div>
+  </div>
   <div class="routeProgress route-progress" id="routeProgress" aria-hidden="true"><span></span></div>
   <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
   <div class="app-shell">
@@ -65,17 +70,20 @@
               </div>
               <div class="banner-meta"><span>✦ Des univers variés</span><span>·</span><span>♡ Tes favoris à retrouver</span><span>·</span><span>✧ Tes histoires à toi</span></div>
             </div>
-            <div class="discovery-showcase" aria-label="Pour toi">
-              <button class="showcase-character showcase-one" data-action="open-chat" data-id="mira" aria-label="Discuter avec Mira">
+            <div class="discovery-showcase" aria-label="Pour toi" data-image-shell>
+              <img class="showcase-background visual-media" data-visual-image data-route-critical src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&amp;fit=crop&amp;w=1400&amp;q=88" alt="" aria-hidden="true" loading="eager" decoding="async">
+              <div class="showcase-glass-orb" aria-hidden="true"><span>✧</span></div>
+              <button class="showcase-character showcase-one" data-tilt-card data-action="open-chat" data-id="mira" aria-label="Discuter avec Mira">
                 <span class="showcase-art">🧝</span><span class="showcase-label"><b>Mira</b><small>Fantaisie</small></span>
               </button>
-              <button class="showcase-character showcase-two" data-action="open-chat" data-id="lyra" aria-label="Discuter avec Lyra">
+              <button class="showcase-character showcase-two" data-tilt-card data-action="open-chat" data-id="lyra" aria-label="Discuter avec Lyra">
                 <span class="showcase-art">🤖</span><span class="showcase-label"><b>Lyra</b><small>Science-fiction</small></span>
               </button>
-              <button class="showcase-character showcase-three" data-action="open-chat" data-id="eliot" aria-label="Discuter avec Eliot">
+              <button class="showcase-character showcase-three" data-tilt-card data-action="open-chat" data-id="eliot" aria-label="Discuter avec Eliot">
                 <span class="showcase-art">🕵️</span><span class="showcase-label"><b>Eliot</b><small>Mystère</small></span>
               </button>
               <span class="showcase-orbit orbit-one"></span><span class="showcase-orbit orbit-two"></span>
+              <span class="showcase-visual-caption">A PLACE FOR EVERY STORY <i>✦</i></span>
             </div>
           </section>
 
@@ -133,7 +141,8 @@
           <div class="page-intro">
             <div class="eyebrow">UN RÉCIT, MILLE POSSIBILITÉS</div><h1>Choisis ton aventure<span>.</span></h1><p>Entre dans un univers, fais tes propres choix et découvre les chemins que ton histoire peut prendre.</p>
           </div>
-          <div class="story-feature">
+          <div class="story-feature" data-image-shell>
+            <img class="story-feature-photo visual-media" data-visual-image data-route-critical src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&amp;fit=crop&amp;w=1200&amp;q=86" alt="" aria-hidden="true" loading="eager" decoding="async">
             <div class="story-feature-symbol">✧</div>
             <div><span>HISTOIRES INTERACTIVES</span><h2>Tu n'es pas seulement lecteur. Tu décides.</h2><p>Chaque choix ouvre une possibilité différente. Reprends une histoire là où tu l'as laissée.</p></div>
             <div class="story-feature-art" aria-hidden="true"><span>✦</span><span>☾</span><span>✧</span></div>
