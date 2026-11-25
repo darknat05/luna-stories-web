@@ -2250,3 +2250,11 @@ body:before{display:none}
 .spotlight-photo img{object-position:center 25%}
 .story-mini-art{display:grid;place-items:center;background:linear-gradient(145deg,#45405a,#252a32)}
 .story-mini-art>span{position:relative;z-index:1;font-size:23px}
+
+/* Real photographer portraits — natural Pinterest-like photo cards */
+.character-poster-art{object-fit:cover;object-position:center 25%;filter:saturate(.96) contrast(1.01);background:#292a2e}
+.character-card:hover .character-poster-art{filter:saturate(1.02) contrast(1.02)}
+.spotlight-photo img{object-fit:cover;object-position:center 25%;filter:saturate(.96) brightness(.98)}
+.character-tag{backdrop-filter:blur(8px)}
+.character-origin{font-size:7px;letter-spacing:.25px}
+.portrait-notice{display:inline-block;margin-top:3px;color:#a6a7ad;font-size:8px;letter-spacing:.15px}
