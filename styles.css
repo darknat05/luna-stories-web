@@ -1568,3 +1568,75 @@ body:not(.light) :is(button,a,input,textarea,select):focus-visible{outline-color
  .section-heading h2{font-size:23px}
 }
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+
+/* LUNA — COMPLETE LIGHT MODE FALLBACK (THEME TOGGLE) */
+body.light{
+ --bg:#d8d0ca;--bg2:#e5ddd7;--panel:#eee6e1;--panel2:#e5dcd7;--panel3:#d9cec9;
+ --border:#bcaeb0;--border-soft:#352b3518;--text:#352b36;--muted:#6e626f;--muted2:#817583;
+ --violet:#77557e;--violet-2:#64466d;--mint:#526d61;--gold:#9b7748;--pink:#a96b83;
+ background:#d8d0ca;color:#352b36
+}
+body.light:before{background:radial-gradient(ellipse at 78% 0%,#c9b8c866,transparent 38%),radial-gradient(ellipse at 0% 78%,#c4b0a444,transparent 34%),linear-gradient(145deg,#e1d8d1,#d4cac4 58%,#ded3cc)}
+body.light .sidebar{background:#e4dcd6f2;border-color:#bcaeb044;box-shadow:8px 0 28px #30263310}
+body.light .brand,body.light .brand-copy strong{color:#3c303c}
+body.light .brand-mark{background:linear-gradient(145deg,#9a78a2,#c3a4c9);color:#fff}
+body.light .brand-copy small,body.light .sidebar-label,body.light .sidebar-footer{color:#796b7b}
+body.light .nav-item{color:#665969}
+body.light .nav-item.active{background:#d0bfd2;border-color:#b19ab6;color:#423346;box-shadow:inset 3px 0 #795b81}
+body.light .nav-item.active .nav-icon,body.light .nav-icon,body.light .shortcut span{color:#795b81}
+body.light .nav-count{background:#d2c5d0;color:#645468}
+body.light .sidebar-note{background:linear-gradient(145deg,#d4c4d5,#c9c9c0);border-color:#b3a2b6}
+body.light .sidebar-note strong{color:#403344}
+body.light .sidebar-note p{color:#695d6c}
+body.light .sidebar-note button{color:#60466a}
+body.light .topbar{background:#dfd6d0ed;border-color:#bcaeb044}
+body.light .breadcrumb,body.light .breadcrumb strong{color:#514451}
+body.light .icon-button,body.light .profile-pill{background:#e8dfda;border-color:#bcaeb0;color:#594a5b}
+body.light .profile-avatar{background:linear-gradient(135deg,#8c6d95,#879a8b);color:#fff}
+body.light .global-search,body.light .search-box{background:#d4cbc6;border-color:#b5a8a5;color:#5e5361}
+body.light .global-search input,body.light .search-box input{color:#352b36}
+body.light .global-search input::placeholder,body.light .search-box input::placeholder{color:#756a78}
+body.light .discovery-banner{background:linear-gradient(115deg,#e4d9d3,#d9cfd0 58%,#cec0cf);border-color:#b9aab0;color:#392e3a;box-shadow:0 18px 45px #34273918}
+body.light .discovery-banner h1,body.light .section-heading h2,body.light .page-intro h1,body.light .featured-copy h3{color:#392e3a}
+body.light .discovery-banner h1 em,body.light .discovery-banner .eyebrow,body.light .eyebrow{color:#76597e}
+body.light .discovery-banner-copy>p,body.light .banner-meta,body.light .section-heading p,body.light .page-intro p{color:#6f626f}
+body.light .discovery-banner .button-primary,body.light .button-primary{background:linear-gradient(130deg,#886991,#715779);color:#fff}
+body.light .discovery-banner .button-quiet,body.light .button-quiet{background:#e9e0db;border-color:#bcaeb0;color:#57495a}
+body.light .feed-tab,body.light .library-tab,body.light .category-chip{background:#e8dfda;border-color:#c2b4b2;color:#665a68}
+body.light .feed-tab.active,body.light .library-tab.active,body.light .category-chip.active{background:#cbbad0;border-color:#9c7da4;color:#433448}
+body.light .results-caption{color:#766a76}
+body.light .results-caption span:first-child{color:#413443}
+body.light .character-card.poly-card,body.light .character-card,body.light .story-card,body.light .story-mini,body.light .settings-card{background:#e5dcd7;border-color:#c0b2b0;box-shadow:0 8px 22px #392b3d12}
+body.light .character-details{background:#e5dcd7}
+body.light .character-name-row h3,body.light .story-content h3,body.light .settings-title h2,body.light .data-row b{color:#392e3a}
+body.light .character-description,body.light .story-mini-copy small,body.light .story-content p,body.light .settings-title p,body.light .data-row small{color:#6e626f}
+body.light .character-origin,body.light .card-category{color:#73577b}
+body.light .card-action{background:#80638a;border-color:#9e80a7;color:#fff}
+body.light .card-more{background:#d7ccd4;border-color:#b9aab8;color:#58485b}
+body.light .featured-banner,body.light .story-feature{background:linear-gradient(110deg,#d0bed2,#c3c5bc);border-color:#b3a0b8;color:#392e3a}
+body.light .featured-copy p,body.light .story-feature p{color:#655a69}
+body.light .featured-icon,body.light .story-feature-symbol,body.light .settings-symbol{background:#bba8c2;color:#49364f}
+body.light .button-light{background:#61496a;color:#fff}
+body.light .form-input{background:#d5cbc7;border-color:#b7a9a8;color:#382e39}
+body.light .form-input::placeholder{color:#796d7b}
+body.light .form-label{color:#544658}
+body.light .privacy-note{background:#c8d0c8;border-color:#9ba99c;color:#48614e}
+body.light .privacy-note b{color:#354b3a}
+body.light .privacy-note p{color:#526756}
+body.light .modal-card{background:#e5dcd7;border-color:#bbaeb0;color:#382e39;box-shadow:0 25px 80px #17101d66}
+body.light .modal-header,body.light .modal-actions{border-color:#c0b2b0}
+body.light .modal-header h2{color:#392e3a}
+body.light .modal-help{color:#675a69}
+body.light .toast{background:#453849;color:#fff;border-color:#80678a}
+body.light .main-footer{border-color:#baadb0;color:#776b78}
+body.light .main-footer span:first-child{color:#614969}
+body.light .chat-aside,body.light .chat-main{background:#211c25;border-color:#514454;color:#f0e9e8}
+body.light .chat-composer{background:#29232f;border-color:#514454}
+body.light .message-bubble{background:#403747;border-color:#65566a;color:#f4edf3}
+body.light .message.mine .message-bubble{background:#624c6c;border-color:#8b7094}
+body.light .mobile-dock{background:#29232ff2;border-color:#5a4a5e}
+body.light .mobile-dock-item{color:#c6b7c5}
+body.light .mobile-dock-item.active{background:#4a3a4f;color:#fff}
+body.light .mobile-dock-item span{background:#ffffff10}
+body.light :is(button,a,input,textarea,select):focus-visible{outline-color:#80638a}
