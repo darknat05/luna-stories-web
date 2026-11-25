@@ -28,6 +28,13 @@ const starter=[
 {id:'alex',name:'Alex',category:'Romance',tags:['BL','Crush','Secret'],emoji:'💙',description:'Un garçon discret de ta classe avec qui tu échanges des messages depuis plusieurs semaines.',greeting:'J’allais justement t’écrire. Tu rentres comment après les cours ?',memory:'',colors:['#527c9a','#293653']},
 {id:'jules',name:'Jules',category:'Drama',tags:['Drama','Best friend','Secret'],emoji:'🤫',description:'Le meilleur ami de ton copain semble vouloir te confier quelque chose au sujet de votre couple.',greeting:'Je ne veux pas créer d’histoires, mais je pense que tu devrais savoir ce qui se passe.',memory:'',colors:['#78618d','#342b4e']},
 ];
+
+const STARTER_GENDERS={
+ mira:'female',eliot:'male',sora:'female',lyra:'nonbinary',noa:'unknown',atlas:'male',
+ iris:'female',theo:'male',aiko:'female',eden:'female',runa:'female',nox:'nonbinary',
+ milo:'male',ada:'female',lina:'female',eli:'male',margot:'female','theo-love':'male',
+ sam:'male','noémie':'female',alex:'male',jules:'male'
+};
 const stories=[
 {id:'signal',title:'Le signal oublié',category:'Science-fiction',emoji:'🚀',subtitle:'Une station silencieuse. Un signal impossible.',description:'Ton vaisseau reçoit un message provenant d’une station disparue des cartes stellaires.',colors:['#344c7a','#202d59'],start:'start',nodes:{
 start:{text:'Ton vaisseau reçoit un signal qui semble provenir d’une station abandonnée. La porte extérieure vient de s’ouvrir toute seule.',choices:[{label:'Entrer dans la station',reply:'La porte se referme doucement derrière toi. Les lumières s’allument une à une, comme si quelqu’un t’attendait.',next:'hall'},{label:'Analyser le signal',reply:'Le signal contient une suite de coordonnées et un mot répété : « mémoire ». Une porte clignote sur le plan.',next:'signal'},{label:'Envoyer un drone',reply:'Le drone traverse le sas. Sa caméra révèle une salle circulaire et une silhouette immobile au fond.',next:'drone'}]},
@@ -63,7 +70,7 @@ function readStored(key){try{return localStorage.getItem(key)}catch{return null}
 function parse(key,fallback){try{const v=readStored(key);return v?JSON.parse(v):fallback}catch{return fallback}}
 function safeString(value,max){return typeof value==='string'?value.trim().slice(0,max):''}
 function safeColor(value){return typeof value==='string'&&/^#[0-9a-f]{6}$/i.test(value)}
-function sanitizeCharacter(c,index){if(!c||typeof c!=='object')return null;const id=safeString(c.id,90),name=safeString(c.name,40),description=safeString(c.description,320);if(!/^[a-zA-Z0-9_-]{1,90}$/.test(id)||starter.some(x=>x.id===id)||!name||!description)return null;const colors=Array.isArray(c.colors)&&c.colors.length===2&&c.colors.every(safeColor)?c.colors:COLORS[index%COLORS.length];return {id,name,category:ALLOWED_CATEGORIES.has(c.category)?c.category:'Quotidien',tags:Array.isArray(c.tags)?c.tags.filter(t=>typeof t==='string').slice(0,5).map(t=>safeString(t,24)):[],emoji:safeString(c.emoji,8)||'🌙',description,greeting:safeString(c.greeting,320)||'Salut ! Heureux de faire ta connaissance.',memory:safeString(c.memory,500),image:safeImage(c.image),colors}}
+function sanitizeCharacter(c,index){if(!c||typeof c!=='object')return null;const id=safeString(c.id,90),name=safeString(c.name,40),description=safeString(c.description,320);if(!/^[a-zA-Z0-9_-]{1,90}$/.test(id)||starter.some(x=>x.id===id)||!name||!description)return null;const colors=Array.isArray(c.colors)&&c.colors.length===2&&c.colors.every(safeColor)?c.colors:COLORS[index%COLORS.length];return {id,name,category:ALLOWED_CATEGORIES.has(c.category)?c.category:'Quotidien',gender:['female','male','nonbinary'].includes(c.gender)?c.gender:'unknown',tags:Array.isArray(c.tags)?c.tags.filter(t=>typeof t==='string').slice(0,5).map(t=>safeString(t,24)):[],emoji:safeString(c.emoji,8)||'🌙',description,greeting:safeString(c.greeting,320)||'Salut ! Heureux de faire ta connaissance.',memory:safeString(c.memory,500),image:safeImage(c.image),colors}}
 function sanitizeChats(raw){const result=Object.create(null);if(!raw||typeof raw!=='object'||Array.isArray(raw))return result;for(const [id,messages] of Object.entries(raw).slice(0,500)){if(!/^[a-zA-Z0-9_-]{1,100}$/.test(id)||!Array.isArray(messages))continue;result[id]=messages.slice(-300).filter(m=>m&&typeof m==='object'&&(m.role==='user'||m.role==='assistant'||m.who==='me'||m.who==='them')&&typeof m.text==='string').map(m=>({role:m.role||(m.who==='me'?'user':'assistant'),text:m.text.slice(0,4000),time:Number.isFinite(Number(m.time))?Number(m.time):Date.now()}))}return result}
 function sanitizeStringMap(raw,maxLength){const result=Object.create(null);if(!raw||typeof raw!=='object'||Array.isArray(raw))return result;for(const [key,value] of Object.entries(raw).slice(0,500)){if(/^[a-zA-Z0-9_-]{1,100}$/.test(key)&&typeof value==='string')result[key]=value.trim().slice(0,maxLength)}return result}
 function sanitizeChatSettings(raw){const result=Object.create(null),styles=['natural','roleplay','dialogue','concise'];if(!raw||typeof raw!=='object'||Array.isArray(raw))return result;for(const [id,value] of Object.entries(raw).slice(0,500)){if(!/^[a-zA-Z0-9_-]{1,100}$/.test(id)||!value||typeof value!=='object')continue;result[id]={style:styles.includes(value.style)?value.style:'natural',narration:value.narration!==false}}return result}
@@ -74,7 +81,7 @@ let custom=Array.isArray(legacyState.characters)?legacyState.characters.slice(0,
 let favorites=Array.isArray(legacyState.favorites)?Array.from(new Set(legacyState.favorites.filter(x=>typeof x==='string'&&starter.concat(custom).some(c=>c.id===x)))):[];
 let chats=sanitizeChats(legacyState.chats),profile=sanitizeProfile(legacyState.profile),memories=sanitizeStringMap(legacyState.memories,1000),chatSettings=sanitizeChatSettings(legacyState.chatSettings),storyProgress=Object.create(null);
 if(legacyState.storyProgress&&typeof legacyState.storyProgress==='object'&&!Array.isArray(legacyState.storyProgress)){for(const [id,node] of Object.entries(legacyState.storyProgress)){const story=stories.find(x=>x.id===id);if(story&&typeof node==='string'&&story.nodes[node])storyProgress[id]=node}}
-let feed='recommended',activeCategory='Tout',libraryFilter='all',activeCharacter=null,activeStory=null,pendingImage='',returnPage='discover',lightTheme=(legacyState.appearanceVersion===2?legacyState.theme==='light':false),pendingUndo=null,pendingUndoTimer=null,activeChatPanel='conversation',editingChatIndex=null;const pendingChatReplies=new Set();
+let feed='recommended',genderFilter='all',activeCategory='Tout',libraryFilter='all',activeCharacter=null,activeStory=null,pendingImage='',returnPage='discover',lightTheme=(legacyState.appearanceVersion===2?legacyState.theme==='light':false),pendingUndo=null,pendingUndoTimer=null,activeChatPanel='conversation',editingChatIndex=null;const pendingChatReplies=new Set();
 function allCharacters(){return starter.concat(custom)}
 function getCharacter(id){return allCharacters().find(c=>c.id===id)||null}
 function persist(){try{const payload={schemaVersion:4,appearanceVersion:2,savedAt:new Date().toISOString(),characters:custom,favorites,chats,profile,memories,chatSettings,storyProgress,theme:lightTheme?'light':'dark'};localStorage.setItem(STORAGE.state,JSON.stringify(payload));[STORAGE.characters,STORAGE.favorites,STORAGE.chats,STORAGE.profile,STORAGE.memory,STORAGE.story,STORAGE.theme].forEach(key=>{try{localStorage.removeItem(key)}catch{}});return true}catch(error){toast('La sauvegarde locale a échoué. Exporte tes données et libère de l’espace avant de continuer.','error');return false}}
@@ -219,6 +226,7 @@ function navigate(page){
   Promise.resolve(update()).then(finishRouteProgress,finishRouteProgress);
  }
 }
+function changeGender(value){genderFilter=['all','male','female','nonbinary'].includes(value)?value:'all';document.querySelectorAll('[data-gender]').forEach(el=>el.classList.toggle('active',el.dataset.gender===genderFilter));renderCharacters()}
 function changeFeed(value){feed=value;document.querySelectorAll('[data-feed]').forEach(el=>el.classList.toggle('active',el.dataset.feed===feed));renderCharacters()}
 function changeCategory(value){activeCategory=value;renderCategories();renderCharacters()}
 function renderCategories(){
@@ -226,31 +234,39 @@ function renderCategories(){
   $('categoryFilters').innerHTML=categories.map(c=>'<button class="category-chip '+(activeCategory===c?'active':'')+'" data-action="category" data-value="'+esc(c)+'"><span class="category-icon">'+(icons[c]||'✧')+'</span><span>'+esc(c)+'</span></button>').join('');
 }
 function characterPortraitURL(character){
- const portraits=[
-  'photo-1534528741775-53994a69daeb',
-  'photo-1500648767791-00dcc994a43e',
-  'photo-1535713875002-d1d0cf377fde',
-  'photo-1524504388940-b1c1722653e1',
-  'photo-1506794778202-cad84cf45f1d',
-  'photo-1544005313-94ddf0286df2',
-  'photo-1508214751196-bcfd4ca60f91',
-  'photo-1507003211169-0a1dd7228f2d',
-  'photo-1531123897727-8f129e1688ce',
-  'photo-1529139574466-a303027c1d8b',
-  'photo-1517841905240-472988babdf9',
-  'photo-1504593811423-6dd665756598',
-  'photo-1527980965255-d3b416303d12',
-  'photo-1534528741775-53994a69daeb',
-  'photo-1534528741775-53994a69daeb',
-  'photo-1524504388940-b1c1722653e1'
- ];
+ const portraits={
+  mira:'photo-1524504388940-b1c1722653e1',
+  eliot:'photo-1500648767791-00dcc994a43e',
+  sora:'photo-1544005313-94ddf0286df2',
+  lyra:'photo-1527980965255-d3b416303d12',
+  noa:'photo-1531123897727-8f129e1688ce',
+  atlas:'photo-1506794778202-cad84cf45f1d',
+  iris:'photo-1517841905240-472988babdf9',
+  theo:'photo-1507003211169-0a1dd7228f2d',
+  aiko:'photo-1534528741775-53994a69daeb',
+  eden:'photo-1508214751196-bcfd4ca60f91',
+  runa:'photo-1504593811423-6dd665756598',
+  nox:'photo-1527980965255-d3b416303d12',
+  milo:'photo-1500648767791-00dcc994a43e',
+  ada:'photo-1544005313-94ddf0286df2',
+  lina:'photo-1534528741775-53994a69daeb',
+  eli:'photo-1506794778202-cad84cf45f1d',
+  margot:'photo-1517841905240-472988babdf9',
+  'theo-love':'photo-1507003211169-0a1dd7228f2d',
+  sam:'photo-1527980965255-d3b416303d12',
+  'noémie':'photo-1524504388940-b1c1722653e1',
+  alex:'photo-1500648767791-00dcc994a43e',
+  jules:'photo-1504593811423-6dd665756598'
+ };
+ const fallback=['photo-1534528741775-53994a69daeb','photo-1500648767791-00dcc994a43e','photo-1524504388940-b1c1722653e1','photo-1544005313-94ddf0286df2'];
  const key=String(character.id||character.name||'luna');
  const seed=Array.from(key).reduce((sum,ch)=>sum+ch.charCodeAt(0),0);
- return 'https://images.unsplash.com/'+portraits[seed%portraits.length]+'?auto=format&fit=crop&w=900&h=1200&q=88';
+ const photo=portraits[key]||fallback[seed%fallback.length];
+ return 'https://images.unsplash.com/'+photo+'?auto=format&fit=crop&w=700&h=860&q=84&crop=faces';
 }
 function avatarHTML(c,extraClass){
  const image=safeImage(c.image)||characterPortraitURL(c);
- return '<img class="'+(extraClass||'character-image')+'" src="'+image+'" alt="Portrait de '+esc(c.name)+'" loading="lazy" decoding="async">';
+ return '<img class="'+(extraClass||'character-image')+'" data-visual-image src="'+image+'" alt="Portrait de '+esc(c.name)+'" loading="lazy" decoding="async"><span class="character-fallback-avatar" aria-hidden="true">'+esc(c.emoji||'✦')+'</span>';
 }
 function characterCoverURL(character){
  const pools={
@@ -278,8 +294,9 @@ function characterCard(c){
 }
 function renderCharacters(){
  renderCategories();
+ document.querySelectorAll('[data-gender]').forEach(el=>el.classList.toggle('active',el.dataset.gender===genderFilter));
  const q=$('characterSearch').value.trim().toLocaleLowerCase('fr');
- let list=allCharacters().filter(c=>(activeCategory==='Tout'||c.category===activeCategory||(c.tags||[]).includes(activeCategory))&&[c.name,c.category,c.description,...(c.tags||[])].join(' ').toLocaleLowerCase('fr').includes(q));
+ let list=allCharacters().filter(c=>{const gender=c.gender||STARTER_GENDERS[c.id]||'unknown';return (genderFilter==='all'||gender===genderFilter)&&(activeCategory==='Tout'||c.category===activeCategory||(c.tags||[]).includes(activeCategory))&&[c.name,c.category,c.description,...(c.tags||[])].join(' ').toLocaleLowerCase('fr').includes(q)});
  if(feed==='favorites')list=list.filter(c=>favorites.includes(c.id));
  if(feed==='mine')list=list.filter(c=>custom.some(x=>x.id===c.id));
  if(feed==='recommended')list.sort((a,b)=>Number(favorites.includes(b.id))-Number(favorites.includes(a.id)));
@@ -325,11 +342,11 @@ function renderStories(){
 
 function openModal(id){$(id).classList.add('open');$(id).setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
 function closeModal(id){$(id).classList.remove('open');$(id).setAttribute('aria-hidden','true');if(!document.querySelector('.modal-backdrop.open'))document.body.style.overflow=''}
-function resetCharacterForm(){$('characterForm').reset();$('characterId').value='';$('characterEmoji').value='🌙';$('characterVisibility').value='private';pendingImage='';$('avatarPreview').textContent='🌙';$('modalTitle').textContent='Créer un personnage'}
-function openCreator(id){resetCharacterForm();if(id){const c=custom.find(x=>x.id===id);if(!c)return;$('modalTitle').textContent='Modifier le personnage';$('characterId').value=c.id;$('characterName').value=c.name;$('characterCategory').value=c.category;$('characterEmoji').value=c.emoji||'🌙';$('characterDescription').value=c.description;$('characterGreeting').value=c.greeting||'';$('characterMemory').value=c.memory||'';pendingImage=safeImage(c.image);renderAvatarPreview()}openModal('characterModal');setTimeout(()=>$('characterName').focus(),50)}
+function resetCharacterForm(){$('characterForm').reset();$('characterId').value='';$('characterGender').value='unknown';$('characterEmoji').value='🌙';$('characterVisibility').value='private';pendingImage='';$('avatarPreview').textContent='🌙';$('modalTitle').textContent='Créer un personnage'}
+function openCreator(id){resetCharacterForm();if(id){const c=custom.find(x=>x.id===id);if(!c)return;$('modalTitle').textContent='Modifier le personnage';$('characterId').value=c.id;$('characterName').value=c.name;$('characterCategory').value=c.category;$('characterGender').value=c.gender||'unknown';$('characterEmoji').value=c.emoji||'🌙';$('characterDescription').value=c.description;$('characterGreeting').value=c.greeting||'';$('characterMemory').value=c.memory||'';pendingImage=safeImage(c.image);renderAvatarPreview()}openModal('characterModal');setTimeout(()=>$('characterName').focus(),50)}
 function renderAvatarPreview(){const image=safeImage(pendingImage);$('avatarPreview').innerHTML=image?'<img src="'+image+'" alt="Aperçu du personnage">':esc($('characterEmoji').value||'🌙')}
 function compressImage(file){return new Promise((resolve,reject)=>{if(!file||!file.type.match(/^image\/(png|jpeg|webp)$/)){reject(new Error('Format non accepté. Utilise PNG, JPG ou WebP.'));return}if(file.size>8*1024*1024){reject(new Error('Image trop volumineuse (maximum 8 Mo).'));return}const reader=new FileReader();reader.onerror=()=>reject(new Error('Impossible de lire cette image.'));reader.onload=()=>{const img=new Image();img.onerror=()=>reject(new Error('Image illisible.'));img.onload=()=>{const max=560,scale=Math.min(1,max/Math.max(img.width,img.height)),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(img.width*scale));canvas.height=Math.max(1,Math.round(img.height*scale));const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,canvas.width,canvas.height);resolve(canvas.toDataURL('image/webp',.72))};img.src=reader.result};reader.readAsDataURL(file)})}
-function saveCharacter(event){event.preventDefault();const id=$('characterId').value||('user_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8));const obj={id,name:safeString($('characterName').value,40),category:ALLOWED_CATEGORIES.has($('characterCategory').value)?$('characterCategory').value:'Quotidien',emoji:safeString($('characterEmoji').value,8)||'🌙',description:safeString($('characterDescription').value,320),greeting:safeString($('characterGreeting').value,320)||'Salut ! Heureux de faire ta connaissance.',memory:safeString($('characterMemory').value,500),image:safeImage(pendingImage),colors:COLORS[custom.length%COLORS.length]};if(!obj.name||!obj.description){toast('Ajoute un nom et une description pour continuer.','error');return}const previous=custom.slice(),index=custom.findIndex(c=>c.id===id);if(index>=0)custom[index]=obj;else custom.unshift(obj);if(!persist()){custom=previous;return}closeModal('characterModal');renderCharacters();renderLibrary();toast(index>=0?'Personnage modifié.':'Personnage créé !','success')}
+function saveCharacter(event){event.preventDefault();const id=$('characterId').value||('user_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8));const obj={id,name:safeString($('characterName').value,40),category:ALLOWED_CATEGORIES.has($('characterCategory').value)?$('characterCategory').value:'Quotidien',gender:['female','male','nonbinary'].includes($('characterGender').value)?$('characterGender').value:'unknown',emoji:safeString($('characterEmoji').value,8)||'🌙',description:safeString($('characterDescription').value,320),greeting:safeString($('characterGreeting').value,320)||'Salut ! Heureux de faire ta connaissance.',memory:safeString($('characterMemory').value,500),image:safeImage(pendingImage),colors:COLORS[custom.length%COLORS.length]};if(!obj.name||!obj.description){toast('Ajoute un nom et une description pour continuer.','error');return}const previous=custom.slice(),index=custom.findIndex(c=>c.id===id);if(index>=0)custom[index]=obj;else custom.unshift(obj);if(!persist()){custom=previous;return}closeModal('characterModal');renderCharacters();renderLibrary();toast(index>=0?'Personnage modifié.':'Personnage créé !','success')}
 function toggleFavorite(id){const previous=favorites.slice(),wasFavorite=favorites.includes(id);favorites=wasFavorite?favorites.filter(x=>x!==id):favorites.concat(id);if(!persist()){favorites=previous;return}renderCharacters();renderLibrary();if(activeCharacter&&activeCharacter.id===id)renderChatDetails();toast(wasFavorite?'Retiré des favoris.':'Ajouté à tes favoris.','success')}
 function askConfirm(title,message,confirmLabel,onConfirm){let modal=$('confirmModal');if(!modal){modal=document.createElement('div');modal.id='confirmModal';modal.className='modal-backdrop';modal.setAttribute('aria-hidden','true');modal.innerHTML='<section class="modal-card small-modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle"><div class="modal-header"><div><div class="eyebrow">CONFIRMATION</div><h2 id="confirmTitle"></h2></div><button type="button" class="modal-close" data-action="confirm-cancel" aria-label="Fermer">×</button></div><p class="modal-help" id="confirmMessage"></p><div class="modal-actions"><button type="button" class="button-quiet" data-action="confirm-cancel">Annuler</button><button type="button" class="button-danger" id="confirmAccept" data-action="confirm-accept"></button></div></section>';document.body.appendChild(modal);modal.addEventListener('click',event=>{if(event.target===modal)closeConfirm()});modal.querySelectorAll('[data-action="confirm-cancel"]').forEach(button=>button.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();closeConfirm()}));modal.querySelector('#confirmAccept').addEventListener('click',event=>{event.preventDefault();event.stopPropagation();acceptConfirm()})}$('confirmTitle').textContent=title;$('confirmMessage').textContent=message;$('confirmAccept').textContent=confirmLabel||'Confirmer';pendingConfirmation=onConfirm;modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';setTimeout(()=>$('confirmAccept').focus(),0)}
 function closeConfirm(){const modal=$('confirmModal');if(modal){modal.classList.remove('open');modal.setAttribute('aria-hidden','true')}pendingConfirmation=null;if(!document.querySelector('.modal-backdrop.open'))document.body.style.overflow=''}
@@ -514,7 +531,7 @@ function importData(file){if(!file)return;if(file.size>10*1024*1024){toast('La s
 function resetAll(){askConfirm('Effacer toutes les données ?', 'Les personnages créés, favoris, conversations et préférences seront supprimés sur ce navigateur. Cette action ne peut pas être annulée.', 'Tout effacer', ()=>{const old={custom,favorites,chats,profile,memories,chatSettings,storyProgress,lightTheme};custom=[];favorites=[];chats=Object.create(null);profile={name:'',bio:'',style:'Libre'};memories=Object.create(null);chatSettings=Object.create(null);storyProgress=Object.create(null);lightTheme=true;setTheme(false);if(persist()){renderCharacters();renderLibrary();fillProfile();toast('Données locales effacées.','success')}else{custom=old.custom;favorites=old.favorites;chats=old.chats;profile=old.profile;memories=old.memories;chatSettings=old.chatSettings;storyProgress=old.storyProgress;lightTheme=old.lightTheme;setTheme(false)}})}
 function setTheme(save=true){document.body.classList.toggle('light',lightTheme);$('themeButton').textContent=lightTheme?'☀':'☾';$('themeButton').setAttribute('aria-label',lightTheme?'Activer le thème sombre':'Activer le thème clair');if(save&&!persist()){lightTheme=!lightTheme;document.body.classList.toggle('light',lightTheme);$('themeButton').textContent=lightTheme?'☀':'☾'}}
 function toastSafeClick(el){flashBusy(el);if(el.dataset.action==='favorite')toggleFavorite(el.dataset.id);else if(el.dataset.action==='open-chat')openChat(el.dataset.id);else if(el.dataset.action==='edit-character')openCreator(el.dataset.id);else if(el.dataset.action==='delete-character')deleteCharacter(el.dataset.id);else if(el.dataset.action==='undo-delete')undoLastDeletion();else if(el.dataset.action==='confirm-cancel')closeConfirm();else if(el.dataset.action==='confirm-accept')acceptConfirm();else if(el.dataset.action==='start-story')startStory(el.dataset.id);else if(el.dataset.action==='restart-story')startStory(el.dataset.id,true);else if(el.dataset.action==='new-character')openCreator();else if(el.dataset.action==='browse')$('characterBrowser').scrollIntoView({behavior:'smooth'});else if(el.dataset.action==='show-favorites'){changeFeed('favorites');navigate('discover')}else if(el.dataset.action==='close-modal')closeModal('characterModal');else if(el.dataset.action==='close-memory')closeModal('memoryModal');else if(el.dataset.action==='chat-memory')showMemory();else if(el.dataset.action==='save-memory')saveMemory();else if(el.dataset.action==='clear-chat')clearChat();else if(el.dataset.action==='story-choice')chooseStory(el.dataset.index);else if(el.dataset.action==='back')navigate(returnPage);else if(el.dataset.action==='export')exportData();else if(el.dataset.action==='import')$('importFile').click();else if(el.dataset.action==='reset')resetAll();else if(el.dataset.action==='category')changeCategory(el.dataset.value);else if(el.dataset.action==='chat-memory')showMemory();else if(el.dataset.action==='chat-settings')openChatSettings();else if(el.dataset.action==='save-chat-settings')saveChatSettings();else if(el.dataset.action==='close-chat-settings')closeModal('chatSettingsModal');else if(el.dataset.action==='toggle-chat-details')toggleChatDetails();else if(el.dataset.action==='chat-export')exportCurrentChat();else if(el.dataset.action==='start-chat-scene')startChatScene(el.dataset.scene);else if(el.dataset.action==='use-chat-prompt'){const input=$('chatInput');input.value=el.dataset.prompt||'';switchChatPanel('conversation');input.focus();autoResize()}else if(el.dataset.action==='copy-chat-message')copyChatMessage(el.dataset.index);else if(el.dataset.action==='edit-last-message')editLastChatMessage();else if(el.dataset.action==='save-chat-edit')saveEditedChatMessage();else if(el.dataset.action==='close-chat-edit'){editingChatIndex=null;closeModal('chatEditModal')}else if(el.dataset.action==='retry-last-response')retryLastChatResponse()}
-document.addEventListener('click',event=>{const chatPanelButton=event.target.closest('[data-chat-panel]');if(chatPanelButton){switchChatPanel(chatPanelButton.dataset.chatPanel);return}const pageButton=event.target.closest('[data-page]');if(pageButton){navigate(pageButton.dataset.page);return}const action=event.target.closest('[data-action]');if(action){toastSafeClick(action);return}const feedButton=event.target.closest('[data-feed]');if(feedButton){changeFeed(feedButton.dataset.feed);return}const libButton=event.target.closest('[data-library]');if(libButton){libraryFilter=libButton.dataset.library;renderLibrary();document.querySelectorAll('[data-library]').forEach(el=>el.classList.toggle('active',el===libButton));return}if(event.target.classList.contains('modal-backdrop')){closeModal(event.target.id)}});
+document.addEventListener('click',event=>{const genderButton=event.target.closest('[data-gender]');if(genderButton){changeGender(genderButton.dataset.gender);return}const chatPanelButton=event.target.closest('[data-chat-panel]');if(chatPanelButton){switchChatPanel(chatPanelButton.dataset.chatPanel);return}const pageButton=event.target.closest('[data-page]');if(pageButton){navigate(pageButton.dataset.page);return}const action=event.target.closest('[data-action]');if(action){toastSafeClick(action);return}const feedButton=event.target.closest('[data-feed]');if(feedButton){changeFeed(feedButton.dataset.feed);return}const libButton=event.target.closest('[data-library]');if(libButton){libraryFilter=libButton.dataset.library;renderLibrary();document.querySelectorAll('[data-library]').forEach(el=>el.classList.toggle('active',el===libButton));return}if(event.target.classList.contains('modal-backdrop')){closeModal(event.target.id)}});
 $('chatEditText').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,180)+'px'});renderChatSuggestions();
 $('characterForm').addEventListener('submit',saveCharacter);
 $('characterEmoji').addEventListener('input',renderAvatarPreview);
