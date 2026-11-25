@@ -130,37 +130,77 @@ function renderCategories(){
   $('categoryFilters').innerHTML=categories.map(c=>'<button class="category-chip '+(activeCategory===c?'active':'')+'" data-action="category" data-value="'+esc(c)+'"><span class="category-icon">'+(icons[c]||'✧')+'</span><span>'+esc(c)+'</span></button>').join('');
 }
 function avatarHTML(c,extraClass){const image=safeImage(c.image);return image?'<img class="'+(extraClass||'character-image')+'" src="'+image+'" alt="Illustration de '+esc(c.name)+'">':'<span class="'+(extraClass||'character-emoji')+'">'+esc(c.emoji||'✦')+'</span>'}
+function characterCoverURL(character){
+ const pools={
+  'Fantaisie':['photo-1511497584788-876760111969','photo-1519681393784-d120267933ba','photo-1470252649378-9c29740c9fa8'],
+  'Mystère':['photo-1519608487953-e999c86e7455','photo-1518837695005-2083093ee35b','photo-1500530855697-b586d89ba3ee'],
+  'Science-fiction':['photo-1451187580459-43490279c0fa','photo-1446776811953-b23d57bd21aa','photo-1519681393784-d120267933ba'],
+  'Aventure':['photo-1500530855697-b586d89ba3ee','photo-1470252649378-9c29740c9fa8','photo-1511497584788-876760111969'],
+  'Romance':['photo-1470252649378-9c29740c9fa8','photo-1518837695005-2083093ee35b','photo-1500530855697-b586d89ba3ee'],
+  'Anime':['photo-1519681393784-d120267933ba','photo-1511497584788-876760111969','photo-1451187580459-43490279c0fa'],
+  'Quotidien':['photo-1470252649378-9c29740c9fa8','photo-1500530855697-b586d89ba3ee','photo-1518837695005-2083093ee35b']
+ };
+ const pool=pools[character.category]||pools['Aventure'];
+ const seed=String(character.id||character.name).split('').reduce((sum,ch)=>sum+ch.charCodeAt(0),0);
+ return 'https://images.unsplash.com/'+pool[seed%pool.length]+'?auto=format&fit=crop&w=1000&q=82';
+}
+function storyCoverURL(id){
+ const covers={signal:'photo-1451187580459-43490279c0fa',library:'photo-1511497584788-876760111969'};
+ return 'https://images.unsplash.com/'+(covers[id]||'photo-1500530855697-b586d89ba3ee')+'?auto=format&fit=crop&w=1100&q=84';
+}
 function characterCard(c){
-  const mine=custom.some(x=>x.id===c.id),fav=favorites.includes(c.id);
-  const palette=(c.colors||COLORS[0]),hasImage=!!safeImage(c.image);
-  return '<article class="character-card poly-card"><div class="character-cover '+(hasImage?'has-character-image':'')+'" style="--cover1:'+esc(palette[0])+';--cover2:'+esc(palette[1])+'"><div class="poster-halo"></div><div class="poster-orbit"></div>'+avatarHTML(c,'character-poster-art')+'<span class="character-tag">'+esc(c.category)+'</span><button class="favorite-button '+(fav?'active':'')+'" data-action="favorite" data-id="'+esc(c.id)+'" aria-label="'+(fav?'Retirer des favoris':'Ajouter aux favoris')+'">'+(fav?'♥':'♡')+'</button><span class="poster-spark">✦</span><span class="poster-bottom-glow"></span></div><div class="character-details"><div class="character-name-row"><h3>'+esc(c.name)+'</h3><span class="character-origin">'+(mine?'✦ CRÉATION':'LUNA PICK')+'</span></div><p class="character-description">'+esc(c.description)+'</p><div class="character-tag-list">'+(c.tags||[]).slice(0,3).map(t=>'<span>'+esc(t)+'</span>').join('')+'</div><div class="character-card-footer"><span class="card-category"><i>✧</i> '+esc(c.category)+'</span><div class="character-actions"><button class="card-action" data-action="open-chat" data-id="'+esc(c.id)+'">Discuter <span>↗</span></button>'+(mine?'<button class="card-more" data-action="edit-character" data-id="'+esc(c.id)+'" aria-label="Modifier '+esc(c.name)+'">✎</button><button class="card-more" data-action="delete-character" data-id="'+esc(c.id)+'" aria-label="Supprimer '+esc(c.name)+'">×</button>':'')+'</div></div></div></article>'
+ const mine=custom.some(x=>x.id===c.id),fav=favorites.includes(c.id);
+ const palette=(c.colors||COLORS[0]),hasImage=!!safeImage(c.image);
+ const cover=hasImage?'':'<img class="character-cover-photo visual-media" data-visual-image src="'+esc(characterCoverURL(c))+'" alt="" aria-hidden="true" loading="lazy" decoding="async">';
+ return '<article class="character-card poly-card" data-tilt-card><div class="character-cover '+(hasImage?'has-character-image':'has-scene-photo')+'" data-image-shell style="--cover1:'+esc(palette[0])+';--cover2:'+esc(palette[1])+'"><span class="cover-shimmer"></span>'+cover+'<div class="poster-halo"></div><div class="poster-orbit"></div>'+avatarHTML(c,'character-poster-art')+'<span class="character-tag">'+esc(c.category)+'</span><button class="favorite-button '+(fav?'active':'')+'" data-action="favorite" data-id="'+esc(c.id)+'" aria-label="'+(fav?'Retirer des favoris':'Ajouter aux favoris')+'">'+(fav?'♥':'♡')+'</button><span class="poster-spark">✦</span><span class="poster-bottom-glow"></span></div><div class="character-details"><div class="character-name-row"><h3>'+esc(c.name)+'</h3><span class="character-origin">'+(mine?'✦ CRÉATION':'LUNA PICK')+'</span></div><p class="character-description">'+esc(c.description)+'</p><div class="character-tag-list">'+(c.tags||[]).slice(0,3).map(t=>'<span>'+esc(t)+'</span>').join('')+'</div><div class="character-card-footer"><span class="card-category"><i>✧</i> '+esc(c.category)+'</span><div class="character-actions"><button class="card-action" data-action="open-chat" data-id="'+esc(c.id)+'">Discuter <span>↗</span></button>'+(mine?'<button class="card-more" data-action="edit-character" data-id="'+esc(c.id)+'" aria-label="Modifier '+esc(c.name)+'">✎</button><button class="card-more" data-action="delete-character" data-id="'+esc(c.id)+'" aria-label="Supprimer '+esc(c.name)+'">×</button>':'')+'</div></div></div></article>'
 }
-function renderCharacters(){renderCategories();const q=$('characterSearch').value.trim().toLocaleLowerCase('fr');let list=allCharacters().filter(c=>(activeCategory==='Tout'||c.category===activeCategory||(c.tags||[]).includes(activeCategory))&&[c.name,c.category,c.description,...(c.tags||[])].join(' ').toLocaleLowerCase('fr').includes(q));if(feed==='favorites')list=list.filter(c=>favorites.includes(c.id));if(feed==='mine')list=list.filter(c=>custom.some(x=>x.id===c.id));if(feed==='recommended')list.sort((a,b)=>Number(favorites.includes(b.id))-Number(favorites.includes(a.id)));$('resultsTitle').textContent=({recommended:'Sélection pour toi',all:'Tous les personnages',favorites:'Tes favoris',mine:'Tes créations'})[feed];$('resultsCount').textContent=list.length+' personnage'+(list.length>1?'s':'');$('characterGrid').innerHTML=list.length?list.map(characterCard).join(''):'<div class="empty-state"><div class="empty-symbol">✧</div><h3>Rien ici pour le moment</h3><p>Change tes filtres ou crée un personnage pour commencer à remplir cet espace.</p><button class="button-primary" data-action="new-character">Créer un personnage</button></div>';$('favoriteCount').textContent=favorites.length;if($('favoriteCountSide'))$('favoriteCountSide').textContent=favorites.length;$('libraryCount').textContent=new Set(custom.map(c=>c.id).concat(favorites)).size;document.querySelectorAll('[data-feed]').forEach(el=>el.classList.toggle('active',el.dataset.feed===feed))}
+function renderCharacters(){
+ renderCategories();
+ const q=$('characterSearch').value.trim().toLocaleLowerCase('fr');
+ let list=allCharacters().filter(c=>(activeCategory==='Tout'||c.category===activeCategory||(c.tags||[]).includes(activeCategory))&&[c.name,c.category,c.description,...(c.tags||[])].join(' ').toLocaleLowerCase('fr').includes(q));
+ if(feed==='favorites')list=list.filter(c=>favorites.includes(c.id));
+ if(feed==='mine')list=list.filter(c=>custom.some(x=>x.id===c.id));
+ if(feed==='recommended')list.sort((a,b)=>Number(favorites.includes(b.id))-Number(favorites.includes(a.id)));
+ $('resultsTitle').textContent=({recommended:'Sélection pour toi',all:'Tous les personnages',favorites:'Tes favoris',mine:'Tes créations'})[feed];
+ $('resultsCount').textContent=list.length+' personnage'+(list.length>1?'s':'');
+ $('characterGrid').innerHTML=list.length?list.map(characterCard).join(''):'<div class="empty-state"><div class="empty-symbol">✧</div><h3>Rien ici pour le moment</h3><p>Change tes filtres ou crée un personnage pour commencer à remplir cet espace.</p><button class="button-primary" data-action="new-character">Créer un personnage</button></div>';
+ $('favoriteCount').textContent=favorites.length;
+ if($('favoriteCountSide'))$('favoriteCountSide').textContent=favorites.length;
+ $('libraryCount').textContent=new Set(custom.map(c=>c.id).concat(favorites)).size;
+ document.querySelectorAll('[data-feed]').forEach(el=>el.classList.toggle('active',el.dataset.feed===feed));
+ watchVisualImages($('characterGrid'));bindTiltCards($('characterGrid'));observeRevealItems($('characterGrid'));
+}
+
 function renderLibrary(){
-  const q=$('librarySearch').value.trim().toLocaleLowerCase('fr');
-  let list=allCharacters().filter(c=>(c.name+' '+c.description).toLocaleLowerCase('fr').includes(q));
-  const chatIds=allCharacters().filter(c=>(chats[c.id]||[]).length>0);
-  const saved=allCharacters().filter(c=>custom.some(x=>x.id===c.id)||favorites.includes(c.id)||(chats[c.id]||[]).length>0);
-  if(libraryFilter==='favorites')list=list.filter(c=>favorites.includes(c.id));
-  if(libraryFilter==='created')list=list.filter(c=>custom.some(x=>x.id===c.id));
-  if(libraryFilter==='chats')list=list.filter(c=>(chats[c.id]||[]).length>0);
-  if(libraryFilter==='all')list=list.filter(c=>custom.some(x=>x.id===c.id)||favorites.includes(c.id)||(chats[c.id]||[]).length>0);
-  $('libraryGrid').innerHTML=list.length?list.map(characterCard).join(''):'<div class="empty-state"><div class="empty-symbol">▤</div><h3>Ton espace se construit ici</h3><p>Ajoute des favoris, commence une conversation ou crée ton premier personnage pour remplir ta bibliothèque.</p><button class="button-primary" data-action="new-character">Créer un personnage</button></div>';
-  const counts={all:saved.length,favorites:favorites.length,created:custom.length,chats:chatIds.length};
-  const set=(id,value)=>{const el=$(id);if(el)el.textContent=String(value)};
-  set('libraryFavoriteStat',favorites.length);set('libraryCreatedStat',custom.length);set('libraryChatStat',chatIds.length);
-  set('libraryAllCount',counts.all);set('libraryFavoritesCount',counts.favorites);set('libraryCreatedCount',counts.created);set('libraryChatsCount',counts.chats);
-  document.querySelectorAll('[data-library]').forEach(el=>el.classList.toggle('active',el.dataset.library===libraryFilter));
+ const q=$('librarySearch').value.trim().toLocaleLowerCase('fr');
+ let list=allCharacters().filter(c=>(c.name+' '+c.description).toLocaleLowerCase('fr').includes(q));
+ const chatIds=allCharacters().filter(c=>(chats[c.id]||[]).length>0);
+ const saved=allCharacters().filter(c=>custom.some(x=>x.id===c.id)||favorites.includes(c.id)||(chats[c.id]||[]).length>0);
+ if(libraryFilter==='favorites')list=list.filter(c=>favorites.includes(c.id));
+ if(libraryFilter==='created')list=list.filter(c=>custom.some(x=>x.id===c.id));
+ if(libraryFilter==='chats')list=list.filter(c=>(chats[c.id]||[]).length>0);
+ if(libraryFilter==='all')list=list.filter(c=>custom.some(x=>x.id===c.id)||favorites.includes(c.id)||(chats[c.id]||[]).length>0);
+ $('libraryGrid').innerHTML=list.length?list.map(characterCard).join(''):'<div class="empty-state"><div class="empty-symbol">▤</div><h3>Ton espace se construit ici</h3><p>Ajoute des favoris, commence une conversation ou crée ton premier personnage pour remplir ta bibliothèque.</p><button class="button-primary" data-action="new-character">Créer un personnage</button></div>';
+ const counts={all:saved.length,favorites:favorites.length,created:custom.length,chats:chatIds.length};
+ const set=(id,value)=>{const el=$(id);if(el)el.textContent=String(value)};
+ set('libraryFavoriteStat',favorites.length);set('libraryCreatedStat',custom.length);set('libraryChatStat',chatIds.length);
+ set('libraryAllCount',counts.all);set('libraryFavoritesCount',counts.favorites);set('libraryCreatedCount',counts.created);set('libraryChatsCount',counts.chats);
+ document.querySelectorAll('[data-library]').forEach(el=>el.classList.toggle('active',el.dataset.library===libraryFilter));
+ watchVisualImages($('libraryGrid'));bindTiltCards($('libraryGrid'));observeRevealItems($('libraryGrid'));
 }
+
 function renderStories(){
-  const html=stories.map((s,index)=>{
-    const resume=!!(chats['story_'+s.id]&&chats['story_'+s.id].length>1);
-    const step=chats['story_'+s.id]?Math.max(0,Math.ceil(chats['story_'+s.id].length/2)-1):0;
-    return '<article class="story-card story-card-luna"><div class="story-art" style="--s1:'+esc(s.colors[0])+';--s2:'+esc(s.colors[1])+'"><span class="story-art-orbit"></span><span class="story-art-emoji">'+esc(s.emoji)+'</span><span class="story-art-index">0'+(index+1)+'</span><span class="story-art-glint">✦</span></div><div class="story-content"><div class="story-content-top"><span class="story-category-tag">'+esc(s.category)+'</span><span class="story-length-tag">✧ RÉCIT INTERACTIF</span></div><h3>'+esc(s.title)+'</h3><p>'+esc(s.description)+'</p><div class="story-progress-row"><span>'+(resume?'Progression sauvegardée':'Premier chapitre')+'</span><span>'+(resume?step+' étape(s)':'À découvrir')+'</span></div><div class="story-card-actions"><button class="card-action" data-action="start-story" data-id="'+esc(s.id)+'">'+(resume?'Reprendre l’histoire':'Commencer')+' <span>↗</span></button>'+(resume?'<button class="card-more" data-action="restart-story" data-id="'+esc(s.id)+'" aria-label="Recommencer '+esc(s.title)+'">↻</button>':'')+'</div></div></article>'
-  }).join('');
-  $('storyGrid').innerHTML=html;
-  $('homeStories').innerHTML=stories.map(s=>'<article class="story-mini"><div class="story-mini-icon">'+esc(s.emoji)+'</div><div class="story-mini-copy"><b>'+esc(s.title)+'</b><small>'+esc(s.category)+'</small></div><button data-action="start-story" data-id="'+esc(s.id)+'">'+(chats['story_'+s.id]&&chats['story_'+s.id].length>1?'Reprendre':'Jouer')+'</button></article>').join('');
+ const content=stories.map((s,index)=>{
+  const resume=!!(chats['story_'+s.id]&&chats['story_'+s.id].length>1);
+  const step=chats['story_'+s.id]?Math.max(0,Math.ceil(chats['story_'+s.id].length/2)-1):0;
+  const photo='<img class="story-cover-photo visual-media" data-visual-image '+(index===0?'data-route-critical':'')+' src="'+esc(storyCoverURL(s.id))+'" alt="" aria-hidden="true" loading="'+(index===0?'eager':'lazy')+'" decoding="async">';
+  return '<article class="story-card story-card-luna" data-tilt-card><div class="story-art" data-image-shell style="--s1:'+esc(s.colors[0])+';--s2:'+esc(s.colors[1])+'"><span class="cover-shimmer"></span>'+photo+'<span class="story-art-orbit"></span><span class="story-art-emoji">'+esc(s.emoji)+'</span><span class="story-art-index">0'+(index+1)+'</span><span class="story-art-glint">✦</span></div><div class="story-content"><div class="story-content-top"><span class="story-category-tag">'+esc(s.category)+'</span><span class="story-length-tag">✧ RÉCIT INTERACTIF</span></div><h3>'+esc(s.title)+'</h3><p>'+esc(s.description)+'</p><div class="story-progress-row"><span>'+(resume?'Progression sauvegardée':'Premier chapitre')+'</span><span>'+(resume?step+' étape(s)':'À découvrir')+'</span></div><div class="story-card-actions"><button class="card-action" data-action="start-story" data-id="'+esc(s.id)+'">'+(resume?'Reprendre l’histoire':'Commencer')+' <span>↗</span></button>'+(resume?'<button class="card-more" data-action="restart-story" data-id="'+esc(s.id)+'" aria-label="Recommencer '+esc(s.title)+'">↻</button>':'')+'</div></div></article>';
+ }).join('');
+ $('storyGrid').innerHTML=content;
+ $('homeStories').innerHTML=stories.map(s=>'<article class="story-mini"><div class="story-mini-icon">'+esc(s.emoji)+'</div><div class="story-mini-copy"><b>'+esc(s.title)+'</b><small>'+esc(s.category)+'</small></div><button data-action="start-story" data-id="'+esc(s.id)+'">'+(chats['story_'+s.id]&&chats['story_'+s.id].length>1?'Reprendre':'Jouer')+'</button></article>').join('');
+ watchVisualImages($('storyGrid'));bindTiltCards($('storyGrid'));observeRevealItems($('storyGrid'));
 }
+
 function openModal(id){$(id).classList.add('open');$(id).setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
 function closeModal(id){$(id).classList.remove('open');$(id).setAttribute('aria-hidden','true');if(!document.querySelector('.modal-backdrop.open'))document.body.style.overflow=''}
 function resetCharacterForm(){$('characterForm').reset();$('characterId').value='';$('characterEmoji').value='🌙';$('characterVisibility').value='private';pendingImage='';$('avatarPreview').textContent='🌙';$('modalTitle').textContent='Créer un personnage'}
