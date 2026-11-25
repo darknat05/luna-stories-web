@@ -26,16 +26,16 @@
       </a>
       <div class="sidebar-label">EXPLORER</div>
       <nav class="side-nav" aria-label="Navigation principale">
-        <button class="nav-item active" data-page="discover"><span class="nav-icon">⌕</span><span>Découvrir</span></button>
-        <button class="nav-item" data-action="new-character"><span class="nav-icon">＋</span><span>Créer un personnage</span></button>
-        <button class="nav-item" data-page="library"><span class="nav-icon">▤</span><span>Bibliothèque</span><span class="nav-count" id="libraryCount">0</span></button>
-        <button class="nav-item" data-page="stories"><span class="nav-icon">✧</span><span>Histoires</span></button>
-        <button class="nav-item" data-page="profile"><span class="nav-icon">◉</span><span>Mon espace</span></button>
+        <button class="nav-item active" data-page="discover"><span class="nav-icon" aria-hidden="true">🔎</span><span>Découvrir</span></button>
+        <button class="nav-item" data-action="new-character"><span class="nav-icon" aria-hidden="true">✨</span><span>Créer un personnage</span></button>
+        <button class="nav-item" data-page="library"><span class="nav-icon" aria-hidden="true">📚</span><span>Bibliothèque</span><span class="nav-count" id="libraryCount">0</span></button>
+        <button class="nav-item" data-page="stories"><span class="nav-icon" aria-hidden="true">📖</span><span>Histoires</span></button>
+        <button class="nav-item" data-page="profile"><span class="nav-icon" aria-hidden="true">👤</span><span>Mon espace</span></button>
       </nav>
       <div class="sidebar-divider"></div>
       <div class="sidebar-label">RACCOURCIS</div>
-      <button class="shortcut" data-action="show-favorites"><span>♡</span> Mes favoris <span class="shortcut-count" id="favoriteCountSide">0</span></button>
-      <button class="shortcut" data-page="library"><span>▤</span> Mes discussions</button>
+      <button class="shortcut" data-action="show-favorites"><span class="shortcut-icon" aria-hidden="true">💜</span> Mes favoris <span class="shortcut-count" id="favoriteCountSide">0</span></button>
+      <button class="shortcut" data-page="library"><span class="shortcut-icon" aria-hidden="true">💬</span> Mes discussions</button>
       <div class="sidebar-spacer"></div>
       <div class="sidebar-note"><span class="note-star">✦</span><strong>Un personnage en tête ?</strong><p>Donne-lui un nom, une image et une personnalité.</p><button data-action="new-character">Créer maintenant <span>→</span></button></div>
       <div class="sidebar-footer"><span class="status-dot"></span> Luna Stories · espace personnel</div>
@@ -48,10 +48,10 @@
           <div class="breadcrumb"><span>LUNA STORIES</span><i>/</i><strong id="breadcrumbCurrent">Découvrir</strong></div>
         </div>
         <label class="global-search" aria-label="Rechercher un personnage">
-          <span>⌕</span><input id="characterSearch" type="search" placeholder="Rechercher un personnage…" autocomplete="off"><kbd>Ctrl K</kbd>
+          <span aria-hidden="true">🔎</span><input id="characterSearch" type="search" placeholder="Rechercher un personnage…" autocomplete="off"><kbd>Ctrl K</kbd>
         </label>
         <div class="topbar-actions">
-          <button class="top-create" data-action="new-character"><span>＋</span> Créer</button>
+          <button class="top-create" data-action="new-character"><span aria-hidden="true">✨</span> Créer</button>
           <button class="icon-button" id="themeButton" aria-label="Changer le thème" title="Changer le thème">☾</button>
           <button class="profile-pill" data-page="profile"><span class="profile-avatar" id="topAvatar">N</span><span id="topName">Mon espace</span><span class="chevron">⌄</span></button>
         </div>
@@ -74,13 +74,13 @@
               <img class="showcase-background visual-media" data-visual-image data-route-critical src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&amp;fit=crop&amp;w=1400&amp;q=88" alt="" aria-hidden="true" loading="eager" decoding="async">
               <div class="showcase-glass-orb" aria-hidden="true"><span>✧</span></div>
               <button class="showcase-character showcase-one" data-tilt-card data-action="open-chat" data-id="mira" aria-label="Discuter avec Mira">
-                <span class="showcase-art">🧝</span><span class="showcase-label"><b>Mira</b><small>Fantaisie</small></span>
+                <img class="showcase-art" data-visual-image src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&amp;fit=crop&amp;w=400&amp;h=560&amp;q=85" alt="" loading="lazy" decoding="async"><span class="showcase-label"><b>Mira</b><small>Fantaisie</small></span>
               </button>
               <button class="showcase-character showcase-two" data-tilt-card data-action="open-chat" data-id="lyra" aria-label="Discuter avec Lyra">
-                <span class="showcase-art">🤖</span><span class="showcase-label"><b>Lyra</b><small>Science-fiction</small></span>
+                <img class="showcase-art" data-visual-image src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&amp;fit=crop&amp;w=400&amp;h=560&amp;q=85" alt="" loading="lazy" decoding="async"><span class="showcase-label"><b>Lyra</b><small>Science-fiction</small></span>
               </button>
               <button class="showcase-character showcase-three" data-tilt-card data-action="open-chat" data-id="eliot" aria-label="Discuter avec Eliot">
-                <span class="showcase-art">🕵️</span><span class="showcase-label"><b>Eliot</b><small>Mystère</small></span>
+                <img class="showcase-art" data-visual-image src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&amp;fit=crop&amp;w=400&amp;h=560&amp;q=85" alt="" loading="lazy" decoding="async"><span class="showcase-label"><b>Eliot</b><small>Mystère</small></span>
               </button>
               <span class="showcase-orbit orbit-one"></span><span class="showcase-orbit orbit-two"></span>
               <span class="showcase-visual-caption">A PLACE FOR EVERY STORY <i>✦</i></span>
@@ -94,10 +94,10 @@
             </div>
             <div class="browse-controls">
               <div class="feed-tabs" role="group" aria-label="Filtrer les personnages">
-                <button class="feed-tab active" data-feed="recommended">✦ Pour toi</button>
-                <button class="feed-tab" data-feed="all">Tous</button>
-                <button class="feed-tab" data-feed="favorites">♡ Favoris <span id="favoriteCount">0</span></button>
-                <button class="feed-tab" data-feed="mine">Mes créations</button>
+                <button class="feed-tab active" data-feed="recommended"><span class="tab-icon" aria-hidden="true">✨</span> Pour toi</button>
+                <button class="feed-tab" data-feed="all"><span class="tab-icon" aria-hidden="true">🌙</span> Tous</button>
+                <button class="feed-tab" data-feed="favorites"><span class="tab-icon" aria-hidden="true">💜</span> Favoris <span id="favoriteCount">0</span></button>
+                <button class="feed-tab" data-feed="mine"><span class="tab-icon" aria-hidden="true">🎨</span> Mes créations</button>
               </div>
             </div>
             <div class="category-row" id="categoryFilters" aria-label="Catégories"></div>
@@ -120,19 +120,19 @@
             <button class="button-primary" data-action="new-character">＋ Créer un personnage</button>
           </div>
           <div class="library-overview">
-            <div class="library-stat"><span class="library-stat-icon">♡</span><div><b id="libraryFavoriteStat">0</b><small>Favoris</small></div></div>
-            <div class="library-stat"><span class="library-stat-icon">✦</span><div><b id="libraryCreatedStat">0</b><small>Créations</small></div></div>
-            <div class="library-stat"><span class="library-stat-icon">☏</span><div><b id="libraryChatStat">0</b><small>Discussions</small></div></div>
+            <div class="library-stat"><span class="library-stat-icon" aria-hidden="true">💜</span><div><b id="libraryFavoriteStat">0</b><small>Favoris</small></div></div>
+            <div class="library-stat"><span class="library-stat-icon" aria-hidden="true">✨</span><div><b id="libraryCreatedStat">0</b><small>Créations</small></div></div>
+            <div class="library-stat"><span class="library-stat-icon" aria-hidden="true">💬</span><div><b id="libraryChatStat">0</b><small>Discussions</small></div></div>
           </div>
           <div class="library-toolbar">
-            <label class="search-box library-search"><span>⌕</span><input id="librarySearch" type="search" placeholder="Rechercher dans ta bibliothèque…" autocomplete="off"></label>
+            <label class="search-box library-search"><span aria-hidden="true">🔎</span><input id="librarySearch" type="search" placeholder="Rechercher dans ta bibliothèque…" autocomplete="off"></label>
             <span class="library-private-note">◉ Visible uniquement dans ce navigateur</span>
           </div>
           <div class="library-tabs" role="tablist" aria-label="Contenu de la bibliothèque">
-            <button class="library-tab active" data-library="all">Tout <span id="libraryAllCount">0</span></button>
-            <button class="library-tab" data-library="favorites">♡ Favoris <span id="libraryFavoritesCount">0</span></button>
-            <button class="library-tab" data-library="created">✦ Mes créations <span id="libraryCreatedCount">0</span></button>
-            <button class="library-tab" data-library="chats">☏ Discussions <span id="libraryChatsCount">0</span></button>
+            <button class="library-tab active" data-library="all"><span class="tab-icon" aria-hidden="true">✨</span> Tout <span id="libraryAllCount">0</span></button>
+            <button class="library-tab" data-library="favorites"><span class="tab-icon" aria-hidden="true">💜</span> Favoris <span id="libraryFavoritesCount">0</span></button>
+            <button class="library-tab" data-library="created"><span class="tab-icon" aria-hidden="true">🎨</span> Mes créations <span id="libraryCreatedCount">0</span></button>
+            <button class="library-tab" data-library="chats"><span class="tab-icon" aria-hidden="true">💬</span> Discussions <span id="libraryChatsCount">0</span></button>
           </div>
           <div class="library-grid character-grid" id="libraryGrid"></div>
         </section>
@@ -143,7 +143,7 @@
           </div>
           <div class="story-feature" data-image-shell>
             <img class="story-feature-photo visual-media" data-visual-image data-route-critical src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&amp;fit=crop&amp;w=1200&amp;q=86" alt="" aria-hidden="true" loading="eager" decoding="async">
-            <div class="story-feature-symbol">✧</div>
+            <div class="story-feature-symbol" aria-hidden="true">📖</div>
             <div><span>HISTOIRES INTERACTIVES</span><h2>Tu n'es pas seulement lecteur. Tu décides.</h2><p>Chaque choix ouvre une possibilité différente. Reprends une histoire là où tu l'as laissée.</p></div>
             <div class="story-feature-art" aria-hidden="true"><span>✦</span><span>☾</span><span>✧</span></div>
           </div>
@@ -165,17 +165,17 @@
                   <div class="chat-top-name"><strong id="chatCharacterName">Personnage</strong><small id="chatCharacterMeta">Univers</small><span class="chat-top-status"><i></i><span id="chatTopStatus">Conversation personnelle</span></span></div>
                 </div>
                 <div class="chat-top-actions">
-                  <button class="chat-tool-button" data-chat-panel="scenes" title="Choisir une scène"><span>✧</span><small>Scènes</small></button>
-                  <button class="chat-tool-button" data-action="toggle-chat-details" title="Afficher la fiche du personnage"><span>ⓘ</span><small>Fiche</small></button>
-                  <button class="chat-tool-button" data-action="chat-memory" title="Notes personnelles"><span>▤</span><small>Notes</small></button>
-                  <button class="chat-tool-button" data-action="chat-settings" title="Préférences de discussion"><span>⚙</span><small>Options</small></button>
-                  <button class="icon-button" data-action="chat-export" title="Exporter la discussion" aria-label="Exporter la discussion">⇩</button>
-                  <button class="icon-button" data-action="clear-chat" title="Effacer la discussion" aria-label="Effacer la discussion">⌫</button>
+                  <button class="chat-tool-button" data-chat-panel="scenes" title="Choisir une scène"><span aria-hidden="true">🎬</span><small>Scènes</small></button>
+                  <button class="chat-tool-button" data-action="toggle-chat-details" title="Afficher la fiche du personnage"><span aria-hidden="true">👤</span><small>Fiche</small></button>
+                  <button class="chat-tool-button" data-action="chat-memory" title="Notes personnelles"><span aria-hidden="true">📝</span><small>Notes</small></button>
+                  <button class="chat-tool-button" data-action="chat-settings" title="Préférences de discussion"><span aria-hidden="true">⚙️</span><small>Options</small></button>
+                  <button class="icon-button" data-action="chat-export" title="Exporter la discussion" aria-label="Exporter la discussion">📥</button>
+                  <button class="icon-button" data-action="clear-chat" title="Effacer la discussion" aria-label="Effacer la discussion">🗑️</button>
                 </div>
               </header>
               <nav class="chat-panel-tabs" aria-label="Sections de la discussion">
-                <button type="button" class="chat-panel-tab active" data-chat-panel="conversation"><span>☏</span> Conversation</button>
-                <button type="button" class="chat-panel-tab" data-chat-panel="scenes"><span>✧</span> Scénarios</button>
+                <button type="button" class="chat-panel-tab active" data-chat-panel="conversation"><span aria-hidden="true">💬</span> Conversation</button>
+                <button type="button" class="chat-panel-tab" data-chat-panel="scenes"><span aria-hidden="true">🎭</span> Scénarios</button>
               </nav>
               <section class="chat-conversation-panel" id="chatConversationPanel">
                 <div class="chat-context-strip"><span class="chat-context-dot"></span> Discussion privée <span class="chat-context-separator">·</span> <span id="chatContextCategory">Univers à découvrir</span><span class="chat-encryption-note">Enregistrée sur cet appareil</span></div>
@@ -201,18 +201,18 @@
         <section class="page" id="page-profile">
           <div class="page-intro"><div class="eyebrow">TON ESPACE PERSONNEL</div><h1>Mon espace<span>.</span></h1><p>Quelques informations pour organiser ton univers Luna Stories.</p></div>
           <div class="profile-layout">
-            <section class="settings-card"><div class="settings-title"><div class="settings-symbol">◉</div><div><h2>Mon profil</h2><p>Ces informations restent dans ce navigateur.</p></div></div><form id="profileForm"><label class="form-label" for="profileName">Nom d'affichage</label><input class="form-input" id="profileName" maxlength="32" placeholder="Comment veux-tu être appelé ?"><label class="form-label" for="profileBio">Quelques mots sur toi</label><textarea class="form-input" id="profileBio" rows="3" maxlength="300" placeholder="Tes univers préférés, tes idées…"></textarea><label class="form-label" for="profileStyle">Style d'histoire que tu préfères</label><select class="form-input" id="profileStyle"><option value="Libre">Libre / varié</option><option>Fantaisie</option><option>Amitié</option><option>Mystère</option><option>Aventure</option><option>Science-fiction</option><option>Quotidien</option><option>Anime</option><option>Romance</option><option>RPG</option><option>Paranormal</option><option>Comédie</option><option>Historique</option><option>Tranche de vie</option></select><button class="button-primary" type="submit">Enregistrer mon profil</button></form></section>
-            <section class="settings-card"><div class="settings-title"><div class="settings-symbol">✧</div><div><h2>Mes données</h2><p>Tu gardes le contrôle de tes créations.</p></div></div><div class="data-row"><div><b>Exporter ma bibliothèque</b><small>Télécharge une sauvegarde JSON.</small></div><button class="button-outline" data-action="export">Exporter</button></div><div class="data-row"><div><b>Importer une sauvegarde</b><small>Restaure des données exportées depuis Luna Stories.</small></div><button class="button-outline" data-action="import">Importer</button></div><div class="data-row"><div><b>Effacer les données locales</b><small>Supprime créations, favoris et conversations sur cet appareil.</small></div><button class="button-danger" data-action="reset">Effacer</button></div><input id="importFile" type="file" accept="application/json,.json" hidden></section>
+            <section class="settings-card"><div class="settings-title"><div class="settings-symbol" aria-hidden="true">👤</div><div><h2>Mon profil</h2><p>Ces informations restent dans ce navigateur.</p></div></div><form id="profileForm"><label class="form-label" for="profileName">Nom d'affichage</label><input class="form-input" id="profileName" maxlength="32" placeholder="Comment veux-tu être appelé ?"><label class="form-label" for="profileBio">Quelques mots sur toi</label><textarea class="form-input" id="profileBio" rows="3" maxlength="300" placeholder="Tes univers préférés, tes idées…"></textarea><label class="form-label" for="profileStyle">Style d'histoire que tu préfères</label><select class="form-input" id="profileStyle"><option value="Libre">Libre / varié</option><option>Fantaisie</option><option>Amitié</option><option>Mystère</option><option>Aventure</option><option>Science-fiction</option><option>Quotidien</option><option>Anime</option><option>Romance</option><option>RPG</option><option>Paranormal</option><option>Comédie</option><option>Historique</option><option>Tranche de vie</option></select><button class="button-primary" type="submit">Enregistrer mon profil</button></form></section>
+            <section class="settings-card"><div class="settings-title"><div class="settings-symbol" aria-hidden="true">🗂️</div><div><h2>Mes données</h2><p>Tu gardes le contrôle de tes créations.</p></div></div><div class="data-row"><div><b>Exporter ma bibliothèque</b><small>Télécharge une sauvegarde JSON.</small></div><button class="button-outline" data-action="export">Exporter</button></div><div class="data-row"><div><b>Importer une sauvegarde</b><small>Restaure des données exportées depuis Luna Stories.</small></div><button class="button-outline" data-action="import">Importer</button></div><div class="data-row"><div><b>Effacer les données locales</b><small>Supprime créations, favoris et conversations sur cet appareil.</small></div><button class="button-danger" data-action="reset">Effacer</button></div><input id="importFile" type="file" accept="application/json,.json" hidden></section>
           </div>
-          <div class="privacy-note"><span>♧</span><div><b>Une note sur la confidentialité</b><p>Cette version sauvegarde les données dans le stockage local de ton navigateur. Il n'y a pas encore de comptes en ligne, de synchronisation entre appareils, ni de galerie publique partagée.</p></div></div>
+          <div class="privacy-note"><span aria-hidden="true">🔒</span><div><b>Une note sur la confidentialité</b><p>Cette version sauvegarde les données dans le stockage local de ton navigateur. Il n'y a pas encore de comptes en ligne, de synchronisation entre appareils, ni de galerie publique partagée.</p></div></div>
         </section>
       </main>
       <nav class="mobile-dock" aria-label="Navigation mobile">
-        <button class="mobile-dock-item active" data-page="discover"><span>⌕</span><small>Découvrir</small></button>
-        <button class="mobile-dock-item" data-page="library"><span>▤</span><small>Bibliothèque</small></button>
+        <button class="mobile-dock-item active" data-page="discover"><span aria-hidden="true">🔎</span><small>Découvrir</small></button>
+        <button class="mobile-dock-item" data-page="library"><span aria-hidden="true">📚</span><small>Bibliothèque</small></button>
         <button class="mobile-dock-create" data-action="new-character" aria-label="Créer un personnage">＋</button>
-        <button class="mobile-dock-item" data-page="stories"><span>✧</span><small>Histoires</small></button>
-        <button class="mobile-dock-item" data-page="profile"><span>◉</span><small>Mon espace</small></button>
+        <button class="mobile-dock-item" data-page="stories"><span aria-hidden="true">📖</span><small>Histoires</small></button>
+        <button class="mobile-dock-item" data-page="profile"><span aria-hidden="true">👤</span><small>Mon espace</small></button>
       </nav>
       <footer class="main-footer"><span>✦ LUNA STORIES</span><span>Fait pour imaginer, inventer et raconter.</span><span>Version web 1.2</span></footer>
     </div>
@@ -223,7 +223,7 @@
       <div class="modal-header"><div><div class="eyebrow">DONNE VIE À TON IDÉE</div><h2 id="modalTitle">Créer un personnage</h2></div><button class="modal-close" data-action="close-modal" aria-label="Fermer">×</button></div>
       <form id="characterForm">
         <input type="hidden" id="characterId">
-        <div class="avatar-editor"><div class="avatar-preview" id="avatarPreview">🌙</div><div><b>Son apparence</b><p>Choisis un emoji ou importe une image.</p><div class="avatar-actions"><input id="characterEmoji" maxlength="8" value="🌙" aria-label="Emoji du personnage"><label class="upload-button" for="characterImage">＋ Ajouter une image</label><input id="characterImage" type="file" accept="image/png,image/jpeg,image/webp" hidden></div></div></div>
+        <div class="avatar-editor"><div class="avatar-preview" id="avatarPreview">🌙</div><div><b>Son apparence</b><p>Choisis un emoji ou importe une image.</p><div class="avatar-actions"><input id="characterEmoji" maxlength="8" value="🌙" aria-label="Emoji du personnage"><label class="upload-button" for="characterImage">🖼️ Ajouter une image</label><input id="characterImage" type="file" accept="image/png,image/jpeg,image/webp" hidden></div></div></div>
         <div class="form-grid"><div class="form-field full"><label for="characterName">Nom du personnage *</label><input id="characterName" class="form-input" required maxlength="40" placeholder="Ex. : Nova"></div><div class="form-field"><label for="characterCategory">Univers</label><select id="characterCategory" class="form-input"><option>Fantaisie</option><option>Amitié</option><option>Mystère</option><option>Aventure</option><option>Science-fiction</option><option>Quotidien</option><option>Anime</option><option>Romance</option><option>RPG</option><option>Paranormal</option><option>Comédie</option><option>Historique</option></select></div><div class="form-field"><label for="characterVisibility">Visibilité</label><select id="characterVisibility" class="form-input"><option value="private">Personnel · privé sur cet appareil</option></select></div><div class="form-field full"><label for="characterDescription">Description *</label><textarea id="characterDescription" class="form-input" required maxlength="320" rows="3" placeholder="Son caractère, son univers, ce qui le rend unique…"></textarea></div><div class="form-field full"><label for="characterGreeting">Première phrase</label><textarea id="characterGreeting" class="form-input" maxlength="320" rows="2" placeholder="Comment commence votre rencontre ?"></textarea></div><div class="form-field full"><label for="characterMemory">Notes / souvenirs à garder</label><textarea id="characterMemory" class="form-input" maxlength="500" rows="2" placeholder="Des détails utiles à retrouver plus tard…"></textarea></div></div>
         <div class="modal-actions"><button class="button-quiet" type="button" data-action="close-modal">Annuler</button><button class="button-primary" type="submit">Enregistrer le personnage <span>→</span></button></div>
       </form>
