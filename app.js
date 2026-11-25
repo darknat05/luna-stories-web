@@ -235,30 +235,78 @@ function renderCategories(){
 }
 function characterPortraitURL(character){
  const portraits={
-  mira:'0001', eliot:'0006', sora:'0003', lyra:'0023', noa:'0005', atlas:'0008',
-  iris:'0011', theo:'0016', aiko:'0013', eden:'0021', runa:'0025', nox:'0024',
-  milo:'0018', ada:'0031', lina:'0034', eli:'0028', margot:'0044',
-  'theo-love':'0032', sam:'0038', 'noémie':'0057', alex:'0043', jules:'0046'
+  "mira":"https://images.pexels.com/photos/38963716/pexels-photo-38963716/free-photo-of-sunny-outdoor-portrait-of-a-young-adult-woman.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "eliot":"https://images.pexels.com/photos/32612646/pexels-photo-32612646/free-photo-of-young-man-posing-casually-in-urban-setting.jpeg?auto=compress&cs=tinysrgb&dpr=1&h=750&w=1260",
+  "sora":"https://images.pexels.com/photos/30487464/pexels-photo-30487464/free-photo-of-young-woman-taking-a-selfie-in-natural-light.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "lyra":"https://images.pexels.com/photos/37262711/pexels-photo-37262711.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "noa":"https://images.pexels.com/photos/9980215/pexels-photo-9980215.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "atlas":"https://images.pexels.com/photos/33554785/pexels-photo-33554785/free-photo-of-casual-urban-portrait-of-a-young-adult-male.png?auto=compress&dpr=1&h=750&w=1260",
+  "iris":"https://images.pexels.com/photos/34352260/pexels-photo-34352260/free-photo-of-portrait-of-a-thoughtful-young-woman-in-natural-light.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "theo":"https://images.pexels.com/photos/36152373/pexels-photo-36152373/free-photo-of-casual-portrait-of-stylish-young-adult-man.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "aiko":"https://images.pexels.com/photos/33179924/pexels-photo-33179924/free-photo-of-young-woman-smiling-in-natural-light-portrait.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "eden":"https://images.pexels.com/photos/17752479/pexels-photo-17752479/free-photo-of-portrait-of-a-young-woman.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "runa":"https://images.pexels.com/photos/40675793/pexels-photo-40675793/free-photo-of-casual-fashion-portrait-with-natural-light.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "nox":"https://images.pexels.com/photos/31866127/pexels-photo-31866127/free-photo-of-contemplative-portrait-of-a-man-in-natural-light.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "milo":"https://images.pexels.com/photos/40607173/pexels-photo-40607173/free-photo-of-portrait-of-young-male-in-studio-lighting.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "ada":"https://images.pexels.com/photos/15162048/pexels-photo-15162048/free-photo-of-portrait-of-a-young-brunette.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "lina":"https://images.pexels.com/photos/35736940/pexels-photo-35736940/free-photo-of-young-woman-smiling-in-natural-light-portrait.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "eli":"https://images.pexels.com/photos/36510878/pexels-photo-36510878/free-photo-of-urban-casual-fashion-street-style-portrait.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "margot":"https://images.pexels.com/photos/36158508/pexels-photo-36158508/free-photo-of-casual-portrait-of-young-woman-outdoors.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "theo-love":"https://images.pexels.com/photos/31969138/pexels-photo-31969138/free-photo-of-casual-portrait-of-young-adult-male-in-studio.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "sam":"https://images.pexels.com/photos/38981264/pexels-photo-38981264.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "noémie":"https://images.pexels.com/photos/41012684/pexels-photo-41012684/free-photo-of-casual-outdoor-portrait-of-a-young-woman.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "alex":"https://images.pexels.com/photos/36510863/pexels-photo-36510863/free-photo-of-casual-portrait-of-young-adult-male.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "jules":"https://images.pexels.com/photos/31708505/pexels-photo-31708505.jpeg?auto=compress&dpr=1&h=750&w=1260"
  };
- const female=['0001','0003','0005','0011','0013','0021','0025','0031','0034','0044','0057','0062','0069','0072','0075','0081','0083','0089','0092','0094','0098','0105','0106','0110','0112','0118'];
- const male=['0006','0008','0016','0018','0028','0032','0038','0043','0046','0048','0054','0060','0065','0067','0074','0076','0078','0085','0087','0090','0095','0101','0102','0109'];
- const nonbinary=['0023','0024','0082','0124','0181','0205'];
+ const female=[
+  "https://images.pexels.com/photos/38963716/pexels-photo-38963716/free-photo-of-sunny-outdoor-portrait-of-a-young-adult-woman.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/30487464/pexels-photo-30487464/free-photo-of-young-woman-taking-a-selfie-in-natural-light.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/4793160/pexels-photo-4793160.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/17752479/pexels-photo-17752479/free-photo-of-portrait-of-a-young-woman.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/9980215/pexels-photo-9980215.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/33179924/pexels-photo-33179924/free-photo-of-young-woman-smiling-in-natural-light-portrait.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/35736940/pexels-photo-35736940/free-photo-of-young-woman-smiling-in-natural-light-portrait.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/34352260/pexels-photo-34352260/free-photo-of-portrait-of-a-thoughtful-young-woman-in-natural-light.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/15162048/pexels-photo-15162048/free-photo-of-portrait-of-a-young-brunette.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/36158508/pexels-photo-36158508/free-photo-of-casual-portrait-of-young-woman-outdoors.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/41012684/pexels-photo-41012684/free-photo-of-casual-outdoor-portrait-of-a-young-woman.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/37967027/pexels-photo-37967027/free-photo-of-casual-outdoor-portrait-of-a-young-woman.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/40675793/pexels-photo-40675793/free-photo-of-casual-fashion-portrait-with-natural-light.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/30609824/pexels-photo-30609824.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/36905099/pexels-photo-36905099.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/37262711/pexels-photo-37262711.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/30057276/pexels-photo-30057276.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/37867151/pexels-photo-37867151.jpeg?auto=compress&dpr=1&h=750&w=1260"
+ ];
+ const male=[
+  "https://images.pexels.com/photos/32612646/pexels-photo-32612646/free-photo-of-young-man-posing-casually-in-urban-setting.jpeg?auto=compress&cs=tinysrgb&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/36152373/pexels-photo-36152373/free-photo-of-casual-portrait-of-stylish-young-adult-man.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/33554785/pexels-photo-33554785/free-photo-of-casual-urban-portrait-of-a-young-adult-male.png?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/31660392/pexels-photo-31660392/free-photo-of-close-up-portrait-of-a-young-adult-male.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/31866127/pexels-photo-31866127/free-photo-of-contemplative-portrait-of-a-man-in-natural-light.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/36510878/pexels-photo-36510878/free-photo-of-urban-casual-fashion-street-style-portrait.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/36510863/pexels-photo-36510863/free-photo-of-casual-portrait-of-young-adult-male.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/31969138/pexels-photo-31969138/free-photo-of-casual-portrait-of-young-adult-male-in-studio.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/40607173/pexels-photo-40607173/free-photo-of-portrait-of-young-male-in-studio-lighting.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/38981264/pexels-photo-38981264.jpeg?auto=compress&dpr=1&h=750&w=1260",
+  "https://images.pexels.com/photos/31708505/pexels-photo-31708505.jpeg?auto=compress&dpr=1&h=750&w=1260"
+ ];
+ const mixed=female.concat(male);
  const key=String(character.id||character.name||'luna');
  const gender=character.gender||STARTER_GENDERS[key]||'unknown';
- const pool=gender==='female'?female:gender==='male'?male:gender==='nonbinary'?nonbinary:female.concat(male,nonbinary);
+ const pool=gender==='female'?female:gender==='male'?male:mixed;
  const seed=Array.from(key).reduce((sum,ch)=>sum+ch.charCodeAt(0),0);
- const portrait=portraits[key]||pool[seed%pool.length]||'0001';
- return 'https://assets.allsvgicons.com/avatars/512/'+portrait+'.webp';
+ return portraits[key]||pool[seed%pool.length]||female[0];
 }
 function avatarHTML(c,extraClass){
  const image=safeImage(c.image)||characterPortraitURL(c);
- return '<img class="'+(extraClass||'character-image')+'" data-visual-image src="'+image+'" alt="Portrait IA du personnage fictif '+esc(c.name)+'" loading="lazy" decoding="async"><span class="character-fallback-avatar" aria-hidden="true">'+esc(c.emoji||'✦')+'</span>';
+ return '<img class="'+(extraClass||'character-image')+'" data-visual-image src="'+image+'" alt="Photo d’illustration du personnage fictif '+esc(c.name)+'" loading="lazy" decoding="async"><span class="character-fallback-avatar" aria-hidden="true">'+esc(c.emoji||'✦')+'</span>';
 }
 function characterCard(c){
  const mine=custom.some(x=>x.id===c.id),fav=favorites.includes(c.id);
  const palette=(c.colors||COLORS[0]),hasImage=!!safeImage(c.image);
  const cover='';
- return '<article class="character-card poly-card" data-tilt-card><div class="character-cover '+(hasImage?'has-character-image':'has-scene-photo')+'" data-image-shell style="--cover1:'+esc(palette[0])+';--cover2:'+esc(palette[1])+'"><span class="cover-shimmer"></span>'+cover+'<div class="poster-halo"></div><div class="poster-orbit"></div>'+avatarHTML(c,'character-poster-art')+'<span class="character-tag">'+esc(c.category)+'</span><button class="favorite-button '+(fav?'active':'')+'" data-action="favorite" data-id="'+esc(c.id)+'" aria-label="'+(fav?'Retirer des favoris':'Ajouter aux favoris')+'">'+(fav?'♥':'♡')+'</button><span class="poster-spark">✦</span><span class="poster-bottom-glow"></span></div><div class="character-details"><div class="character-name-row"><h3>'+esc(c.name)+'</h3><span class="character-origin">'+(mine?'✦ TA CRÉATION':'PERSONNAGE FICTIF')+'</span></div><p class="character-description">'+esc(c.description)+'</p><div class="character-tag-list">'+(c.tags||[]).slice(0,3).map(t=>'<span>'+esc(t)+'</span>').join('')+'</div><div class="character-card-footer"><span class="card-category"><i>✧</i> '+esc(c.category)+'</span><div class="character-actions"><button class="card-action" data-action="open-chat" data-id="'+esc(c.id)+'">Discuter <span>↗</span></button>'+(mine?'<button class="card-more" data-action="edit-character" data-id="'+esc(c.id)+'" aria-label="Modifier '+esc(c.name)+'">✎</button><button class="card-more" data-action="delete-character" data-id="'+esc(c.id)+'" aria-label="Supprimer '+esc(c.name)+'">×</button>':'')+'</div></div></div></article>'
+ return '<article class="character-card poly-card" data-tilt-card><div class="character-cover '+(hasImage?'has-character-image':'has-scene-photo')+'" data-image-shell style="--cover1:'+esc(palette[0])+';--cover2:'+esc(palette[1])+'"><span class="cover-shimmer"></span>'+cover+'<div class="poster-halo"></div><div class="poster-orbit"></div>'+avatarHTML(c,'character-poster-art')+'<span class="character-tag">'+esc(c.category)+'</span><button class="favorite-button '+(fav?'active':'')+'" data-action="favorite" data-id="'+esc(c.id)+'" aria-label="'+(fav?'Retirer des favoris':'Ajouter aux favoris')+'">'+(fav?'♥':'♡')+'</button><span class="poster-spark">✦</span><span class="poster-bottom-glow"></span></div><div class="character-details"><div class="character-name-row"><h3>'+esc(c.name)+'</h3><span class="character-origin">'+(mine?'✦ TA CRÉATION':'PHOTO PEXELS · ILLUSTRATION')+'</span></div><p class="character-description">'+esc(c.description)+'</p><div class="character-tag-list">'+(c.tags||[]).slice(0,3).map(t=>'<span>'+esc(t)+'</span>').join('')+'</div><div class="character-card-footer"><span class="card-category"><i>✧</i> '+esc(c.category)+'</span><div class="character-actions"><button class="card-action" data-action="open-chat" data-id="'+esc(c.id)+'">Discuter <span>↗</span></button>'+(mine?'<button class="card-more" data-action="edit-character" data-id="'+esc(c.id)+'" aria-label="Modifier '+esc(c.name)+'">✎</button><button class="card-more" data-action="delete-character" data-id="'+esc(c.id)+'" aria-label="Supprimer '+esc(c.name)+'">×</button>':'')+'</div></div></div></article>'
 }
 function renderCharacters(){
  renderCategories();
