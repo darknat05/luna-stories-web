@@ -235,62 +235,30 @@ function renderCategories(){
 }
 function characterPortraitURL(character){
  const portraits={
-  mira:'photo-1524504388940-b1c1722653e1',
-  eliot:'photo-1500648767791-00dcc994a43e',
-  sora:'photo-1544005313-94ddf0286df2',
-  lyra:'photo-1527980965255-d3b416303d12',
-  noa:'photo-1531123897727-8f129e1688ce',
-  atlas:'photo-1506794778202-cad84cf45f1d',
-  iris:'photo-1517841905240-472988babdf9',
-  theo:'photo-1507003211169-0a1dd7228f2d',
-  aiko:'photo-1534528741775-53994a69daeb',
-  eden:'photo-1508214751196-bcfd4ca60f91',
-  runa:'photo-1504593811423-6dd665756598',
-  nox:'photo-1527980965255-d3b416303d12',
-  milo:'photo-1500648767791-00dcc994a43e',
-  ada:'photo-1544005313-94ddf0286df2',
-  lina:'photo-1534528741775-53994a69daeb',
-  eli:'photo-1506794778202-cad84cf45f1d',
-  margot:'photo-1517841905240-472988babdf9',
-  'theo-love':'photo-1507003211169-0a1dd7228f2d',
-  sam:'photo-1527980965255-d3b416303d12',
-  'noémie':'photo-1524504388940-b1c1722653e1',
-  alex:'photo-1500648767791-00dcc994a43e',
-  jules:'photo-1504593811423-6dd665756598'
+  mira:'0001', eliot:'0006', sora:'0003', lyra:'0023', noa:'0005', atlas:'0008',
+  iris:'0011', theo:'0016', aiko:'0013', eden:'0021', runa:'0025', nox:'0024',
+  milo:'0018', ada:'0031', lina:'0034', eli:'0028', margot:'0044',
+  'theo-love':'0032', sam:'0038', 'noémie':'0057', alex:'0043', jules:'0046'
  };
- const fallback=['photo-1534528741775-53994a69daeb','photo-1500648767791-00dcc994a43e','photo-1524504388940-b1c1722653e1','photo-1544005313-94ddf0286df2'];
+ const female=['0001','0003','0005','0011','0013','0021','0025','0031','0034','0044','0057','0062','0069','0072','0075','0081','0083','0089','0092','0094','0098','0105','0106','0110','0112','0118'];
+ const male=['0006','0008','0016','0018','0028','0032','0038','0043','0046','0048','0054','0060','0065','0067','0074','0076','0078','0085','0087','0090','0095','0101','0102','0109'];
+ const nonbinary=['0023','0024','0082','0124','0181','0205'];
  const key=String(character.id||character.name||'luna');
+ const gender=character.gender||STARTER_GENDERS[key]||'unknown';
+ const pool=gender==='female'?female:gender==='male'?male:gender==='nonbinary'?nonbinary:female.concat(male,nonbinary);
  const seed=Array.from(key).reduce((sum,ch)=>sum+ch.charCodeAt(0),0);
- const photo=portraits[key]||fallback[seed%fallback.length];
- return 'https://images.unsplash.com/'+photo+'?auto=format&fit=crop&w=700&h=860&q=84&crop=faces';
+ const portrait=portraits[key]||pool[seed%pool.length]||'0001';
+ return 'https://assets.allsvgicons.com/avatars/512/'+portrait+'.webp';
 }
 function avatarHTML(c,extraClass){
  const image=safeImage(c.image)||characterPortraitURL(c);
- return '<img class="'+(extraClass||'character-image')+'" data-visual-image src="'+image+'" alt="Portrait de '+esc(c.name)+'" loading="lazy" decoding="async"><span class="character-fallback-avatar" aria-hidden="true">'+esc(c.emoji||'✦')+'</span>';
-}
-function characterCoverURL(character){
- const pools={
-  'Fantaisie':['photo-1511497584788-876760111969','photo-1519681393784-d120267933ba','photo-1470252649378-9c29740c9fa8'],
-  'Mystère':['photo-1519608487953-e999c86e7455','photo-1518837695005-2083093ee35b','photo-1500530855697-b586d89ba3ee'],
-  'Science-fiction':['photo-1451187580459-43490279c0fa','photo-1446776811953-b23d57bd21aa','photo-1519681393784-d120267933ba'],
-  'Aventure':['photo-1500530855697-b586d89ba3ee','photo-1470252649378-9c29740c9fa8','photo-1511497584788-876760111969'],
-  'Romance':['photo-1470252649378-9c29740c9fa8','photo-1518837695005-2083093ee35b','photo-1500530855697-b586d89ba3ee'],
-  'Anime':['photo-1519681393784-d120267933ba','photo-1511497584788-876760111969','photo-1451187580459-43490279c0fa'],
-  'Quotidien':['photo-1470252649378-9c29740c9fa8','photo-1500530855697-b586d89ba3ee','photo-1518837695005-2083093ee35b']
- };
- const pool=pools[character.category]||pools['Aventure'];
- const seed=String(character.id||character.name).split('').reduce((sum,ch)=>sum+ch.charCodeAt(0),0);
- return 'https://images.unsplash.com/'+pool[seed%pool.length]+'?auto=format&fit=crop&w=1000&q=82';
-}
-function storyCoverURL(id){
- const covers={signal:'photo-1451187580459-43490279c0fa',library:'photo-1511497584788-876760111969'};
- return 'https://images.unsplash.com/'+(covers[id]||'photo-1500530855697-b586d89ba3ee')+'?auto=format&fit=crop&w=1100&q=84';
+ return '<img class="'+(extraClass||'character-image')+'" data-visual-image src="'+image+'" alt="Portrait IA du personnage fictif '+esc(c.name)+'" loading="lazy" decoding="async"><span class="character-fallback-avatar" aria-hidden="true">'+esc(c.emoji||'✦')+'</span>';
 }
 function characterCard(c){
  const mine=custom.some(x=>x.id===c.id),fav=favorites.includes(c.id);
  const palette=(c.colors||COLORS[0]),hasImage=!!safeImage(c.image);
  const cover='';
- return '<article class="character-card poly-card" data-tilt-card><div class="character-cover '+(hasImage?'has-character-image':'has-scene-photo')+'" data-image-shell style="--cover1:'+esc(palette[0])+';--cover2:'+esc(palette[1])+'"><span class="cover-shimmer"></span>'+cover+'<div class="poster-halo"></div><div class="poster-orbit"></div>'+avatarHTML(c,'character-poster-art')+'<span class="character-tag">'+esc(c.category)+'</span><button class="favorite-button '+(fav?'active':'')+'" data-action="favorite" data-id="'+esc(c.id)+'" aria-label="'+(fav?'Retirer des favoris':'Ajouter aux favoris')+'">'+(fav?'♥':'♡')+'</button><span class="poster-spark">✦</span><span class="poster-bottom-glow"></span></div><div class="character-details"><div class="character-name-row"><h3>'+esc(c.name)+'</h3><span class="character-origin">'+(mine?'✦ CRÉATION':'LUNA PICK')+'</span></div><p class="character-description">'+esc(c.description)+'</p><div class="character-tag-list">'+(c.tags||[]).slice(0,3).map(t=>'<span>'+esc(t)+'</span>').join('')+'</div><div class="character-card-footer"><span class="card-category"><i>✧</i> '+esc(c.category)+'</span><div class="character-actions"><button class="card-action" data-action="open-chat" data-id="'+esc(c.id)+'">Discuter <span>↗</span></button>'+(mine?'<button class="card-more" data-action="edit-character" data-id="'+esc(c.id)+'" aria-label="Modifier '+esc(c.name)+'">✎</button><button class="card-more" data-action="delete-character" data-id="'+esc(c.id)+'" aria-label="Supprimer '+esc(c.name)+'">×</button>':'')+'</div></div></div></article>'
+ return '<article class="character-card poly-card" data-tilt-card><div class="character-cover '+(hasImage?'has-character-image':'has-scene-photo')+'" data-image-shell style="--cover1:'+esc(palette[0])+';--cover2:'+esc(palette[1])+'"><span class="cover-shimmer"></span>'+cover+'<div class="poster-halo"></div><div class="poster-orbit"></div>'+avatarHTML(c,'character-poster-art')+'<span class="character-tag">'+esc(c.category)+'</span><button class="favorite-button '+(fav?'active':'')+'" data-action="favorite" data-id="'+esc(c.id)+'" aria-label="'+(fav?'Retirer des favoris':'Ajouter aux favoris')+'">'+(fav?'♥':'♡')+'</button><span class="poster-spark">✦</span><span class="poster-bottom-glow"></span></div><div class="character-details"><div class="character-name-row"><h3>'+esc(c.name)+'</h3><span class="character-origin">'+(mine?'✦ TA CRÉATION':'PERSONNAGE FICTIF')+'</span></div><p class="character-description">'+esc(c.description)+'</p><div class="character-tag-list">'+(c.tags||[]).slice(0,3).map(t=>'<span>'+esc(t)+'</span>').join('')+'</div><div class="character-card-footer"><span class="card-category"><i>✧</i> '+esc(c.category)+'</span><div class="character-actions"><button class="card-action" data-action="open-chat" data-id="'+esc(c.id)+'">Discuter <span>↗</span></button>'+(mine?'<button class="card-more" data-action="edit-character" data-id="'+esc(c.id)+'" aria-label="Modifier '+esc(c.name)+'">✎</button><button class="card-more" data-action="delete-character" data-id="'+esc(c.id)+'" aria-label="Supprimer '+esc(c.name)+'">×</button>':'')+'</div></div></div></article>'
 }
 function renderCharacters(){
  renderCategories();
@@ -332,11 +300,11 @@ function renderStories(){
  const content=stories.map((s,index)=>{
   const resume=!!(chats['story_'+s.id]&&chats['story_'+s.id].length>1);
   const step=chats['story_'+s.id]?Math.max(0,Math.ceil(chats['story_'+s.id].length/2)-1):0;
-  const photo='<img class="story-cover-photo visual-media" data-visual-image '+(index===0?'data-route-critical':'')+' src="'+esc(storyCoverURL(s.id))+'" alt="" aria-hidden="true" loading="'+(index===0?'eager':'lazy')+'" decoding="async">';
+  const photo='';
   return '<article class="story-card story-card-luna" data-tilt-card><div class="story-art" data-image-shell style="--s1:'+esc(s.colors[0])+';--s2:'+esc(s.colors[1])+'"><span class="cover-shimmer"></span>'+photo+'<span class="story-art-orbit"></span><span class="story-art-emoji">'+esc(s.emoji)+'</span><span class="story-art-index">0'+(index+1)+'</span><span class="story-art-glint">✦</span></div><div class="story-content"><div class="story-content-top"><span class="story-category-tag">'+esc(s.category)+'</span><span class="story-length-tag">✧ RÉCIT INTERACTIF</span></div><h3>'+esc(s.title)+'</h3><p>'+esc(s.description)+'</p><div class="story-progress-row"><span>'+(resume?'Progression sauvegardée':'Premier chapitre')+'</span><span>'+(resume?step+' étape(s)':'À découvrir')+'</span></div><div class="story-card-actions"><button class="card-action" data-action="start-story" data-id="'+esc(s.id)+'">'+(resume?'Reprendre l’histoire':'Commencer')+' <span>↗</span></button>'+(resume?'<button class="card-more" data-action="restart-story" data-id="'+esc(s.id)+'" aria-label="Recommencer '+esc(s.title)+'">↻</button>':'')+'</div></div></article>';
  }).join('');
  $('storyGrid').innerHTML=content;
- $('homeStories').innerHTML=stories.map(s=>'<article class="story-mini"><div class="story-mini-art" data-image-shell><img class="visual-media" data-visual-image src="'+esc(storyCoverURL(s.id))+'" alt="" loading="lazy" decoding="async"><span>'+esc(s.emoji)+'</span></div><div class="story-mini-copy"><b>'+esc(s.title)+'</b><small>'+esc(s.category)+'</small></div><button data-action="start-story" data-id="'+esc(s.id)+'">'+(chats['story_'+s.id]&&chats['story_'+s.id].length>1?'Reprendre':'Jouer')+' <span aria-hidden="true">↗</span></button></article>').join('');
+ $('homeStories').innerHTML=stories.map(s=>'<article class="story-mini"><div class="story-mini-art" data-image-shell><span>'+esc(s.emoji)+'</span></div><div class="story-mini-copy"><b>'+esc(s.title)+'</b><small>'+esc(s.category)+'</small></div><button data-action="start-story" data-id="'+esc(s.id)+'">'+(chats['story_'+s.id]&&chats['story_'+s.id].length>1?'Reprendre':'Jouer')+' <span aria-hidden="true">↗</span></button></article>').join('');
  watchVisualImages($('storyGrid'));watchVisualImages($('homeStories'));bindTiltCards($('storyGrid'));observeRevealItems($('storyGrid'));
 }
 
