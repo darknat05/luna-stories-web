@@ -1399,7 +1399,7 @@ body.light .chat-disclaimer{color:#a99bac}
 body.light .chat-active .chat-composer textarea::placeholder{color:#918397}
 body.light .chat-active .chat-detail-fav{background:#ffffff0e}
 body.light .mobile-dock{
- display:flex;align-items:center;justify-content:space-around;gap:5px;
+ display:none;align-items:center;justify-content:space-around;gap:5px;
  position:fixed;z-index:30;left:12px;right:12px;bottom:12px;
  padding:9px 11px calc(9px + env(safe-area-inset-bottom));
  border:1px solid #78697d;border-radius:19px;
@@ -1428,6 +1428,7 @@ body.light .profile-pill:focus-visible,body.light .nav-item:focus-visible{outlin
  body.light .character-cover{height:clamp(190px,26vw,240px)}
 }
 @media(max-width:760px){
+ body.light .mobile-dock{display:flex}
  body.light .topbar{height:60px;padding:0 14px;gap:9px}
  body.light .breadcrumb{font-size:8px;letter-spacing:.7px}
  body.light .global-search{width:auto;flex:1;min-width:65px;height:38px;padding:0 9px;gap:6px}
