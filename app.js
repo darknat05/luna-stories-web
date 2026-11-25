@@ -285,7 +285,7 @@ function renderCharacters(){
  if(feed==='recommended')list.sort((a,b)=>Number(favorites.includes(b.id))-Number(favorites.includes(a.id)));
  $('resultsTitle').textContent=({recommended:'Sélection pour toi',all:'Tous les personnages',favorites:'Tes favoris',mine:'Tes créations'})[feed];
  $('resultsCount').textContent=list.length+' personnage'+(list.length>1?'s':'');
- $('characterGrid').innerHTML=list.length?list.map(characterCard).join(''):'<div class="empty-state"><div class="empty-symbol">✧</div><h3>Rien ici pour le moment</h3><p>Change tes filtres ou crée un personnage pour commencer à remplir cet espace.</p><button class="button-primary" data-action="new-character">Créer un personnage</button></div>';
+ $('characterGrid').innerHTML=list.length?list.map(characterCard).join(''):'<div class="empty-state"><div class="empty-symbol">🔎</div><h3>Rien ici pour le moment</h3><p>Change tes filtres ou crée un personnage pour commencer à remplir cet espace.</p><button class="button-primary" data-action="new-character">Créer un personnage</button></div>';
  $('favoriteCount').textContent=favorites.length;
  if($('favoriteCountSide'))$('favoriteCountSide').textContent=favorites.length;
  $('libraryCount').textContent=new Set(custom.map(c=>c.id).concat(favorites)).size;
@@ -302,7 +302,7 @@ function renderLibrary(){
  if(libraryFilter==='created')list=list.filter(c=>custom.some(x=>x.id===c.id));
  if(libraryFilter==='chats')list=list.filter(c=>(chats[c.id]||[]).length>0);
  if(libraryFilter==='all')list=list.filter(c=>custom.some(x=>x.id===c.id)||favorites.includes(c.id)||(chats[c.id]||[]).length>0);
- $('libraryGrid').innerHTML=list.length?list.map(characterCard).join(''):'<div class="empty-state"><div class="empty-symbol">▤</div><h3>Ton espace se construit ici</h3><p>Ajoute des favoris, commence une conversation ou crée ton premier personnage pour remplir ta bibliothèque.</p><button class="button-primary" data-action="new-character">Créer un personnage</button></div>';
+ $('libraryGrid').innerHTML=list.length?list.map(characterCard).join(''):'<div class="empty-state"><div class="empty-symbol">📚</div><h3>Ton espace se construit ici</h3><p>Ajoute des favoris, commence une conversation ou crée ton premier personnage pour remplir ta bibliothèque.</p><button class="button-primary" data-action="new-character">Créer un personnage</button></div>';
  const counts={all:saved.length,favorites:favorites.length,created:custom.length,chats:chatIds.length};
  const set=(id,value)=>{const el=$(id);if(el)el.textContent=String(value)};
  set('libraryFavoriteStat',favorites.length);set('libraryCreatedStat',custom.length);set('libraryChatStat',chatIds.length);
@@ -319,8 +319,8 @@ function renderStories(){
   return '<article class="story-card story-card-luna" data-tilt-card><div class="story-art" data-image-shell style="--s1:'+esc(s.colors[0])+';--s2:'+esc(s.colors[1])+'"><span class="cover-shimmer"></span>'+photo+'<span class="story-art-orbit"></span><span class="story-art-emoji">'+esc(s.emoji)+'</span><span class="story-art-index">0'+(index+1)+'</span><span class="story-art-glint">✦</span></div><div class="story-content"><div class="story-content-top"><span class="story-category-tag">'+esc(s.category)+'</span><span class="story-length-tag">✧ RÉCIT INTERACTIF</span></div><h3>'+esc(s.title)+'</h3><p>'+esc(s.description)+'</p><div class="story-progress-row"><span>'+(resume?'Progression sauvegardée':'Premier chapitre')+'</span><span>'+(resume?step+' étape(s)':'À découvrir')+'</span></div><div class="story-card-actions"><button class="card-action" data-action="start-story" data-id="'+esc(s.id)+'">'+(resume?'Reprendre l’histoire':'Commencer')+' <span>↗</span></button>'+(resume?'<button class="card-more" data-action="restart-story" data-id="'+esc(s.id)+'" aria-label="Recommencer '+esc(s.title)+'">↻</button>':'')+'</div></div></article>';
  }).join('');
  $('storyGrid').innerHTML=content;
- $('homeStories').innerHTML=stories.map(s=>'<article class="story-mini"><div class="story-mini-icon">'+esc(s.emoji)+'</div><div class="story-mini-copy"><b>'+esc(s.title)+'</b><small>'+esc(s.category)+'</small></div><button data-action="start-story" data-id="'+esc(s.id)+'">'+(chats['story_'+s.id]&&chats['story_'+s.id].length>1?'Reprendre':'Jouer')+'</button></article>').join('');
- watchVisualImages($('storyGrid'));bindTiltCards($('storyGrid'));observeRevealItems($('storyGrid'));
+ $('homeStories').innerHTML=stories.map(s=>'<article class="story-mini"><div class="story-mini-art" data-image-shell><img class="visual-media" data-visual-image src="'+esc(storyCoverURL(s.id))+'" alt="" loading="lazy" decoding="async"><span>'+esc(s.emoji)+'</span></div><div class="story-mini-copy"><b>'+esc(s.title)+'</b><small>'+esc(s.category)+'</small></div><button data-action="start-story" data-id="'+esc(s.id)+'">'+(chats['story_'+s.id]&&chats['story_'+s.id].length>1?'Reprendre':'Jouer')+' <span aria-hidden="true">↗</span></button></article>').join('');
+ watchVisualImages($('storyGrid'));watchVisualImages($('homeStories'));bindTiltCards($('storyGrid'));observeRevealItems($('storyGrid'));
 }
 
 function openModal(id){$(id).classList.add('open');$(id).setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
@@ -397,7 +397,7 @@ function renderChatMessages(){
  $('chatMessages').innerHTML=list.map((m,index)=>{
   const role=m.role||(m.who==='me'?'user':'assistant'),mine=role==='user'||m.who==='me';
   const time=m.time?new Date(m.time).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}):'';
-  const actions='<div class="message-tools"><button type="button" data-action="copy-chat-message" data-index="'+index+'" aria-label="Copier ce message" title="Copier">▢</button>'+(mine&&index===lastUserIndex?'<button type="button" data-action="edit-last-message" aria-label="Modifier ton dernier message" title="Modifier">✎</button>':'')+(!mine&&index===lastAssistantIndex&&lastUserIndex>=0&&index>lastUserIndex&&!activeStory?'<button type="button" data-action="retry-last-response" aria-label="Régénérer la réponse de démonstration" title="Réessayer">↻</button>':'')+'</div>';
+  const actions='<div class="message-tools"><button type="button" data-action="copy-chat-message" data-index="'+index+'" aria-label="Copier ce message" title="Copier">📋</button>'+(mine&&index===lastUserIndex?'<button type="button" data-action="edit-last-message" aria-label="Modifier ton dernier message" title="Modifier">✏️</button>':'')+(!mine&&index===lastAssistantIndex&&lastUserIndex>=0&&index>lastUserIndex&&!activeStory?'<button type="button" data-action="retry-last-response" aria-label="Régénérer la réponse de démonstration" title="Réessayer">🔄</button>':'')+'</div>';
   return '<article class="message '+(mine?'mine':'theirs')+'"><div class="message-avatar">'+(mine?'N':avatarHTML(activeCharacter,''))+'</div><div class="message-content"><span class="message-author">'+(mine?'Toi':esc(activeCharacter.name))+'</span><div class="message-bubble">'+esc(m.text).replace(/\n/g,'<br>')+'</div><div class="message-meta"><span class="message-time">'+time+'</span>'+actions+'</div></div></article>';
  }).join('');
  $('chatMessages').scrollTop=$('chatMessages').scrollHeight;
