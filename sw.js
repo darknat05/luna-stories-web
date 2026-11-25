@@ -1,4 +1,4 @@
-const CACHE_NAME = "luna-stories-static-v9";
+const CACHE_NAME = "luna-stories-static-v10";
 const CORE_ASSETS = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.webmanifest", "./icon.svg"];
 const NETWORK_FIRST = new Set(["/", "/index.html", "/styles.css", "/app.js", "/manifest.webmanifest", "/sw.js", "/icon.svg"]);
 
